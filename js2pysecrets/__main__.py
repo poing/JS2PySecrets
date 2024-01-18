@@ -1,6 +1,6 @@
-"""Entry point for js2pysecrets."""
+# js2pysecrets/__main__.py
 
-from js2pysecrets.cli import main  # pragma: no cover
+from .wrapper import wrapper
 
-if __name__ == "__main__":  # pragma: no cover
-    main()
+if __name__ == "__main__":
+    wrapper()

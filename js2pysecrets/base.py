@@ -1,17 +1,32 @@
-"""
-js2pysecrets base module.
+import json
+from .wrapper import wrapper
 
-This is the principal module of the js2pysecrets project.
-here you put your main classes and objects.
+def init(bits=None, rngType=None):
+	setup = [{'function': 'init', 'args': [bits]}]
+	main = {'function': None, 'args': []}
+	tasks = {'tasks': [{'start': main}]}
+	json_data = json.dumps(tasks, indent=None)
+	data = wrapper(json_data)
+	return data
 
-Be creative! do whatever you want!
+def getConfig():
+	setup = []
+	main = {'function': 'getConfig', 'args': []}
+	tasks = {'tasks': [{'setup': setup, 'start': main}]}
+	json_data = json.dumps(tasks, indent=None)
+	data = wrapper(json_data)
+	return data
 
-If you want to replace this with a Flask application run:
+def share(secret, numShares, threshold, padLength=128):
+	setup = [
+		{'function': 'setRNG', 'args': ['testRandom']},
+		{'function': 'init', 'args': []},
+	]
+	main = {'function': 'share', 'args': [secret, numShares, threshold, padLength]}
+	tasks = {'tasks': [{'setup': setup, 'start': main}]}
+	json_data = json.dumps(tasks, indent=None)
+	data = wrapper(json_data)
+	return data
 
-    $ make init
 
-and then choose `flask` as template.
-"""
-
-# example constant variable
-NAME = "js2pysecrets"
+	
