@@ -11,9 +11,10 @@ This version handles multiple commands, sent as setup and start.  And have impro
 
 import json
 import subprocess
+import os
 
 # Path to the Node.js wrapper script
-JS_FILE_PATH = "../javascript/wrapper.js"
+JS_FILE_PATH = "./javascript/wrapper.js"
 
 def wrapper(input_data):
     """
@@ -26,8 +27,14 @@ def wrapper(input_data):
         The result of the JavaScript function or None if there is an error.
     """
     
-    # Enclose input_json in single quotes
-    js_command = ["node", JS_FILE_PATH, input_data]
+    # Get the directory where this Python script is located
+    script_directory = os.path.dirname(os.path.realpath(__file__))
+
+    # Change the current working directory to the directory containing the wrapper.js file
+    os.chdir(os.path.join(script_directory, '..', 'javascript'))
+    
+    # Call the wrapper
+    js_command = ["node", "wrapper.js", input_data]
     
     try:
         # Run the command and capture the output and stderr
