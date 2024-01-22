@@ -8,6 +8,7 @@ from .base import _reset
 from .base import random
 from .base import str2hex
 from .base import jsFunction
+from .base import combine
 
 #with open("VERSION", "r") as version_file:
 #    __version__ = version_file.read().strip()
