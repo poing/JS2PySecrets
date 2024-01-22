@@ -69,11 +69,15 @@ if (require.main === module) {
               const result = selectedFunction(...arguments);
               taskResult.startResult = { success: true, result };
             } catch (error) {
+			  // Log the full command and arguments
+			  console.log(`Executing command: ${functionName}(${arguments.join(', ')})`);
               // Capture and report the error to stderr
               console.error(error.message);
               taskResult.startResult = { success: false, error: error.message };
             }
           } else {
+			  // Log the full command and arguments
+			  console.log(`Executing command: ${functionName}(${arguments.join(', ')})`);
             // Report unknown function
             const errorMessage = `Unknown function: ${functionName}`;
             console.error(errorMessage);
