@@ -27,7 +27,9 @@ The `JavaScript` wrapper **is not** intended to allow subsequent commands.  It s
 ```python
 from js2pysecrets import setRNG, random
 
-setRNG('testRandom')
+setRNG('testRandom') # Output: True
+
+# New subprocess defaults to 'nodeCryptoRandomBytes' RNG
 random(32) # Output: '24c177c8'
 random(32) # Output: '89535434'
 random(32) # Output: '306e0c23'
@@ -44,7 +46,7 @@ random(32) # Output: '075bcd15'
 random(32) # Output: '075bcd15'
 ```
 
-
+Additional commands **could** be added one a *case-by-case* basis, support is included in the wrapper.  But the intention of the wrapper is mainly to assist testing of a full `Python` implementation and confirm `100%` compatibility with the `JavaScript` version.
 
 ## Examples
 
