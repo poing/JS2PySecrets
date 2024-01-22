@@ -55,7 +55,6 @@ Divide a 512-bit key, expressed in hexadecimal form, into 10 shares, requiring t
 **Not everything is working yet...**
 
 ```python
-import json
 import js2pysecrets
 
 # generate a 512-bit key
@@ -95,7 +94,6 @@ Divide a password containing a mix of numbers, letters, and other characters, re
 *Big and reversed endianness for the `JS` str2hex*   
 
 ```python
-import json
 import js2pysecrets
 
 # var pw = "<<PassWord123>>"
@@ -110,9 +108,11 @@ print(jsHex)
 pyHex = pw.encode('utf-16').hex().lstrip('fe') # Stripped off the BOM
 print(pyHex)
 
-# // split into 5 shares, with a threshold of 3
-# var shares = secrets.share(pwHex, 5, 3)
-# 
+# split into 5 shares, with a threshold of 3
+# shares = js2pysecrets.share(jsHex, 5, 3)
+shares = js2pysecrets.share(jsHex, 5, 3)
+print(shares)
+
 # // combine 2 shares:
 # var comb = secrets.combine(shares.slice(1, 3))
 # 
