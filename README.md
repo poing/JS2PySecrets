@@ -18,7 +18,7 @@ Combing of shares is not working *yet*...
 
 **`Node`** is **required**.  
 
-To use this project in it's current state **and for testing**, `Node` is required on the system.  `Node` will always be required for testing.  It's used to run the `JavaScript` in the local environment.
+To use this project in it's current state **and for testing**, `Node` is required on the system.  `Node` is always required for testing.  It's used to run the `JavaScript` in the local environment.
 
 ## Examples
 
