@@ -33,7 +33,7 @@ random(32) # Output: '89535434'
 random(32) # Output: '306e0c23'
 ```
 
-While the `Javascript` *does* have code to allow subsequent commands, the only **INTENDED** use is to force the use of `testRandom` for testing purposes.  This can be accomplished by over-riding the function with the kew-word argument `test=True`.
+While the `Javascript` *does* have code to allow subsequent commands, the only **INTENDED** use is to force the use of `testRandom` for testing purposes.  This can be accomplished by over-riding the function with the key-word argument `test=True`.
 
 ```python
 from js2pysecrets import jsFunction
