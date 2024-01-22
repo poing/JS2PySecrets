@@ -25,10 +25,12 @@ To use this project in it's current state **and for testing**, `Node` is require
 The `JavaScript` wrapper **is not** intended to allow subsequent commands.  It spawns an *indvidual* `subprocess` of `Node` for each function called.
 
 ```python
-import js2pysecrets
+from js2pysecrets import setRNG, random
 
-js2pysecrets.setRNG('testRandom')
-js2pysecrets.share('FFFF', 6, 3) # This will NOT use 'testRandom'
+setRNG('testRandom')
+random(32) # Output: '24c177c8'
+random(32) # Output: '89535434'
+random(32) # Output: '306e0c23'
 ```
 
 While the `Javascript` *does* have code to allow subsequent commands, the only **INTENDED** use is to force the use of `testRandom` for testing purposes.  This can be accomplished by over-riding the function with the kew-word argument `test=True`.
@@ -37,9 +39,9 @@ While the `Javascript` *does* have code to allow subsequent commands, the only *
 from js2pysecrets import jsFunction
 
 random = jsFunction('random', test=True)
-random(32) # Output '075bcd15'
-random(32) # Output '075bcd15'
-random(32) # Output '075bcd15'
+random(32) # Output: '075bcd15'
+random(32) # Output: '075bcd15'
+random(32) # Output: '075bcd15'
 ```
 
 
