@@ -46,7 +46,7 @@ random(32) # Output: '075bcd15'
 random(32) # Output: '075bcd15'
 ```
 
-Additional commands **could** be added one a *case-by-case* basis, support is included in the wrapper.  But the intention of the wrapper is mainly to assist testing of a full `Python` implementation and confirm `100%` compatibility with the `JavaScript` version.
+Additional commands **could** be added on a *case-by-case* basis, support is included in the wrapper.  But the intention of the wrapper is mainly to assist testing of a full `Python` implementation to confirm `100%` compatibility with the `JavaScript` version.
 
 ## Examples
 
