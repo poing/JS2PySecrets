@@ -1,4 +1,47 @@
+# js2pysecrets
 
+[![codecov](https://codecov.io/gh/poing/JS2PySecrets/branch/main/graph/badge.svg?token=JS2PySecrets_token_here)](https://codecov.io/gh/poing/JS2PySecrets)
+[![CI](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml/badge.svg)](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml)
+
+Awesome js2pysecrets created by poing
+
+## Status
+
+The project is intended to create a `Python` version that is compatible with `secrets.js`.  It's currently in the **DEVELOPMENT** stage and the framework is being built to *effectively* test and run the `JavaScript` from within the `Python` environment.
+
+### Requirements
+
+The use this project in it's current state **and for testing**, `Node` is required on the system.  This is used to run the `JavaScript`.
+
+## Install it from PyPI
+
+```bash
+pip install js2pysecrets
+```
+
+## Usage
+
+```py
+from js2pysecrets import BaseClass
+from js2pysecrets import base_function
+
+BaseClass().base_method()
+base_function()
+```
+
+```bash
+$ python -m js2pysecrets
+#or
+$ js2pysecrets
+```
+
+## Development and Testing
+
+Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+
+<!--  DELETE THE LINES ABOVE THIS AND WRITE YOUR PROJECT README BELOW -->
+----
 # Python Project Template
 
 A low dependency and really simple to start project template for Python Projects.
@@ -48,38 +91,3 @@ See also
 
 [❤️ Sponsor this project](https://github.com/sponsors/rochacbruno/)
 
-<!--  DELETE THE LINES ABOVE THIS AND WRITE YOUR PROJECT README BELOW -->
-
----
-# js2pysecrets
-
-[![codecov](https://codecov.io/gh/poing/JS2PySecrets/branch/main/graph/badge.svg?token=JS2PySecrets_token_here)](https://codecov.io/gh/poing/JS2PySecrets)
-[![CI](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml/badge.svg)](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml)
-
-Awesome js2pysecrets created by poing
-
-## Install it from PyPI
-
-```bash
-pip install js2pysecrets
-```
-
-## Usage
-
-```py
-from js2pysecrets import BaseClass
-from js2pysecrets import base_function
-
-BaseClass().base_method()
-base_function()
-```
-
-```bash
-$ python -m js2pysecrets
-#or
-$ js2pysecrets
-```
-
-## Development
-
-Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.

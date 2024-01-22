@@ -1,32 +1,33 @@
 import json
-from .wrapper import wrapper
+from .wrapper import wrapper  # Import your wrapper function
 
-def init(bits=None, rngType=None):
-	setup = [{'function': 'init', 'args': [bits]}]
-	main = {'function': None, 'args': []}
-	tasks = {'tasks': [{'start': main}]}
-	json_data = json.dumps(tasks, indent=None)
-	data = wrapper(json_data)
-	return data
+class jsFunction:
+    def __init__(self, func_name, test=False):
+        self.func_name = func_name
+        self.test = test
 
-def getConfig():
-	setup = []
-	main = {'function': 'getConfig', 'args': []}
-	tasks = {'tasks': [{'setup': setup, 'start': main}]}
-	json_data = json.dumps(tasks, indent=None)
-	data = wrapper(json_data)
-	return data
+    def __call__(self, *args, **kwargs):
+        result = {
+            'function': self.func_name,
+            'args': args
+        }
 
-def share(secret, numShares, threshold, padLength=128):
-	setup = [
-		{'function': 'setRNG', 'args': ['testRandom']},
-		{'function': 'init', 'args': []},
-	]
-	main = {'function': 'share', 'args': [secret, numShares, threshold, padLength]}
-	tasks = {'tasks': [{'setup': setup, 'start': main}]}
-	json_data = json.dumps(tasks, indent=None)
-	data = wrapper(json_data)
-	return data
+        setup = []  # Keep the setup list
+        if self.test:
+            setup = [{'function': 'setRNG', 'args': ['testRandom']}]
 
+        main = {'function': self.func_name, 'args': args}
+        tasks = {'tasks': [{'setup': setup, 'start': main}]}
+        json_data = json.dumps(tasks, indent=None)
+        data = wrapper(json_data)
+        
+        return data
 
-	
+random = jsFunction('random')
+share = jsFunction('share')
+init = jsFunction('init')
+getConfig = jsFunction('getConfig')
+_reset = jsFunction('_reset')
+setRNG = jsFunction('setRNG')
+str2hex = jsFunction('str2hex')
+hex2str = jsFunction('hex2str')

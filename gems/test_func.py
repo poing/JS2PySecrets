@@ -25,3 +25,5 @@ def inject_behavior(original_function):
 
 # Wrap the forTesting function with the inject_behavior decorator
 #forTesting = inject_behavior(forTesting)
+
+# Maybe can use the wrapper from the test_inject, setting the global HERE.
