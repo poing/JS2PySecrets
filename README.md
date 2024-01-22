@@ -131,23 +131,17 @@ print(shares)
 ## Install it from PyPI
 
 ```bash
-pip install js2pysecrets
+# not published yet - still in development
+# pip install js2pysecrets
 ```
 
 ## Usage
 
 ```py
-from js2pysecrets import BaseClass
-from js2pysecrets import base_function
+import js2pysecrets
 
-BaseClass().base_method()
-base_function()
-```
-
-```bash
-$ python -m js2pysecrets
-#or
-$ js2pysecrets
+js2pysecrets.rand(32)
+js2pysecrets.share('10AF', 6, 3)
 ```
 
 ## Development and Testing
