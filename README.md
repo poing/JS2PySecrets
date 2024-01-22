@@ -1,4 +1,156 @@
+# js2pysecrets
 
+[![codecov](https://codecov.io/gh/poing/JS2PySecrets/branch/main/graph/badge.svg?token=JS2PySecrets_token_here)](https://codecov.io/gh/poing/JS2PySecrets)
+[![CI](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml/badge.svg)](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml)
+
+
+This is a `Python` implementation of [Shamir's threshold secret sharing scheme](http://en.wikipedia.org/wiki/Shamir's_Secret_Sharing), based **and compatible with** the `JavaScript` fork of `secrets.js` [*maintained by `grempe`*](https://github.com/grempe/secrets.js).  Which is orginally based on the code created by `amper5and` on Github. The [original secrets.js can be found there](https://github.com/amper5and/secrets.js/).
+
+## Status
+
+The project is intended to create a `Python` version that is compatible with `secrets.js`.  It's currently in the **DEVELOPMENT** stage and the framework is being built to *effectively* test and run the `JavaScript` from within the `Python` environment.
+
+All of the `JavaScript` functions can be called from *within* the `Python` environment.  However, **there are limitations**!  Most notably, you can **ONLY** call a single function, so some of the utility provided by the `JavaScript` version is not available.  *In many cases, isn't even necessary*.
+
+Combing of shares is not working *yet*...
+
+### Requirements
+
+**`Node`** is **required**.  
+
+To use this project in it's current state **and for testing**, `Node` is required on the system.  `Node` is always required for testing.  It's used to run the `JavaScript` in the local environment.
+
+## JavaScript Wrapper
+
+The `JavaScript` wrapper **is not** intended to allow subsequent commands.  It spawns an *indvidual* `subprocess` of `Node` for each function called.
+
+```python
+from js2pysecrets import setRNG, random
+
+setRNG('testRandom') # Output: True
+
+# New subprocess defaults to 'nodeCryptoRandomBytes' RNG
+random(32) # Output: '24c177c8'
+random(32) # Output: '89535434'
+random(32) # Output: '306e0c23'
+```
+
+While the `Javascript` *does* have code to allow subsequent commands, the only **INTENDED** use is to force the use of `testRandom` for testing purposes.  This can be accomplished by over-riding the function with the key-word argument `test=True`.
+
+```python
+from js2pysecrets import jsFunction
+
+random = jsFunction('random', test=True)
+random(32) # Output: '075bcd15'
+random(32) # Output: '075bcd15'
+random(32) # Output: '075bcd15'
+```
+
+Additional commands **could** be added on a *case-by-case* basis, support is included in the wrapper.  But the intention of the wrapper is mainly to assist testing of a full `Python` implementation to confirm `100%` compatibility with the `JavaScript` version.
+
+## Examples
+
+Divide a 512-bit key, expressed in hexadecimal form, into 10 shares, requiring that any 5 of them are necessary to reconstruct the original key:
+
+**Not everything is working yet...**
+
+```python
+import js2pysecrets
+
+# generate a 512-bit key
+# key = js2pysecrets.random(512) // => key is a hex string
+key = js2pysecrets.random(512)
+print(key)
+
+# split into 10 shares with a threshold of 5
+# shares = js2pysecrets.share(key, 10, 5)
+#  => shares = ['801xxx...xxx','802xxx...xxx','803xxx...xxx','804xxx...xxx','805xxx...xxx']
+shares = js2pysecrets.share(key, 10, 5)
+print(shares)
+
+# // combine 4 shares
+# var comb = secrets.combine(shares.slice(0, 4))
+# console.log(comb === key) // => false
+#
+# // combine 5 shares
+# comb = secrets.combine(shares.slice(4, 9))
+# console.log(comb === key) // => true
+# 
+# // combine ALL shares
+# comb = secrets.combine(shares)
+# console.log(comb === key) // => true
+# 
+# // create another share with id 8
+# var newShare = secrets.newShare(8, shares) // => newShare = '808xxx...xxx'
+# 
+# // reconstruct using 4 original shares and the new share:
+# comb = secrets.combine(shares.slice(1, 5).concat(newShare))
+# console.log(comb === key) // => true
+```
+
+Divide a password containing a mix of numbers, letters, and other characters, requiring that any 3 shares must be present to reconstruct the original password:
+
+**Things really start to break here...**  
+*Big and reversed endianness for the `JS` str2hex*   
+
+```python
+import js2pysecrets
+
+# var pw = "<<PassWord123>>"
+pw = "<<PassWord123>>"
+ 
+# convert the text into a hex string
+# jsHex = secrets.str2hex(pw) // => hex string
+jsHex = js2pysecrets.str2hex(pw)
+print(jsHex)
+
+# Notice how the JS uses an unconventional str2hex method
+pyHex = pw.encode('utf-16').hex().lstrip('fe') # Stripped off the BOM
+print(pyHex)
+
+# split into 5 shares, with a threshold of 3
+# shares = js2pysecrets.share(jsHex, 5, 3)
+shares = js2pysecrets.share(jsHex, 5, 3)
+print(shares)
+
+# // combine 2 shares:
+# var comb = secrets.combine(shares.slice(1, 3))
+# 
+# //convert back to UTF string:
+# comb = secrets.hex2str(comb)
+# console.log(comb === pw) // => false
+# 
+# // combine 3 shares:
+# comb = secrets.combine([shares[1], shares[3], shares[4]])
+# 
+# //convert back to UTF string:
+# comb = secrets.hex2str(comb)
+# console.log(comb === pw) // => true
+```
+
+## Install it from PyPI
+
+```bash
+# not published yet - still in development
+# pip install js2pysecrets
+```
+
+## Usage
+
+```py
+import js2pysecrets
+
+js2pysecrets.rand(32)
+js2pysecrets.share('10AF', 6, 3)
+```
+
+## Development and Testing
+
+Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+
+<!--  DELETE THE LINES ABOVE THIS AND WRITE YOUR PROJECT README BELOW -->
+----
 # Python Project Template
 
 A low dependency and really simple to start project template for Python Projects.
@@ -48,38 +200,3 @@ See also
 
 [❤️ Sponsor this project](https://github.com/sponsors/rochacbruno/)
 
-<!--  DELETE THE LINES ABOVE THIS AND WRITE YOUR PROJECT README BELOW -->
-
----
-# js2pysecrets
-
-[![codecov](https://codecov.io/gh/poing/JS2PySecrets/branch/main/graph/badge.svg?token=JS2PySecrets_token_here)](https://codecov.io/gh/poing/JS2PySecrets)
-[![CI](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml/badge.svg)](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml)
-
-Awesome js2pysecrets created by poing
-
-## Install it from PyPI
-
-```bash
-pip install js2pysecrets
-```
-
-## Usage
-
-```py
-from js2pysecrets import BaseClass
-from js2pysecrets import base_function
-
-BaseClass().base_method()
-base_function()
-```
-
-```bash
-$ python -m js2pysecrets
-#or
-$ js2pysecrets
-```
-
-## Development
-
-Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.

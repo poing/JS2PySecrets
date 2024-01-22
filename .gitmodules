@@ -1,0 +1,3 @@
+[submodule "secrets.js"]
+	path = secrets.js
+	url = git@github.com:grempe/secrets.js.git
