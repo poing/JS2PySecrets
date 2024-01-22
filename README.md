@@ -20,6 +20,17 @@ Combing of shares is not working *yet*...
 
 To use this project in it's current state **and for testing**, `Node` is required on the system.  `Node` is always required for testing.  It's used to run the `JavaScript` in the local environment.
 
+## JavaScript Wrapper
+
+The `JavaScript` wrapper **is not** intended to allow subsequent commands.  It spawns an *indvidual* `subprocess` of `Node` for each function called.
+
+```diff
+import js2pysecrets
+
+js2pysecrets.setRNG('testRandom')
+- js2pysecrets.share('FFFF', 6, 3) # This will NOT use 'testRandom'
+```
+
 ## Examples
 
 Divide a 512-bit key, expressed in hexadecimal form, into 10 shares, requiring that any 5 of them are necessary to reconstruct the original key:
