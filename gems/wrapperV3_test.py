@@ -68,7 +68,7 @@ def run_js_functions(input_data):
         return None
 
 
-# Example usage
+# Working Example: Valid JavaScript: share('1234abc', 6, 3); 
 # Setup commands
 setup = [
     {'function': 'setRNG', 'args': ['testRandom']},
@@ -87,5 +87,29 @@ tasks = {'tasks': [{'setup': setup, 'start': main}]}
 json_data = json.dumps(tasks, indent=None)
 #print(json_data)
 
-run_js_functions(json_data)
+js_result = run_js_functions(json_data)
+print(js_result)
+
+
+# Problem Example: Invalid JavaScript: combine(['8027e7e7e7e7e7e7e7e7e7e7e7e6f5d34c2', '805191919191919191919191919083a53a5', '80667676767676767676767676776442ddb']); 
+# Setup commands
+setup = [
+    {'function': 'setRNG', 'args': ['testRandom']},
+]
+
+# Dynamic Values
+foo = ['8027e7e7e7e7e7e7e7e7e7e7e7e6f5d34c2', '805191919191919191919191919083a53a5', '80667676767676767676767676776442ddb']
+
+# Main function
+main = {'function': 'combine', 'args': foo}
+
+# Combine setup and main
+tasks = {'tasks': [{'setup': setup, 'start': main}]}
+
+# Convert the Python dictionary to JSON
+json_data = json.dumps(tasks, indent=None)
+#print(json_data)
+
+js_result = run_js_functions(json_data)
+print(js_result)
 
