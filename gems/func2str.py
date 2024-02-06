@@ -26,9 +26,9 @@ def funcA(*args, **kwargs):
 
 @function_to_string
 def funcB(*args, **kwargs):
-    pass
+    pass 
     
-funcC=function_to_string('funcC')
+funcC = function_to_string('blue')
 
 # Testing
 print(funcA("aa", "bb", 123, x=123))  # "funcA('aa', 'bb', 123, x=123)"
@@ -36,7 +36,7 @@ print(funcA('aa', 'bb', 123, x=123))   # "funcA('aa', 'bb', 123, x=123)"
 print(funcA('aa', 'bb', 123, x=123))   # "funcA('aa', 'bb', 123, x=123)"
 
 # Support and pass dict
-print(funcC(["aa", "bb"], 123, x=123)) # 'funcB(["aa", "bb"], 123, x=123)'
+print(funcB(["aa", "bb"], 123, x=123)) # 'funcB(["aa", "bb"], 123, x=123)'
 
 foobar = "AAFF"
 
@@ -44,6 +44,7 @@ tasks = [
 	funcA(foobar, 2, "that"),
 	funcA(["some", "more", 2]),
 	funcB("and something", "else", 2, plus=22),
+	blue('hey'),
 ]
 
 # Convert the Python dictionary to JSON
