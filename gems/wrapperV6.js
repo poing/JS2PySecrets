@@ -19,8 +19,13 @@ if (require.main === module) {
   let lastResult = null;
 
   try {
-    const inputData = JSON.parse(inputJson);
+    const inputData = parseStringArray(inputJson);
+    //const inputData = inputJson;
+    //console.log("Commands received from Python: inputJSON: ", inputJson);
     console.log("Commands received from Python:", inputData);
+    
+    //jsonn = inputData.split(",");
+    //console.log("Three: ", jsonn[2]);
 
     // Check if inputData is an array
     if (Array.isArray(inputData)) {
@@ -56,4 +61,25 @@ if (require.main === module) {
     // In case of an error, print a JSON object with an "error" key
     console.log(JSON.stringify({ error: error.message }));
   }
+}
+
+
+function parseStringArray(inputString) {
+    // Remove the opening and closing brackets and split the string by '], ['
+    var arrayStr = inputString.slice(1, -1);
+    var arrayItems = arrayStr.split(/\], \[/);
+
+    // Iterate over each item and remove escape characters
+    var parsedArray = arrayItems.map(item => {
+        // Remove leading and trailing quotes
+        item = item.replace(/^"/, '').replace(/"$/, '');
+
+        // Replace escaped single quotes with single quotes
+        item = item.replace(/\\'/g, "'");
+
+        return [item];
+    });
+
+    // Return the parsed array
+    return parsedArray;
 }

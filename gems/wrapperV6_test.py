@@ -11,6 +11,7 @@ This version handles multiple commands, sent as setup and start.  And have impro
 
 import json
 import subprocess
+import ast
 
 # Path to the Node.js wrapper script
 JS_FILE_PATH = "wrapperV6.js"
@@ -118,13 +119,16 @@ delta = share('1234abc', 6, 3)
 tasks = [
 	alpha,
 	bravo,
-	delta
+	delta,
+	share(["aaa"],["bbb"], ["ccc"])
 ]
 
-tasks = delta
+print("Tasks: ", tasks)
+
+#tasks = delta
 
 json_data = json.dumps(tasks, indent=None)
-#print(json_data) # [["init(33)"], ["setRNG('testRandom')"], ["share('1234abc', 6, 3)"]]
+#print("JSON Data: ", json_data) # [["init(33)"], ["setRNG('testRandom')"], ["share('1234abc', 6, 3)"]]
 
 
 js_result = wrapper(json_data)
