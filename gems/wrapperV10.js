@@ -1,7 +1,7 @@
-// wrapper.js
+// wrapperV10.js
 
 /* 
-A revised and simplified version of JavaScript the wrapper.  Accepts multiple JavaScript commands for the secrets.js package, returning the output of the last command.
+This is the third working version of the wrapper.  Better error handling and accepting multiple JavaScript commands for the secrets.js package.
 */
 
 // Hex to ASCII
@@ -26,7 +26,9 @@ if (require.main === module) {
   }
 
   try {
-	// The the commands to execute
+
+	  
+	//return commands;
 	const inputData = JSON.parse(commands);
 
 	// Debugging statements
@@ -36,8 +38,8 @@ if (require.main === module) {
 	// Loop through commands	
 	for (const command of inputData) {
 		// Evaluate each command
-		lastResult = eval('secrets.' + command);
-	}
+		lastResult = eval('secrets.' + command[0]);
+	}	
 
 	// Return the result of the last command
 	console.log(JSON.stringify(lastResult));

@@ -16,14 +16,21 @@ import js2pysecrets
 # json_data = json.dumps(tasks, indent=None)
 # print(wrapper(json_data))
 
-# print(js2pysecrets.share("ababab", 6, 3))
 # print(js2pysecrets.getConfig())
 # print(js2pysecrets._reset())
 # print(js2pysecrets.getConfig())
 
 # data = js2pysecrets.random(64)
 # print(js2pysecrets.str2hex(data))
-random = js2pysecrets.jsFunction('random', test=True)
-print(random(32))
+#random = js2pysecrets.jsFunction('random', test=True)
+#print(random(32))
 print(js2pysecrets.random(32))
+print(js2pysecrets.share("ababab", 6, 3, test=True))
 
+shares = js2pysecrets.share("ababab", 6, 3)
+print(shares[1])
+print(shares[3])
+print(shares[5])
+
+recoveredPass = js2pysecrets.combine([shares[1],shares[3],shares[5]])
+print("recovered password is: ", recoveredPass)

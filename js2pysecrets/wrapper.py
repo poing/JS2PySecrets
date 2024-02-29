@@ -5,23 +5,23 @@
 # wrapper.py
 
 """
-This script demonstrates the third working version of calling Node.js to execute JavaScript using a wrapper to load the secrets.js package.
-This version handles multiple commands, sent as setup and start.  And have improved error handling.
+This script is a revised version for calling Node.js to execute JavaScript using a wrapper to load the secrets.js package.
+This version handles multiple commands with a list, encodes the list to base36 for the CLI, and has improved error handling.
 """
 
 import json
-import subprocess
 import os
+import subprocess
 
 # Path to the Node.js wrapper script
-JS_FILE_PATH = "./javascript/wrapper.js"
+#JS_FILE_PATH = "./javascript/wrapper.js"
 
 def wrapper(input_data):
     """
     Run a JavaScript function using the Node.js wrapper.
 
     Args:
-        input_data (dict): Dictionary containing the function name and arguments.
+        input_data [list]: List of functions with arguments.
 
     Returns:
         The result of the JavaScript function or None if there is an error.
@@ -40,39 +40,28 @@ def wrapper(input_data):
         # Run the command and capture the output and stderr
         result = subprocess.run(js_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
         
-        # Debugging statement to print stdout and stderr
+        # Debugging statements to print stdout and stderr
+        # print("Input data sent to JavaScript:", input_data)
         # print("stdout:", result.stdout)
         # print("stderr:", result.stderr)
 
         try:
             # Attempt to load the entire stdout as JSON
             js_result = json.loads(result.stdout)
+            #print('json.loads')
             
-            # Check if the result has 'error' or 'results' key
-            if js_result is not None and "results" in js_result:
-                start_result = js_result.get("results", [])[0].get("startResult", {}).get("result")
-                if start_result is not None:
-                    return(start_result)
-                else:
-                    print("No result found for 'start' function.")
-            elif js_result is not None and "error" in js_result:
-                print("JavaScript error:", js_result.get("error"))
-            else:
-                print("JavaScript output is missing 'error' or 'results' key.")
-                
             # Print stderr if it exists
             if result.stderr:
                 print("JavaScript stderr:", result.stderr)
                 
+            return js_result
+
         except json.JSONDecodeError as e:
-            print("Error decoding JSON:", e)
+            print("Python error decoding JSON:", e)
             print("Raw stdout content:", result.stdout)
 
     except subprocess.CalledProcessError as e:
         # Print the error from the JavaScript script
-        js_error = result.stderr.strip()
+        js_error = e.stderr.strip()  # Use e.stderr instead of result.stderr
         print("JavaScript error:", js_error)
         return None
-
-
-

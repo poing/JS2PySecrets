@@ -2,20 +2,20 @@
 # -*- coding: utf-8 -*-
 # vim: set et sw=4 fenc=utf-8:
 #
-# wrapperV4_test.py
+# wrapperV5_test.py
 
 """
-This script demonstrates the another working version, based on V3, calling Node.js to execute JavaScript using a wrapper to load the secrets.js package.
-This version handles multiple commands, sent as setup and start.  And have improved error handling.  But there is an issue passing array data to the JS.  combine(["aa", "bb", "cc"]); does not work in the wrapper.
+FAILED - FAILED - FAILED - FAILED - FAILED - FAILED
+This script FAILED, based on V3, calling Node.js to execute JavaScript using a wrapper to load the secrets.js package.
+This version handles multiple commands, sent as setup and start.  And have improved error handling.  Failed attempt to pass array data to the JS.  combine(["aa", "bb", "cc"]); does not work in the wrapper.
+FAILED - FAILED - FAILED - FAILED - FAILED - FAILED
 """
 
 import json
 import subprocess
 
 # Path to the Node.js wrapper script
-JS_FILE_PATH = "wrapperV4.js"
-
-# ... (previous code)
+JS_FILE_PATH = "wrapperV5.js"
 
 def run_js_functions(input_data):
     """
@@ -28,11 +28,13 @@ def run_js_functions(input_data):
         The result of the JavaScript function or None if there is an error.
     """
     
-    # Enclose input_json in single quotes
-    js_command = ["node", JS_FILE_PATH, input_data]
+    # Convert the Python dictionary to JSON
+    json_data = json.dumps(input_data, indent=None)
+    
+    # Run the command and capture the output and stderr
+    js_command = ["node", JS_FILE_PATH, json_data]
     
     try:
-        # Run the command and capture the output and stderr
         result = subprocess.run(js_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=True)
         
         # Debugging statement to print stdout and stderr
@@ -85,15 +87,9 @@ main = {'function': 'share', 'args': foo}
 # Combine setup and main
 tasks = {'tasks': [{'setup': setup, 'start': main}]}
 
-print(tasks)
-
-
-# Convert the Python dictionary to JSON
-json_data = json.dumps(tasks, indent=None)
-
-# Run the JavaScript functions
-js_result = run_js_functions(json_data)
+js_result = run_js_functions(tasks)
 print(js_result)
+
 
 # Problem Example: Invalid JavaScript: combine(['8027e7e7e7e7e7e7e7e7e7e7e7e6f5d34c2', '805191919191919191919191919083a53a5', '80667676767676767676767676776442ddb']); 
 # Setup commands
@@ -102,24 +98,14 @@ setup = [
 ]
 
 # Dynamic Values
-foo = [
-    '8027e7e7e7e7e7e7e7e7e7e7e7e6f5d34c2',
-    '805191919191919191919191919083a53a5',
-    '80667676767676767676767676776442ddb'
-]
+foo = {'arrayArg': ['8027e7e7e7e7e7e7e7e7e7e7e7e6f5d34c2', '805191919191919191919191919083a53a5', '80667676767676767676767676776442ddb']}
 
 # Main function
-main = {'function': 'combine', 'args': [foo]}
+main = {'function': 'combine', 'args': foo}
 
 # Combine setup and main
 tasks = {'tasks': [{'setup': setup, 'start': main}]}
 
-print(tasks)
-
-# Convert the Python dictionary to JSON
-json_data = json.dumps(tasks, indent=None)
-
-# Run the JavaScript functions
-js_result = run_js_functions(json_data)
+js_result = run_js_functions(tasks)
 print(js_result)
 
