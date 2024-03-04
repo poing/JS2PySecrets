@@ -38,12 +38,11 @@ random(32) # Output: '306e0c23'
 While the `Javascript` *does* have code to allow subsequent commands, the only **INTENDED** use is to force the use of `testRandom` for testing purposes.  This can be accomplished by over-riding the function with the key-word argument `test=True`.
 
 ```python
-from js2pysecrets import jsFunction
+from js2pysecrets import random
 
-random = jsFunction('random', test=True)
-random(32) # Output: '075bcd15'
-random(32) # Output: '075bcd15'
-random(32) # Output: '075bcd15'
+random(32, test=True) # Output: '075bcd15'
+random(32, test=True) # Output: '075bcd15'
+random(32, test=True) # Output: '075bcd15'
 ```
 
 Additional commands **could** be added on a *case-by-case* basis, support is included in the wrapper.  But the intention of the wrapper is mainly to assist testing of a full `Python` implementation to confirm `100%` compatibility with the `JavaScript` version.

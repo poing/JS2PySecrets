@@ -1,6 +1,6 @@
 # js2pysecrets/__init__.py
 
-from .wrapper import wrapper
+#from .wrapper import wrapper
 # from .base import getConfig
 # from .base import init
 from .base import share
