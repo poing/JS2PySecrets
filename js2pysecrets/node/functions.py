@@ -1,6 +1,6 @@
 import json
-from .wrapper import wrapper  # Import your wrapper function
-from .decorators import JsFunction, jsNeedless
+from js2pysecrets.wrapper import wrapper  # Import your wrapper function
+from js2pysecrets.decorators import JsFunction, jsNeedless
 
 @JsFunction
 def share(*args, **kwargs):
