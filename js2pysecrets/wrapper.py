@@ -60,6 +60,10 @@ def wrapper(input_data):
             print("Python error decoding JSON:", e)
             print("Raw stdout content:", result.stdout)
 
+    except FileNotFoundError:
+        # Handle the case where Node.js is not installed
+        print("Error: Node.js is required. Please install Node.js to continue.")
+        exit(1)
     except subprocess.CalledProcessError as e:
         # Print the error from the JavaScript script
         js_error = e.stderr.strip()  # Use e.stderr instead of result.stderr
