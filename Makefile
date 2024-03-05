@@ -32,7 +32,6 @@ fmt:              ## Format code using black & isort.
 
 .PHONY: lint
 lint:             ## Run pep8, black, mypy linters.
-	#$(ENV_PREFIX)flake8 js2pysecrets/
 	$(ENV_PREFIX)black -l 79 --check js2pysecrets/
 	$(ENV_PREFIX)black -l 79 --check tests/
 	$(ENV_PREFIX)mypy --ignore-missing-imports js2pysecrets/
