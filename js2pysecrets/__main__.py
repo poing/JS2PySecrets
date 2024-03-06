@@ -1,6 +1,6 @@
-# js2pysecrets/__main__.py
+"""Entry point for turbo_parakeet."""
 
-from .wrapper import wrapper
+from js2pysecrets.cli import main  # pragma: no cover
 
-if __name__ == "__main__":
-    wrapper()
+if __name__ == "__main__":  # pragma: no cover
+    main()
