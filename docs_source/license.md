@@ -1,4 +1,4 @@
-#License
+# License
 
 ```text
 MIT License
