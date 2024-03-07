@@ -55,10 +55,10 @@ jobs:
         run: make install
       - name: Run tests
         run: make test
-       - name: Check Node
-         run: node -e 'console.log(process.versions)'
-       - name: Tree
-         run: tree
+      - name: Check Node
+        run: node -e 'console.log(process.versions)'
+      - name: Tree
+        run: tree
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v4
         # with:
