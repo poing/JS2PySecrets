@@ -2,3 +2,7 @@ site_name: js2pysecrets
 theme: readthedocs
 docs_dir: docs_source
 site_dir: docs
+nav:
+    - 'index.md'
+    - 'gems.md'
+    - 'license.md'
