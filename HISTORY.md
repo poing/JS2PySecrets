@@ -4,6 +4,7 @@ Changelog
 
 (unreleased)
 ------------
+- Release: version  🚀 [poing]
 - Fix version to test actions. [poing]
 - Merge pull request #16 from poing/0.0.3. [Brian LaVallee]
 
