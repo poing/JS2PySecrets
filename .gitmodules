@@ -1,4 +1,0 @@
-[submodule "secrets.js"]
-	path = secrets.js
-	url = https://github.com/grempe/secrets.js.git
-	branch = fe0b970
