@@ -57,6 +57,10 @@ jobs:
         run: make test
       - name: Check Node
         run: node -e 'console.log(process.versions)'
+      - name: Update Submodule
+        run: git submodule update        
+      - name: Tree
+        run: tree
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v4
         # with:

@@ -1,6 +1,7 @@
 {
   "name": "js2pysecrets",
   "version": "0.0.0",
+  "private": true,
   "description": "This package.json stub is used for CI processes in a Python package.  It includes dependencies required for testing.",
   "main": "secrets.js",
   "scripts": {
@@ -14,5 +15,8 @@
     "split"
   ],
   "author": "Brian LaVallee <brian.lavallee@invite-comm.jp>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "secrets.js-grempe": "^2.0.0"
+  }
 }
