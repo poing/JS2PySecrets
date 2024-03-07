@@ -57,7 +57,7 @@ jobs:
         run: make test
       - name: Check Node
         run: node list
-        run: node -e 'console.log(process.versions)'
+        #run: node -e 'console.log(process.versions)'
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v4
         # with:
