@@ -4,6 +4,30 @@ Changelog
 
 (unreleased)
 ------------
+- Added license to docs. [poing]
+- Change the item order. [poing]
+- Change the item order. [poing]
+- Removed secrets.js, new approach is to use node_modules. [poing]
+- Node Update. [poing]
+- Node Update. [poing]
+- Node Update. [poing]
+- Node Update. [poing]
+- Node Update. [poing]
+- More NodeJS testing. [poing]
+- More NodeJS testing. [poing]
+- More NodeJS testing. [poing]
+- More NodeJS testing. [poing]
+- More NodeJS testing. [poing]
+- Added tree command, to check the deployment. [poing]
+- Adding NPM package details. [poing]
+- Added NodeJS to the workflow. [poing]
+- Added NodeJS to the workflow. [poing]
+- Have release working. [poing]
+
+
+0.0.3 (2024-03-07)
+------------------
+- Release: version 0.0.3 🚀 [poing]
 - Release: version  🚀 [poing]
 - Release: version  🚀 [poing]
 - Fix version to test actions. [poing]
