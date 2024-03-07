@@ -55,9 +55,9 @@ jobs:
         run: make install
       - name: Run tests
         run: make test
-      - name: Check Node
+      - name: Show Node Dependency Versions
         run: node -e 'console.log(process.versions)'
-      - name: Tree
+      - name: Show Directroy Tree
         run: tree
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v4
