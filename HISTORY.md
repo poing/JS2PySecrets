@@ -4,7 +4,17 @@ Changelog
 
 (unreleased)
 ------------
+- Fix version to test actions. [poing]
+- Merge pull request #16 from poing/0.0.3. [Brian LaVallee]
 
+  0.0.3
+- Merge branch 'main' into 0.0.3. [Brian LaVallee]
+- Release: version  🚀 [poing]
+- Merge pull request #15 from poing/0.0.3. [Brian LaVallee]
+
+  Cleanup, Prune, and Revert to Template
+- Restructured docs to use gh pages. [poing]
+- Release: version  🚀 [poing]
 - Merge branch 'main' into 0.0.3. [Brian LaVallee]
 - This is a backup. [poing]
 - Cleanup, Prune, and Revert to Template. [poing]
