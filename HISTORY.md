@@ -4,9 +4,7 @@ Changelog
 
 (unreleased)
 ------------
-- Merge pull request #15 from poing/0.0.3. [Brian LaVallee]
 
-  Cleanup, Prune, and Revert to Template
 - Merge branch 'main' into 0.0.3. [Brian LaVallee]
 - This is a backup. [poing]
 - Cleanup, Prune, and Revert to Template. [poing]
