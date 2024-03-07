@@ -130,3 +130,6 @@ dmypy.json
 
 # templates
 .github/templates/*
+
+# NodeJS 
+node_modules

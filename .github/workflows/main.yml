@@ -50,17 +50,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - name: Install Node dependencies
-        run: npm install secrets.js-grempe
+        run: npm install
       - name: Install project
         run: make install
       - name: Run tests
         run: make test
-      - name: Check Node
-        run: node -e 'console.log(process.versions)'
-      - name: Update Submodule
-        run: git submodule update --recursive
-      - name: Tree
-        run: tree
+       - name: Check Node
+         run: node -e 'console.log(process.versions)'
+#       - name: Update Submodule
+#         run: git submodule update --recursive
+#       - name: Tree
+#         run: tree
       - name: "Upload coverage to Codecov"
         uses: codecov/codecov-action@v4
         # with:

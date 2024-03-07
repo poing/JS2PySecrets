@@ -1,19 +1,8 @@
 {
   "name": "js2pysecrets",
-  "version": "0.0.0",
+  "version": "0.0.4",
   "private": true,
   "description": "This package.json stub is used for CI processes in a Python package.  It includes dependencies required for testing.",
-  "main": "secrets.js",
-  "scripts": {
-    "test": "test"
-  },
-  "keywords": [
-    "secret",
-    "sharing",
-    "shamir",
-    "cryptography",
-    "split"
-  ],
   "author": "Brian LaVallee <brian.lavallee@invite-comm.jp>",
   "license": "MIT",
   "dependencies": {
