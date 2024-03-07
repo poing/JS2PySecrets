@@ -58,7 +58,7 @@ jobs:
       - name: Check Node
         run: node -e 'console.log(process.versions)'
       - name: Update Submodule
-        run: git submodule update        
+        run: git submodule update --recursive
       - name: Tree
         run: tree
       - name: "Upload coverage to Codecov"
