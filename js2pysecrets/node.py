@@ -18,12 +18,22 @@ def random(*args, **kwargs):
 
 
 @JsFunction
+def getConfig(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
 def combine(*args, **kwargs):
     pass  # pragma: no cover
 
 
 @jsNeedless
 def init(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@jsNeedless
+def newShare(*args, **kwargs):
     pass  # pragma: no cover
 
 

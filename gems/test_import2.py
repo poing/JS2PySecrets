@@ -5,7 +5,9 @@
 # test.py
 
 import json
-import js2pysecrets
+from js2pysecrets import share, combine
+import js2pysecrets.node as node
+
 
 # from js2pysecrets import wrapper
 # 
@@ -24,13 +26,15 @@ import js2pysecrets
 # print(js2pysecrets.str2hex(data))
 #random = js2pysecrets.jsFunction('random', test=True)
 #print(random(32))
-print(js2pysecrets.random(32))
-print(js2pysecrets.share("ababab", 6, 3, test=True))
+print(node.random(32))
+print(share("ababab", 6, 3, test=True))
 
-shares = js2pysecrets.share("ababab", 6, 3)
+shares = node.share("ababab", 6, 3)
 print(shares[1])
 print(shares[3])
 print(shares[5])
 
-recoveredPass = js2pysecrets.combine([shares[1],shares[3],shares[5]])
+recoveredPass = combine([shares[1],shares[3],shares[5]])
 print("recovered password is: ", recoveredPass)
+
+node.random(0)

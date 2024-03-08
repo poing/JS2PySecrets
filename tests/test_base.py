@@ -1,4 +1,4 @@
-from js2pysecrets.base import NAME
+from js2pysecrets import NAME
 
 
 def test_base():
