@@ -16,6 +16,11 @@ function hex2a(hex)
 // Require the secrets package and assign it to a variable
 const secrets = require('../node_modules/secrets.js-grempe/secrets.js');
 
+// Extend secrets package to cause a JSONDecodeError for coverage tests
+secrets.fail = () => {
+  console.log('Oh no, this is a string.  Not JSON.');
+};
+
 // If the script is executed directly, call the appropriate function based on arguments
 if (require.main === module) {
   const commands = hex2a(process.argv[2]);
@@ -29,18 +34,26 @@ if (require.main === module) {
 	// The the commands to execute
 	const inputData = JSON.parse(commands);
 
+
 	// Debugging statements
-	//console.log("Commands received from Python:", commands);
+	//console.log("Commands received from Python:", inputData);
 	//console.log("inputData[0][0]: ", inputData[0][0]); // returns: init(33)
+
+
+	// Array to store results
+	let allResults = [];
 
 	// Loop through commands	
 	for (const command of inputData) {
 		// Evaluate each command
-		lastResult = eval('secrets.' + command);
+		//lastResult = eval('secrets.' + command);
+		const result = eval('secrets.' + command);
+		allResults.push(result);
 	}
 
 	// Return the result of the last command
-	console.log(JSON.stringify(lastResult));
+	//console.log(JSON.stringify(lastResult));
+	console.log(JSON.stringify(allResults));
 
   } catch (error) {
     console.error("Error executing command:", error.message);

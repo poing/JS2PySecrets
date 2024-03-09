@@ -68,8 +68,8 @@ def wrapper(input_data):
             return js_result
 
         except json.JSONDecodeError as e:
-            # print("Python error decoding JSON:", e)
-            # print("Raw stdout content:", result.stdout)
+            print("Python error decoding JSON:", e)
+            print("Raw stdout content:", result.stdout)
             warning_message = "Python error decoding JSON: " + str(e)
             warnings.warn(warning_message, category=Warning)
             return None
@@ -79,7 +79,7 @@ def wrapper(input_data):
         print(
             "Error: Node.js is required. Please install Node.js to continue."
         )  # pragma: no cover
-        exit(1)  # pragma: no cover
+        # exit(1)  # pragma: no cover
     except subprocess.CalledProcessError as e:
         # Print the error from the JavaScript script
         js_error = e.stderr.strip()  # Use e.stderr instead of result.stderr
@@ -87,3 +87,10 @@ def wrapper(input_data):
         warning_message = "JavaScript error: " + js_error
         warnings.warn(warning_message, category=Warning)
         return None
+
+
+def chain(commands):
+    json_data = json.dumps(commands, indent=None).replace("'", "`")
+    encoded_commands = json_data.encode().hex()
+    results = wrapper(encoded_commands)
+    return results

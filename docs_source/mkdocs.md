@@ -1,6 +1,6 @@
-# JS2PySecrets
+# MkDocs Reference
 
-This is a `Python` implementation of [Shamir's threshold secret sharing scheme](http://en.wikipedia.org/wiki/Shamir's_Secret_Sharing), based **and compatible with** the `JavaScript` fork of `secrets.js` [*maintained by `grempe`*](https://github.com/grempe/secrets.js).  Which is orginally based on the code created by `amper5and` on Github. The [original secrets.js can be found there](https://github.com/amper5and/secrets.js/).
+For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
 ## Commands
 
