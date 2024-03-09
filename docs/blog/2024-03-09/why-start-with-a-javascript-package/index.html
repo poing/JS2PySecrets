@@ -16,7 +16,7 @@
     
     
       
-        <title>Hello world! - js2pysecrets</title>
+        <title>Why start with a JavaScript package? - js2pysecrets</title>
       
     
     
@@ -68,7 +68,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#hello-world" class="md-skip">
+        <a href="#why-start-with-a-javascript-package" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Hello world!
+              Why start with a JavaScript package?
             
           </span>
         </div>
@@ -375,22 +375,16 @@
   
 
 
-<h1 id="hello-world">Hello world!</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec
-maximus ex. Sed consequat, nulla quis malesuada dapibus, elit metus vehicula
-erat, ut egestas tellus eros at risus. In hac habitasse platea dictumst.
-Phasellus id lacus pulvinar erat consequat pretium. Morbi malesuada arcu mauris
-Nam vel justo sem. Nam placerat purus non varius luctus. Integer pretium leo in
-sem rhoncus, quis gravida orci mollis. Proin id aliquam est. Vivamus in nunc ac
-metus tristique pellentesque. Suspendisse viverra urna in accumsan aliquet.</p>
+<h1 id="why-start-with-a-javascript-package">Why start with a JavaScript package?</h1>
+<p>My decision to start with a JavaScript package came from thorough online research, leading me to the <a href="https://iancoleman.io/shamir/">Shamir Secret Sharing Scheme</a> website. This site offered a straightforward and practical online tool for splitting and combining secrets, with the added benefit of offline usability.</p>
 <!-- more -->
 
-<p>Nunc vehicula sagittis condimentum. Cras facilisis bibendum lorem et feugiat.
-In auctor accumsan ligula, at consectetur erat commodo quis. Morbi ac nunc
-pharetra, pellentesque risus in, consectetur urna. Nulla id enim facilisis
-arcu tincidunt pulvinar. Vestibulum laoreet risus scelerisque porta congue.
-In velit purus, dictum quis neque nec, molestie viverra risus. Nam pellentesque
-tellus id elit ultricies, vel finibus erat cursus.</p>
+<p>The website not only provided the source code but also offered various links, including the JavaScript library it used to implement Shamir's secret sharing. Additionally, there was a documented security audit conducted on the open-source JavaScript library, instilling confidence in its reliability.</p>
+<p>One significant challenge I encountered with Shamir's secret sharing implementations are the differing outputs (and inputs) across various programming languages and code bases. Despite the plethora of implementations and approaches, they simply fail to interoperate.</p>
+<p><em>I'm certain that someone somewhere, a college programmer studying security, is currently crafting their own implementation of Shamir's secret sharing.</em></p>
+<p>While I dug into different implementations of Shamir's shared secrets, gaining valuable insights along the way, I found myself drawn back to the <code>secrets.js-grempe</code> JavaScript package. Its advantages, including the security audit and its use in a user-friendly offline website, were compelling factors in my decision.</p>
+<p>And so...</p>
+<p>I began exploring how to create a Python version that could seamlessly interoperate with the JavaScript package.</p>
 
 
 
