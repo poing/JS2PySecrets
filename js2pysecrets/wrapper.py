@@ -79,7 +79,7 @@ def wrapper(input_data):
         print(
             "Error: Node.js is required. Please install Node.js to continue."
         )  # pragma: no cover
-        exit(1)  # pragma: no cover
+        # exit(1)  # pragma: no cover
     except subprocess.CalledProcessError as e:
         # Print the error from the JavaScript script
         js_error = e.stderr.strip()  # Use e.stderr instead of result.stderr

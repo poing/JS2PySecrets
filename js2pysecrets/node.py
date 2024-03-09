@@ -18,7 +18,7 @@ def random(*args, **kwargs):
 
 
 @JsFunction
-def foobar(*args, **kwargs):
+def setRNG(*args, **kwargs):
     pass  # pragma: no cover
 
 

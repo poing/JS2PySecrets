@@ -11,35 +11,23 @@ class JsFunction:
 
     def __call__(self, *args, test=False, distinct=False, **kwargs):
         def wrapped_func(*args, **kwargs):
-            args_str = ", ".join(repr(arg) for arg in args)
-
-            return f"{self.func.__name__}({args_str})"
+            if args:
+                args_str = ", ".join(repr(arg) for arg in args)
+                return f"{self.func.__name__}({args_str})"
+            else:
+                if self.distinct or distinct:
+                    return f"{self.func.__name__}()"
+                else:
+                    return f"{self.func.__name__}()"
 
         if distinct or self.distinct:
-            return (
-                wrapped_func(*args, **kwargs)
-                if args
-                else self.func(*args, **kwargs)
-            )
+            return wrapped_func(*args, **kwargs)
         else:
-
             data = []
-
-            # DO NOT REMOVE THIS
             if test or self.test:
                 data.append("setRNG('testRandom')")
 
-            data.append(
-                wrapped_func(*args, **kwargs)
-                if args
-                else self.func(*args, **kwargs)
-            )
-
-            # Break this section out into a stand-alone function
-            # json_data = json.dumps(data, indent=None).replace("'", "`")
-            # commands = json_data.encode().hex()
-            # results = wrapper(commands)
-            # End of section
+            data.append(wrapped_func(*args, **kwargs))
 
             return get_last_element_or_string(chain(data))
 

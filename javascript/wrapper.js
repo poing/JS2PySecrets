@@ -16,6 +16,11 @@ function hex2a(hex)
 // Require the secrets package and assign it to a variable
 const secrets = require('../node_modules/secrets.js-grempe/secrets.js');
 
+// Extend secrets package to cause a JSONDecodeError for coverage tests
+secrets.fail = () => {
+  console.log('Oh no, this is a string.  Not JSON.');
+};
+
 // If the script is executed directly, call the appropriate function based on arguments
 if (require.main === module) {
   const commands = hex2a(process.argv[2]);
