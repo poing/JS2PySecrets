@@ -2,8 +2,7 @@
 
 !!! danger "Work in Progress"
 
-	The Python implementation of Shamir's threshold secret sharing scheme
-	is currently under development.  
+	The Python implementation of Shamir's Secret Sharing is currently under development.  
 	
 	It doesn't work just yet, but it's progressing.
 
@@ -21,7 +20,7 @@ $\LARGE q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
 
 	Here's a quick overview of how Python will look, compared with the JavaScript implimentation.
 
-	=== "Python"
+	=== " :fontawesome-brands-python: Python"
 
 		``` py
 		import js2pysecrets as secrets
@@ -30,10 +29,10 @@ $\LARGE q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
 	
 		shares = secrets.share(key, 6, 3)
 		
-		recovered = secrets.combine(shares) # "86A8E7"
+		recovered = secrets.combine(shares) # '86a8e7'
 		```
 
-	=== "JavaScript"
+	=== " :fontawesome-brands-square-js: JavaScript"
 
 		``` js
 		const secrets = require('secrets.js');
@@ -42,5 +41,6 @@ $\LARGE q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
 	
 		var shares = secrets.share(key, 6, 3);
 		
-		var recovered = secrets.combine(shares); // "86A8E7"
+		var recovered = secrets.combine(shares); // "86a8e7"
 		```
+		
