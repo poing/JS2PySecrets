@@ -1,7 +1,9 @@
 # js2pysecrets
 
 [![codecov](https://codecov.io/gh/poing/JS2PySecrets/branch/main/graph/badge.svg?token=JS2PySecrets_token_here)](https://codecov.io/gh/poing/JS2PySecrets)
-[![CI](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml/badge.svg)](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml)[![Built with Material for MkDocs](https://img.shields.io/badge/Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://squidfunk.github.io/mkdocs-material/)
+[![CI](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml/badge.svg)](https://github.com/poing/JS2PySecrets/actions/workflows/main.yml)
+
+[![Built with Material for MkDocs](https://img.shields.io/badge/Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://squidfunk.github.io/mkdocs-material/)
 
 
 This is a `Python` implementation of [Shamir's threshold secret sharing scheme](http://en.wikipedia.org/wiki/Shamir's_Secret_Sharing), based **and compatible with** the `JavaScript` fork of `secrets.js` [*maintained by `grempe`*](https://github.com/grempe/secrets.js).  Which is orginally based on the code created by `amper5and` on Github. The [original secrets.js can be found there](https://github.com/amper5and/secrets.js/).
