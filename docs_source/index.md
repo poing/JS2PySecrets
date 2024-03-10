@@ -8,7 +8,7 @@
 
 Python implementation of Shamir's Secret Sharing.
 
-$\LARGE q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
+$q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
 
 !!! note ""
 
