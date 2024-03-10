@@ -25,6 +25,7 @@ extra:
 markdown_extensions:
   - admonition
   - pymdownx.details
+  - pymdownx.critic
   - pymdownx.superfences
   - pymdownx.arithmatex:
       generic: true
@@ -65,7 +66,9 @@ site_dir: docs
 nav:
   - index.md
   - gems.md
-  - contributing/index.md
+  - "Contributing to JS2PySecrets":
+    - "Getting Started": contributing/index.md
+    - "Writing Tests": contributing/tests.md
   - blog/index.md
   - 'mkdocs.md'
   - 'license.md'
