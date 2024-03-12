@@ -45,6 +45,9 @@ def test_with_UTF8():
 
 
 # @pytest.mark.filterwarnings("ignore:secrets.share")
+@pytest.mark.skipif(
+    sys.platform.startswith("win"), reason="Windows defaults to CP-1252"
+)
 def test_initialization():
     with warnings.catch_warnings(record=True) as caught_warnings:
         beforeEach = []
