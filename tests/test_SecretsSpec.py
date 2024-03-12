@@ -3,6 +3,7 @@ from js2pysecrets.wrapper import chain
 import js2pysecrets.node as secrets
 import pytest
 import warnings
+import sys
 
 
 def test_withASCII():
@@ -15,13 +16,22 @@ def test_withASCII():
     )
 
 
+@pytest.mark.skipif(
+    sys.platform.startswith("win"), reason="Windows defaults to CP-1252"
+)
 def test_with_UTF8():
     key = "¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · ₧ · ₨ · ₩ · ₪ · ₫ · ₭ · ₮ · ₯ · ₹"
     expected = "\xa5 \xb7 \xa3 \xb7 \u20ac \xb7 $ \xb7 \xa2 \xb7 \u20a1 \xb7 \u20a2 \xb7 \u20a3 \xb7 \u20a4 \xb7 \u20a5 \xb7 \u20a6 \xb7 \u20a7 \xb7 \u20a8 \xb7 \u20a9 \xb7 \u20aa \xb7 \u20ab \xb7 \u20ad \xb7 \u20ae \xb7 \u20af \xb7 \u20b9"
 
-    assert secrets.hex2str(
-        secrets.combine(secrets.share(secrets.str2hex(key), 3, 2))
-    ).encode("utf-8", "strict") == key.encode("utf-8", "strict")
+    assert (
+        secrets.hex2str(
+            secrets.combine(secrets.share(secrets.str2hex(key), 3, 2))
+        )
+        == key
+    )
+
+
+# .encode("utf-8", "strict")
 
 
 # @pytest.mark.filterwarnings("ignore:secrets.share")
