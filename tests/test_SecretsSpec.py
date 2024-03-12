@@ -37,7 +37,7 @@ def test_with_UTF8():
         secrets.hex2str(
             secrets.combine(secrets.share(secrets.str2hex(key_bytes), 3, 2))
         )
-        == key_bytes
+        == key
     )
 
 
