@@ -79,7 +79,7 @@ def test_initialization():
         assert results[-2]["bits"] == 20
         shares = results[-1]
         # Specify a large number of shares for this test
-        assert secrets.combine(shares) == key
+        assert secrets.combine(shares[50:]) == key
 
         # Test initialization with a null arg
         series = beforeEach.copy()
