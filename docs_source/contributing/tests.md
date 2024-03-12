@@ -2,7 +2,7 @@
 
 Since the primary goal of this project is to create a Python implementation of Shamir's Secret Sharing that can interoperates with a JavaScript implementation.  This package needs to run the JavaScript commands.
 
-While there are a variety of Python libraries to execute JavaScript, they had limitations.  Some translate JavaScript into Python.  For others, using `require()` was a challange.  In the end, this package uses a wrapper to make function calls directly to NodeJS.
+While there are a variety of Python libraries to execute JavaScript, they had limitations.  Some translate JavaScript into Python.  For others, using `require()` was a challange.  In the end, this package uses a wrapper to make function calls directly to Node.js.
 
 ??? danger "Warning - The JavaScript wrapper uses the `eval()` function.	 "
 	JavaScript's eval() function is a powerful tool that can execute code stored as a string. However, it also poses a security risk when used improperly. Here are a few reasons why eval() is considered insecure:
@@ -26,7 +26,17 @@ While there are a variety of Python libraries to execute JavaScript, they had li
 |-- package.json
 ```
 
-The only drawback to this approach, is each call to NodeJS invokes a new process.  It easily handles single functions.  But another approach is needed for subsequent calls. 
+!!! example "Using the Node.js wrapper"
+
+	=== " :fontawesome-brands-python: Python"
+
+		``` py
+		import js2pysecrets.node as secrets
+		
+		secrets.share("aabb", 6, 3)
+		```
+
+There is a drawback to this approach, each call to Node.js invokes a new process.  It easily handles single functions, but another approach is needed to handle subsequent calls. 
 
 
 !!! warning "The Python Wrapper"
@@ -36,26 +46,72 @@ The only drawback to this approach, is each call to NodeJS invokes a new process
 	=== " :fontawesome-brands-python: Python"
 
 		``` py
-		import js2pysecrets as secrets
-	
-		key = "86A8E7"
-	
-		shares = secrets.share(key, 6, 3)
-		
-		recovered = secrets.combine(shares) # '86a8e7'
+		import js2pysecrets.node as secrets
+
+		# Enable fixed pattern for simulated random number generation (RNG)
+		secrets.setRNG('testRandom') # True
+
+		# Outputs should all be the same, but are not
+		secrets.random(8) # 'fc'
+		secrets.random(8) # 'c0'
+		secrets.random(8) # 'a9'
+		secrets.random(8) # '27'
 		```
 
-	=== " :fontawesome-brands-square-js: JavaScript"
+	=== " :fontawesome-brands-node-js: Node.js"
 
 		``` js
-		const secrets = require('secrets.js');
-	
-		var key = "86A8E7";
-	
-		var shares = secrets.share(key, 6, 3);
+		const secrets = require('../node_modules/secrets.js-grempe/secrets.js');
+
+		// Enable fixed pattern for simulated random number generation (RNG)
+		secrets.setRNG('testRandom') // True
 		
-		var recovered = secrets.combine(shares); // "86a8e7"
+		// Outputs should all be the same
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
 		```
+
+
+
+!!! success "Chaning a Series"
+
+	The Python wrapper __does not__ operate like Javascript   calls are not sequential.
+
+	=== " :fontawesome-brands-python: Python"
+
+		``` py
+		import js2pysecrets.node as secrets
+		from js2pysecrets.wrapper import chain
+
+		# Commands run in sequence need to use chain
+		series = []
+		
+		series.append(secrets.setRNG('testRandom', list=True)) # results[0]: True
+		series.append(secrets.random(8, list=True)) # results[1]: '15'
+		series.append(secrets.random(8, list=True)) # results[2]: '15'
+		series.append(secrets.random(8, list=True)) # results[3]: '15'
+		series.append(secrets.random(8, list=True)) # results[4]: '15'
+		
+		results = chain(series)
+		```
+
+	=== " :fontawesome-brands-node-js: Node.js"
+
+		``` js
+		const secrets = require('../node_modules/secrets.js-grempe/secrets.js');
+
+		// Enable fixed pattern for simulated random number generation (RNG)
+		secrets.setRNG('testRandom') // True
+		
+		// Outputs should all be the same
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
+		```
+
 
 
 

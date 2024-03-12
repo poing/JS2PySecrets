@@ -4,28 +4,27 @@ from .wrapper import chain
 
 
 class JsFunction:
-    def __init__(self, func, test=False, distinct=False):
+    def __init__(self, func, list=False):
         self.func = func
-        self.test = test
-        self.distinct = distinct
+        self.list = list
 
-    def __call__(self, *args, test=False, distinct=False, **kwargs):
+    def __call__(self, *args, list=False, **kwargs):
         def wrapped_func(*args, **kwargs):
             if args:
                 args_str = ", ".join(repr(arg) for arg in args)
                 return f"{self.func.__name__}({args_str})"
             else:
-                if self.distinct or distinct:
+                if self.list or list:
                     return f"{self.func.__name__}()"
                 else:
                     return f"{self.func.__name__}()"
 
-        if distinct or self.distinct:
+        if list or self.list:
             return wrapped_func(*args, **kwargs)
         else:
             data = []
-            if test or self.test:
-                data.append("setRNG('testRandom')")
+            # if test or self.test:
+            #    data.append("setRNG('testRandom')")
 
             data.append(wrapped_func(*args, **kwargs))
 
@@ -45,9 +44,8 @@ def get_last_element_or_string(result):
 
 
 class jsNeedless:
-    def __init__(self, func_name, test=False):
+    def __init__(self, func_name):
         self.func_name = func_name
-        self.test = test
 
     def __call__(self, *args, **kwargs):
         raise Exception(

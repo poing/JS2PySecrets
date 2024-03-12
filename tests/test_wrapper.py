@@ -47,19 +47,19 @@ def test_jsNeedless():
     assert not_supported(lambda: needless(33, "blue"))
 
 
-def test_Distinct():
-    assert node.share("aabb", 6, 3, distinct=True) == "share('aabb', 6, 3)"
-    assert node.init(distinct=True) == "init()"
+def test_List():
+    assert node.share("aabb", 6, 3, list=True) == "share('aabb', 6, 3)"
+    assert node.init(list=True) == "init()"
 
 
 def test_Chain():
     data = []
-    data.append(node.setRNG("testRandom", distinct=True))
-    data.append(node.share("aabb", 6, 3, distinct=True))
-    data.append(node.share("aabb", 6, 3, distinct=True))
-    data.append(node.init(16, distinct=True))
-    data.append(node.share("aabb", 6, 3, distinct=True))
-    data.append(node.share("aabb", 6, 3, distinct=True))
+    data.append(node.setRNG("testRandom", list=True))
+    data.append(node.share("aabb", 6, 3, list=True))
+    data.append(node.share("aabb", 6, 3, list=True))
+    data.append(node.init(16, list=True))
+    data.append(node.share("aabb", 6, 3, list=True))
+    data.append(node.share("aabb", 6, 3, list=True))
     results = chain(data)
     assert results[1][4] == results[2][4]
     assert results[4][5] != results[5][5]
@@ -77,16 +77,16 @@ def test_Randomness():
     assert count < num_trials, "Randomness test failed"
 
 
-def test_TestRNG():
-    count = 0
-    num_trials = 10
-    for _ in range(num_trials):
-        # Simulate random behavior
-        rand1 = node.random(16, test=True)
-        rand2 = node.random(16, test=True)
-        if int(rand1, 16) == int(rand2, 16):
-            count += 1
-    assert count == num_trials, "Test RNG Failed"
+# def test_TestRNG():
+#     count = 0
+#     num_trials = 10
+#     for _ in range(num_trials):
+#         # Simulate random behavior
+#         rand1 = node.random(16, test=True)
+#         rand2 = node.random(16, test=True)
+#         if int(rand1, 16) == int(rand2, 16):
+#             count += 1
+#     assert count == num_trials, "Test RNG Failed"
 
 
 @pytest.mark.filterwarnings("ignore:invalidFunction")

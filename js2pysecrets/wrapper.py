@@ -90,7 +90,11 @@ def wrapper(input_data):
 
 
 def chain(commands):
-    json_data = json.dumps(commands, indent=None).replace("'", "`")
+    json_data = (
+        json.dumps(commands, indent=None)
+        .replace("'", "`")
+        .replace("None", "null")
+    )
     encoded_commands = json_data.encode().hex()
     results = wrapper(encoded_commands)
     return results
