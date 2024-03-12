@@ -1,30 +1,16 @@
 # import json
 
-from .decorators import JsFunction, jsNeedless
+# from .decorators import JsFunction, jsNeedless
 
 # from .wrapper import wrapper  # Import your wrapper function
+
+from js2pysecrets.settings import Settings
 
 NAME = "js2pysecrets"
 
 
-@JsFunction
-def share(*args, **kwargs):
-    pass  # pragma: no cover
-
-
-@JsFunction
-def random(*args, **kwargs):
-    pass  # pragma: no cover
-
-
-@JsFunction
-def combine(*args, **kwargs):
-    pass  # pragma: no cover
-
-
-@jsNeedless
-def init(*args, **kwargs):
-    pass  # pragma: no cover
+settings = Settings()
+defaults = settings.get_defaults()
 
 
 # # Core Functions from secrets.js

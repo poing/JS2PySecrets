@@ -20,9 +20,9 @@ def test_withASCII():
     )
 
 
-@pytest.mark.skipif(
-    sys.platform.startswith("win"), reason="Windows defaults to CP-1252"
-)
+# @pytest.mark.skipif(
+#     sys.platform.startswith("win"), reason="Windows defaults to CP-1252"
+# )
 def test_with_UTF8():
     key = "¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · ₧ · ₨ · ₩ · ₪ · ₫ · ₭ · ₮ · ₯ · ₹"
     expected = "\xa5 \xb7 \xa3 \xb7 \u20ac \xb7 $ \xb7 \xa2 \xb7 \u20a1 \xb7 \u20a2 \xb7 \u20a3 \xb7 \u20a4 \xb7 \u20a5 \xb7 \u20a6 \xb7 \u20a7 \xb7 \u20a8 \xb7 \u20a9 \xb7 \u20aa \xb7 \u20ab \xb7 \u20ad \xb7 \u20ae \xb7 \u20af \xb7 \u20b9"
@@ -40,15 +40,8 @@ def test_with_UTF8():
         == key
     )
 
+    # .encode("utf-8", "strict")
 
-# .encode("utf-8", "strict")
-
-
-# @pytest.mark.filterwarnings("ignore:secrets.share")
-@pytest.mark.skipif(
-    sys.platform.startswith("win"), reason="Windows defaults to CP-1252"
-)
-def test_initialization():
     with warnings.catch_warnings(record=True) as caught_warnings:
         beforeEach = []
 
