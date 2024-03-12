@@ -1,9 +1,13 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# vim: set et sw=4 fenc=utf-8:
+
 from js2pysecrets.wrapper import chain
 
 import js2pysecrets.node as secrets
 import pytest
-import warnings
 import sys
+import warnings
 
 
 def test_withASCII():
@@ -79,7 +83,7 @@ def test_initialization():
         assert results[-2]["bits"] == 20
         shares = results[-1]
         # Specify a large number of shares for this test
-        assert secrets.combine(shares[50:]) == key
+        assert secrets.combine(shares) == key
 
         # Test initialization with a null arg
         series = beforeEach.copy()
