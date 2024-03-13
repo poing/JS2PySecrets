@@ -18,7 +18,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [latest]
+        python-version: [3.11]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -117,4 +117,4 @@ jobs:
       - name: Install project
         run: pip install -e .[test]
       - name: run tests
-        run: python -X utf8 -m pytest -s -vvvv -l --tb=long tests
+        run: pytest -s -vvvv -l --tb=long tests
