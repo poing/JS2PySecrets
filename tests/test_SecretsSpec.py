@@ -21,7 +21,7 @@ def test_withASCII():
 
 
 @pytest.mark.skipif(
-    sys.platform == "win32", reason="Windows default to CP-1252"
+    sys.platform.startswith("win"), reason="Windows default to CP-1252"
 )
 def test_with_UTF8():
     key = "¥ · £ · € · $ · ¢ · ₡ · ₢ · ₣ · ₤ · ₥ · ₦ · ₧ · ₨ · ₩ · ₪ · ₫ · ₭ · ₮ · ₯ · ₹"
