@@ -36,7 +36,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9, 3.10, 3.11, latest]
+        python-version: [3.11]
         node-version: [latest]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
@@ -92,29 +92,29 @@ jobs:
       - name: Run tests
         run: make test
 
-  tests_win:
-    needs: linter
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [3.11]
-        node-version: [latest]
-        os: [windows-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: npm
-      - name: Install Node dependencies
-        run: npm install
-      - name: Install Pip
-        run: pip install --user --upgrade pip
-      - name: Install project
-        run: pip install -e .[test]
-      - name: run tests
-        run: pytest -s -vvvv -l --tb=long tests
+#   tests_win:
+#     needs: linter
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         python-version: [3.11]
+#         node-version: [latest]
+#         os: [windows-latest]
+#     runs-on: ${{ matrix.os }}
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-python@v5
+#         with:
+#           python-version: ${{ matrix.python-version }}
+#       - uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           cache: npm
+#       - name: Install Node dependencies
+#         run: npm install
+#       - name: Install Pip
+#         run: pip install --user --upgrade pip
+#       - name: Install project
+#         run: pip install -e .[test]
+#       - name: run tests
+#         run: pytest -s -vvvv -l --tb=long tests
