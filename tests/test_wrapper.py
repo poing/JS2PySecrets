@@ -77,16 +77,16 @@ def test_Randomness():
     assert count < num_trials, "Randomness test failed"
 
 
-# def test_TestRNG():
-#     count = 0
-#     num_trials = 10
-#     for _ in range(num_trials):
-#         # Simulate random behavior
-#         rand1 = node.random(16, test=True)
-#         rand2 = node.random(16, test=True)
-#         if int(rand1, 16) == int(rand2, 16):
-#             count += 1
-#     assert count == num_trials, "Test RNG Failed"
+def test_TestKeyword():
+    count = 0
+    num_trials = 10
+    for _ in range(num_trials):
+        # Simulate random behavior
+        rand1 = node.random(16, test=True)
+        rand2 = node.random(16, test=True)
+        if int(rand1, 16) == int(rand2, 16):
+            count += 1
+    assert count == num_trials, "Test Keyword Failed"
 
 
 @pytest.mark.filterwarnings("ignore:invalidFunction")

@@ -21,29 +21,29 @@ extra:
     - icon: fontawesome/brands/github 
       link: https://github.com/poing/
       name: Brian LaVallee
-#  custom_dir: overrides
 markdown_extensions:
   - admonition
-  - pymdownx.details
-  - pymdownx.critic
-  - pymdownx.superfences
+  - attr_list
+  - md_in_html
   - pymdownx.arithmatex:
-      generic: true
+        generic: true
+  - pymdownx.blocks.html
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+        emoji_index: !!python/name:material.extensions.emoji.twemoji
+        emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
-      anchor_linenums: true
-      line_spans: __span
-      pygments_lang_class: true
+        anchor_linenums: true
+        line_spans: __span
+        pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
   - pymdownx.superfences
+  - pymdownx.superfences
   - pymdownx.tabbed:
-      alternate_style: true
-  - attr_list
-  - md_in_html
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+        alternate_style: true
 
 plugins:
   - blog:
@@ -64,7 +64,7 @@ extra_css:
 docs_dir: docs_source
 site_dir: docs
 nav:
-  - index.md
+  - About: index.md
   - gems.md
   - "Contributing to JS2PySecrets":
     - "Getting Started": contributing/index.md

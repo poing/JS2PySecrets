@@ -41,7 +41,7 @@ There is a drawback to this approach, each call to Node.js invokes a new process
 
 !!! warning "The Python Wrapper"
 
-	The Python wrapper __does not__ operate like Javascript   calls are not sequential.
+	The Python wrapper __does not__ operate like Javascript, calls are not sequential.
 
 	=== " :fontawesome-brands-python: Python"
 
@@ -75,9 +75,9 @@ There is a drawback to this approach, each call to Node.js invokes a new process
 
 
 
-!!! success "Chaning a Series"
+!!! success "Chaining a Series"
 
-	The Python wrapper __does not__ operate like Javascript   calls are not sequential.
+	The Python wrapper __does not__ operate like Javascript, calls are not sequential.
 
 	=== " :fontawesome-brands-python: Python"
 
@@ -88,7 +88,10 @@ There is a drawback to this approach, each call to Node.js invokes a new process
 		# Commands run in sequence need to use chain
 		series = []
 		
+		# Enable fixed pattern for simulated random number generation (RNG)
 		series.append(secrets.setRNG('testRandom', list=True)) # results[0]: True
+
+		# Outputs should all be the same
 		series.append(secrets.random(8, list=True)) # results[1]: '15'
 		series.append(secrets.random(8, list=True)) # results[2]: '15'
 		series.append(secrets.random(8, list=True)) # results[3]: '15'
@@ -113,6 +116,37 @@ There is a drawback to this approach, each call to Node.js invokes a new process
 		```
 
 
+!!! tip "Using `testRandom` _without_ `chain()`"
+
+	Since a large percentage of tests only require `testRandom` to be run before the command under test, 
+
+	=== " :fontawesome-brands-python: Python"
+
+		``` py
+		import js2pysecrets.node as secrets
+		
+		# Use test keyword to enable fixed pattern for simulated random number generation (RNG)
+		# Outputs should all be the same
+		secrets.random(8, test=True) # '15'
+		secrets.random(8, test=True) # '15'
+		secrets.random(8, test=True) # '15'
+		secrets.random(8, test=True) # '15'
+		```
+
+	=== " :fontawesome-brands-node-js: Node.js"
+
+		``` js
+		const secrets = require('../node_modules/secrets.js-grempe/secrets.js');
+
+		// Enable fixed pattern for simulated random number generation (RNG)
+		secrets.setRNG('testRandom') // True
+		
+		// Outputs should all be the same
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
+		secrets.random(8) // '15'
+		```
 
 
 

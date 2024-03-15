@@ -7,6 +7,7 @@
 import json
 import js2pysecrets as secrets
 from js2pysecrets.settings import Settings
+import random
 
 
 # Accessing Defaults
@@ -36,6 +37,7 @@ print(defaults.bits)  # Output: 8 (reverted to the default value)
 
 print(defaults.primitive_polynomials[12])
 
+settings.update_defaults(bits=99)
 print(defaults)
 
 # from js2pysecrets import wrapper

@@ -1,0 +1,3 @@
+[flake8]
+per-file-ignores =
+    js2pysecrets/settings.py:E731

@@ -4,11 +4,12 @@ from .wrapper import chain
 
 
 class JsFunction:
-    def __init__(self, func, list=False):
+    def __init__(self, func, test=False, list=False):
         self.func = func
+        self.test = test
         self.list = list
 
-    def __call__(self, *args, list=False, **kwargs):
+    def __call__(self, *args, test=False, list=False, **kwargs):
         def wrapped_func(*args, **kwargs):
             if args:
                 args_str = ", ".join(repr(arg) for arg in args)
@@ -23,8 +24,8 @@ class JsFunction:
             return wrapped_func(*args, **kwargs)
         else:
             data = []
-            # if test or self.test:
-            #    data.append("setRNG('testRandom')")
+            if test or self.test:
+                data.append("setRNG('testRandom')")
 
             data.append(wrapped_func(*args, **kwargs))
 

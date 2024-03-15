@@ -1,16 +1,21 @@
 # settings.py
+import random
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Optional
 
 
 @dataclass
 class Defaults:
+    rng = lambda self, bits: bin(random.getrandbits(bits))[2:].zfill(bits)
     bits: int = 8  # default number of bits
     radix: int = 16  # work with HEX by default
     min_bits: int = 3
     max_bits: int = 20  # This allows up to 1,048,575 shares
     bytes_per_char: int = 2
     max_bytes_per_char: int = 6  # Math.pow(256,7) > Math.pow(2,53)
+    maxShares: int = 255
+    hasCSPRNG: bool = False
+    typeCSPRNG: Optional[str] = None
 
     """
     Primitive polynomials (in decimal form) for Galois Fields GF(2^n),
@@ -55,6 +60,16 @@ class Defaults:
     )
 
 
+@dataclass
+class Config:
+    bits: int
+    radix: int
+    rng: None
+    maxShares: int
+    hasCSPRNG: bool
+    typeCSPRNG: Optional[str]
+
+
 class Settings:
     _instance = None
 
@@ -67,6 +82,40 @@ class Settings:
 
     def get_defaults(self):
         return self.defaults
+
+    @property
+    def bits(self):
+        return self.defaults.bits
+
+    @property
+    def radix(self):
+        return self.defaults.radix
+
+    @property
+    def rng(self):
+        return self.defaults.rng
+
+    @property
+    def maxShares(self):
+        return self.defaults.maxShares
+
+    @property
+    def hasCSPRNG(self):
+        return self.defaults.hasCSPRNG
+
+    @property
+    def typeCSPRNG(self):
+        return self.defaults.typeCSPRNG
+
+    def get_config(self):
+        return Config(
+            radix=self.radix,
+            bits=self.bits,
+            maxShares=self.maxShares,
+            hasCSPRNG=self.hasCSPRNG,
+            typeCSPRNG=self.typeCSPRNG,
+            rng=self.rng,
+        )
 
     def update_defaults(self, **kwargs):
         if kwargs:
