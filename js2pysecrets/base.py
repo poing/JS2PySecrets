@@ -90,10 +90,6 @@ def str2hex(string, bytes_per_char=None):
             f"Bytes per character must be an integer between 1 and "
             f"{defaults.max_bytes_per_char}, inclusive."
         )
-    #         raise Exception(
-    #             "Bytes per character must be an integer between 1 and "
-    #             "{defaults.max_bytes_per_char}, inclusive."
-    #         )
 
     hex_chars = 2 * bytes_per_char
     max_val = 16**hex_chars - 1
@@ -113,6 +109,43 @@ def str2hex(string, bytes_per_char=None):
             )  # pragma: no cover  Too difficult to test
 
         out = format(num, f"0{hex_chars}x") + out
+
+    return out
+
+
+def hex2str(hex_string, bytes_per_char=None):
+    if not isinstance(hex_string, str):
+        raise ValueError("Input must be a hexadecimal string.")
+
+    defaults = settings.get_defaults()
+
+    # defaults = {"bytes_per_char": 2, "max_bytes_per_char": 4}
+    # Assuming these defaults
+
+    bytes_per_char = bytes_per_char or defaults.bytes_per_char
+
+    if (
+        not isinstance(bytes_per_char, int)
+        or bytes_per_char % 1 != 0
+        or bytes_per_char < 1
+        or bytes_per_char > defaults.max_bytes_per_char
+    ):
+        raise ValueError(
+            f"Bytes per character must be an integer between 1 and "
+            f"{defaults.max_bytes_per_char}, inclusive."
+        )
+
+    hex_chars = 2 * bytes_per_char
+
+    # Pad left if necessary
+    hex_string = hex_string.zfill(
+        len(hex_string) + (hex_chars - len(hex_string) % hex_chars) % hex_chars
+    )
+
+    out = ""
+    for i in range(0, len(hex_string), hex_chars):
+        char_code = int(hex_string[i : i + hex_chars], 16)
+        out = chr(char_code) + out
 
     return out
 

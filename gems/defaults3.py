@@ -44,6 +44,8 @@ data = node.getConfig()
 print(data)
 
 
-print(secrets.str2hex('hello world', 2))
-print(node.str2hex('hello world', 2))
+foo = secrets.str2hex('hello world', 2)
+bar = node.str2hex('hello world', 2)
 
+print(secrets.hex2str(bar))
+print(node.hex2str(foo))
