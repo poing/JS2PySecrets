@@ -42,21 +42,15 @@ def padLeft(string, multipleOfBits=None):
         new_length = -(-len(string) // multipleOfBits) * multipleOfBits
         return string.zfill(new_length)
 
- 
-
-# def padLeft(string, multipleOfBits):
-#     if multipleOfBits and isinstance(multipleOfBits, int)
-# and multipleOfBits > 1:
-#     multipleOfBits = multipleOfBits or settings.bits
-#     return string.zfill(-(-len(str) // multipleOfBits) * multipleOfBits)
-
 
 def bin2hex(binary_string: str) -> str:
-    return hex(int(binary_string, 2))
+    hex_string = hex(int(binary_string, 2))[2:]
+    hex_string = hex_string.zfill((len(padLeft(binary_string, 4)) // 4))
+    return hex_string
 
 
 def hex2bin(hex_string: str) -> str:
-    return bin(int(hex_string, 16))
+    return bin(int(hex_string, 16))[2:]
 
 
 """
@@ -164,6 +158,18 @@ backward compatibility. This variable has no affect in the current code.
 """
 
 
+def hasCryptoGetRandomValues():
+    # Browser supports crypto.getRandomValues()
+    # Depreciated - Not Applicable for Python Version
+    return False  # pragma: no cover
+
+
+def hasCryptoRandomBytes():
+    # Node.js support for crypto.randomBytes()
+    # Depreciated - Not Applicable for Python Version
+    return False  # pragma: no cover
+
+
 def getRNG():
     if isinstance(settings.rng, str):
         return lambda bits: (bin(123456789)[2:].zfill(32) * -(-bits // 32))[
@@ -265,6 +271,17 @@ def hex2str(hex_string, bytes_per_char=None):
 def getConfig():
     settings.update_defaults(hasCSPRNG=isSetRNG())
     return settings.get_config()
+
+
+def random(bits):
+    if not isinstance(bits, int) or bits < 2 or bits > 65536:
+        raise ValueError(
+            "Number of bits must be an Integer between 1 and 65536."
+        )
+
+    rng = getRNG()
+
+    return bin2hex(rng(bits))
 
 
 # # Core Functions from secrets.js

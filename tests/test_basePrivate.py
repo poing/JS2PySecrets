@@ -116,9 +116,6 @@ def test_str2hex_bytes():
 
 
 def test_hex2str(random_string, bytes_per_char):
-    # Convert random_string to bytes using specified encoding
-    # byte_string = random_string.encode(encoding)
-
     # Perform conversion using str2hex function
     py_hex = secrets.str2hex(str(random_string), bytes_per_char)
     js_hex = node.str2hex(str(random_string), bytes_per_char)
@@ -264,8 +261,6 @@ def test_getRNG(input_range):
 
 @pytest.mark.parametrize("input_range", range(random.randrange(1, 2047)))
 def test_node_py_getRNG(input_range):
-    # block_size = int(2048 / (input_range + 1))
-    # bits = (block_size * (input_range + 1)) - random.randrange(0, block_size)
     bits = bit_range(input_range)
     secrets.init()
     secrets.setRNG("testRandom")
@@ -281,8 +276,6 @@ def test_node_py_getRNG(input_range):
 
 @pytest.mark.parametrize("input_range", range(random.randrange(1, 2047)))
 def test_node_py_lengthRNG(input_range):
-    # block_size = int(2048 / (input_range + 1))
-    # bits = (block_size * (input_range + 1)) - random.randrange(0, block_size)
     bits = bit_range(input_range)
     secrets.init()
     assert secrets.isSetRNG() == True
@@ -490,11 +483,19 @@ def multiple_numbers(request):
     return request.param
 
 
+def test_padLeft_Fail():
+    match = "Padding must be multiples of no larger than 1024 bits."
+    with pytest.raises(ValueError, match=match):
+        secrets.padLeft("101010101110", 1025)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
 def test_node_py_padLeft_spotCheck():
     py_command = secrets.getRNG()
     py_random = py_command(11)
-    # py_string = secrets.padLeft(py_random, multiple_numbers)
-    # js_string = node._padLeft(py_random, multiple_numbers)
     assert len(secrets.padLeft(py_random, 0)) == 11
     assert len(secrets.padLeft(py_random, 1)) == 11
     assert len(secrets.padLeft(py_random, 3)) == 12
@@ -506,6 +507,7 @@ def test_node_py_padLeft_spotCheck():
 
 
 def test_node_py_padLeft(prime_numbers, multiple_numbers):
+    secrets.init()
     py_command = secrets.getRNG()
     py_random = py_command(prime_numbers)
     py_string = secrets.padLeft(py_random, multiple_numbers)
@@ -514,3 +516,22 @@ def test_node_py_padLeft(prime_numbers, multiple_numbers):
     assert len(py_string) == len(js_string)
     assert (len(py_string) % multiple_numbers) == 0
     assert (len(js_string) % multiple_numbers) == 0
+
+
+def random_range(input_range):
+    block_size = int(65536 / (input_range + 1))
+    # bits = (block_size * (input_range + 1)) - random.randrange(0, block_size)
+    bits = (1 + block_size) - random.randrange(0, block_size)
+    return bits
+
+
+# @pytest.mark.parametrize("input_range", range(random.randrange(2, 128)))
+@pytest.mark.parametrize("input_range", range(300))
+def test_py_js_random(input_range):
+    # bits = random_range(input_range)
+    bits = int(input_range * 188) + 2
+    secrets.init()
+    secrets.setRNG("testRandom")
+    py_string = secrets.random(bits)
+    js_string = node.random(bits, test=True)
+    assert py_string == js_string
