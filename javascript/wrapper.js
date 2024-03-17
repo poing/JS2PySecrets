@@ -21,6 +21,16 @@ secrets.fail = () => {
   console.log('Oh no, this is a string.  Not JSON.');
 };
 
+// Extend _getRNG for testing
+secrets.binNodeCryptoRandomBytes = function(bits) {
+    const rng = secrets._getRNG("nodeCryptoRandomBytes");
+    return rng(bits);
+}
+secrets.binTestRandom = function(bits) {
+    const rng = secrets._getRNG("testRandom");
+    return rng(bits);
+}
+
 // If the script is executed directly, call the appropriate function based on arguments
 if (require.main === module) {
   const commands = hex2a(process.argv[2]);

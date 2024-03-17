@@ -16,11 +16,39 @@ settings = Settings()
 # config = settings.get_config()
 
 
+def reset():
+    settings.reset_defaults()
+
+
 def isSetRNG():
-    config = settings.get_config()
-    if isinstance(config.rng, str) or callable(config.rng):
+    if isinstance(settings.rng, str) or callable(settings.rng):
         return True
     return False
+
+
+def padLeft(string, multipleOfBits=None):
+
+    if multipleOfBits == 0 or multipleOfBits == 1:
+        return string
+
+    if multipleOfBits and multipleOfBits > 1024:
+        raise ValueError(
+            "Padding must be multiples of no larger than 1024 bits."
+        )
+
+    multipleOfBits = multipleOfBits or settings.bits
+
+    if string:
+        new_length = -(-len(string) // multipleOfBits) * multipleOfBits
+        return string.zfill(new_length)
+
+ 
+
+# def padLeft(string, multipleOfBits):
+#     if multipleOfBits and isinstance(multipleOfBits, int)
+# and multipleOfBits > 1:
+#     multipleOfBits = multipleOfBits or settings.bits
+#     return string.zfill(-(-len(str) // multipleOfBits) * multipleOfBits)
 
 
 def bin2hex(binary_string: str) -> str:
@@ -32,11 +60,85 @@ def hex2bin(hex_string: str) -> str:
 
 
 """
+ABOVE THIS LINE ARE INTERNAL FUNCTIONS
+"""
+
+
+def init(bits=None, rngType=None):
+    logs = []
+    exps = []
+    x = 1
+    primitive = None
+
+    # reset all config back to initial state
+    reset()
+
+    if bits and (
+        not isinstance(bits, int)
+        or bits < settings.min_bits
+        or bits > settings.max_bits
+    ):
+        raise ValueError(
+            f"Number of bits must be an integer between {settings.min_bits} "
+            f"and {settings.max_bits}, inclusive."
+        )
+
+    if rngType and not isinstance(rngType, str) or callable(rngType):
+        raise ValueError(f"Invalid RNG type argument : '{rngType}'")
+
+    settings.update_defaults(radix=settings.radix)
+    settings.update_defaults(bits=bits or settings.bits)
+    settings.update_defaults(size=(2**settings.bits))
+    settings.update_defaults(maxShares=settings.size - 1)
+
+    # Construct the exp and log tables for multiplication.
+    primitive = settings.primitive_polynomials[settings.bits]
+
+    for i in range(settings.size):
+        exps.append(x)
+        logs.append(i)
+        x = x << 1  # Left shift assignment
+        if x >= settings.size:
+            x = x ^ primitive  # Bitwise XOR assignment
+            x = x & settings.maxShares  # Bitwise AND assignment
+
+    settings.update_defaults(logs=logs)
+    settings.update_defaults(exps=exps)
+
+    if rngType:
+        settings.update_defaults(rng=rngType)
+
+    if not isSetRNG():
+        setRNG()  # pragma: no cover unlikely-and-redundant
+
+    if (
+        not isSetRNG()
+        or not settings.bits
+        or not settings.size
+        or not settings.maxShares
+        or not settings.logs
+        or not settings.exps
+        or len(settings.logs) != settings.size
+        or len(settings.exps) != settings.size
+    ):
+        raise ValueError(
+            "Initialization failed."
+        )  # pragma: no cover hard-to-fail
+
+
+"""
 Adapted Python Random Number Generation:
 
 This module provides a Python adaptation of the JavaScript code for random
 number generation. It offers a minimalistic approach to replicating the
 functionality present in the JavaScript version.
+
+In the JavaScript version, supporting multiple RNGs was essential due to
+differences in available random number generation mechanisms across different
+environments. For example, Node.js provided `crypto.randomBytes()`, utilizing
+OpenSSL's `RAND_bytes()` function, while browsers supported
+`crypto.getRandomValues()`. Additionally, the `testRandom` function was
+included for testing purposes, providing repeatable non-random bits.
 
 The `setRNG` function mirrors the logic of the JavaScript function. If it's a
 string, ANY STRING, it implies a specific type is requested. In such cases,
@@ -62,10 +164,20 @@ backward compatibility. This variable has no affect in the current code.
 """
 
 
-# lambda bits: bin(random.getrandbits(bits))[2:].zfill(bits)
+def getRNG():
+    if isinstance(settings.rng, str):
+        return lambda bits: (bin(123456789)[2:].zfill(32) * -(-bits // 32))[
+            -bits:
+        ]
+    return settings.rng
+
+
+# lambda bits: bin(1+random.getrandbits(bits))[2:].zfill(bits)
+# lambda bits: bin(1+secrets.randbits(bits))[2:].zfill(bits)
+# lambda bits: (bin(123456789)[2:].zfill(32) * -(-bits // 32))[-bits:]
 def setRNG(new_rng=None):
-    config = settings.get_config()
-    new_rng = new_rng or config.rng
+    defaults = settings.get_defaults()
+    new_rng = new_rng or defaults.rng
     settings.update_defaults(rng=new_rng)
     return True
 
@@ -167,10 +279,6 @@ def getConfig():
 # share = jsFunction('share')
 # newShare = jsFunction('newShare')
 #
-# # Test Functions
-# _reset = jsNeedless('_reset')
-# _isSetRNG = jsFunction('_isSetRNG')
-
 #         /* test-code */
 #         // export private functions so they can be unit tested directly.
 #         _reset: reset,

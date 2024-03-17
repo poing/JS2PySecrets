@@ -6,17 +6,19 @@ from typing import List, Optional
 
 @dataclass
 class Defaults:
-    rng = lambda self, bits: bin(random.getrandbits(bits))[2:].zfill(bits)
+    rng = lambda self, bits: bin(1 + random.getrandbits(bits))[2:].zfill(bits)
     bits: int = 8  # default number of bits
     radix: int = 16  # work with HEX by default
     min_bits: int = 3
     max_bits: int = 20  # This allows up to 1,048,575 shares
+    size: int = 0
     bytes_per_char: int = 2
     max_bytes_per_char: int = 6  # Math.pow(256,7) > Math.pow(2,53)
     maxShares: int = 255
     hasCSPRNG: bool = False
     typeCSPRNG: Optional[str] = None
-
+    logs: List[None | int] = field(default_factory=lambda: [])
+    exps: List[None | int] = field(default_factory=lambda: [])
     """
     Primitive polynomials (in decimal form) for Galois Fields GF(2^n),
     for 2 <= n <= 30  The index of each term in the array corresponds
@@ -64,7 +66,6 @@ class Defaults:
 class Config:
     bits: int
     radix: int
-    rng: None
     maxShares: int
     hasCSPRNG: bool
     typeCSPRNG: Optional[str]
@@ -80,6 +81,9 @@ class Settings:
             cls._instance.current_settings = Defaults()
         return cls._instance
 
+    def __getattr__(self, attr):
+        return getattr(self.defaults, attr)
+
     def get_defaults(self):
         return self.defaults
 
@@ -90,10 +94,6 @@ class Settings:
     @property
     def radix(self):
         return self.defaults.radix
-
-    @property
-    def rng(self):
-        return self.defaults.rng
 
     @property
     def maxShares(self):
@@ -114,7 +114,6 @@ class Settings:
             maxShares=self.maxShares,
             hasCSPRNG=self.hasCSPRNG,
             typeCSPRNG=self.typeCSPRNG,
-            rng=self.rng,
         )
 
     def update_defaults(self, **kwargs):

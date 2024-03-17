@@ -55,7 +55,6 @@ def test_get_config():
     config = settings.get_config()
     assert config.bits == 8
     assert config.radix == 16
-    assert callable(config.rng) == True
     assert config.maxShares == 255
     assert config.hasCSPRNG == False
     assert config.typeCSPRNG == None
@@ -64,14 +63,13 @@ def test_get_config():
 def test_get_updated_config():
     settings.update_defaults(bits=2)
     settings.update_defaults(radix=4)
-    settings.update_defaults(rng="hello world")
+    # settings.update_defaults(rng="hello world")
     settings.update_defaults(maxShares=6)
     settings.update_defaults(hasCSPRNG=True)
     settings.update_defaults(typeCSPRNG="hello world")
     config = settings.get_config()
     assert config.bits == 2
     assert config.radix == 4
-    assert callable(config.rng) == False
+    # assert callable(settings.rng) == False
     assert config.maxShares == 6
     assert config.hasCSPRNG == True
-    assert config.typeCSPRNG == config.rng

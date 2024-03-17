@@ -6,6 +6,7 @@
 	
 	It doesn't work just yet, but it's progressing.
 
+
 Python implementation of Shamir's Secret Sharing.
 
 $q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$

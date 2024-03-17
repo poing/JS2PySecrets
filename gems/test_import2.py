@@ -5,7 +5,7 @@
 # test.py
 
 import json
-from js2pysecrets import share, combine
+#from js2pysecrets import share, combine
 import js2pysecrets.node as node
 
 
@@ -26,15 +26,28 @@ import js2pysecrets.node as node
 # print(js2pysecrets.str2hex(data))
 #random = js2pysecrets.jsFunction('random', test=True)
 #print(random(32))
-print(node.random(32))
-print(share("ababab", 6, 3, test=True))
+# print(node.random(32))
+# print(share("ababab", 6, 3, test=True))
+# 
+# shares = node.share("ababab", 6, 3)
+# print(shares[1])
+# print(shares[3])
+# print(shares[5])
+# 
+# recoveredPass = combine([shares[1],shares[3],shares[5]])
+# print("recovered password is: ", recoveredPass)
+# 
+# node.random(0)
 
-shares = node.share("ababab", 6, 3)
-print(shares[1])
-print(shares[3])
-print(shares[5])
+print(node.nodeCryptoRandomBytes(32))
+print(node.nodeCryptoRandomBytes(32))
+print(node.nodeCryptoRandomBytes(32))
+print(node.nodeCryptoRandomBytes(32))
+print(node.nodeCryptoRandomBytes(32))
+print(node.nodeCryptoRandomBytes(32))
 
-recoveredPass = combine([shares[1],shares[3],shares[5]])
-print("recovered password is: ", recoveredPass)
-
-node.random(0)
+print(node.testRandom(32))
+print(node.testRandom(32))
+print(node.testRandom(32))
+print(node.testRandom(16))
+print(node.testRandom(32))
