@@ -5,14 +5,18 @@
 # defaults.py
 
 import json
-import js2pysecrets as secrets
 import js2pysecrets.node as node
 
-from js2pysecrets.settings import Settings
 import random
 
 # This does not work
+
+import js2pysecrets as secrets
+from js2pysecrets.settings import Settings
 settings = Settings()
+
+
+
 #config = settings.get_config()
 #print(secrets.isSetRNG())
 

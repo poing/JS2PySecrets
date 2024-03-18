@@ -6,6 +6,7 @@ import js2pysecrets.node as node
 import pytest
 import random
 import warnings
+from js2pysecrets.wrapper import wrapper, chain
 
 
 settings = Settings()
@@ -535,3 +536,99 @@ def test_py_js_random(input_range):
     py_string = secrets.random(bits)
     js_string = node.random(bits, test=True)
     assert py_string == js_string
+
+
+@pytest.mark.parametrize("input_range", range(300))
+def test_py_js_hex2bin(input_range):
+    # bits = random_range(input_range)
+    bits = int(input_range * 188) + 2
+    secrets.init()
+    secrets.setRNG()
+    hex_string = secrets.random(bits)
+    py_string = secrets.hex2bin(hex_string)
+    js_string = node._hex2bin(hex_string)
+    assert py_string == js_string
+
+
+def test_hex2bin_Fail():
+    match = "Invalid hex character:"
+    with pytest.raises(ValueError, match=match):
+        secrets.hex2bin("0123efgh")
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+@pytest.fixture(params=[None, 128, 256, 384, 512, 640, 768, 896, 1024])
+def multiple_of_bits(request):
+    return request.param
+
+
+# Define your test function
+def test_array_split(random_string, multiple_of_bits):
+    hex_string = secrets.str2hex(random_string)
+    bin_string = "1" + secrets.hex2bin(hex_string)
+
+    py_array = secrets.splitNumStringToIntArray(bin_string, multiple_of_bits)
+    js_array = node._splitNumStringToIntArray(bin_string, multiple_of_bits)
+
+    # Iterate over the elements of one array
+    for i in range(len(py_array)):
+        assert py_array[i] == js_array[i]
+
+
+@pytest.fixture(
+    params=[None, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+)
+def set_init_bits(request):
+    return request.param
+
+
+# Define test cases
+@pytest.mark.parametrize(
+    "x, coeffs",
+    [
+        (1, [21, 47, 205]),
+        (2, [21, 47, 205]),
+        (3, [21, 47, 205]),
+        (4, [21, 47, 205]),
+        (5, [21, 47, 205]),
+        (6, [21, 47, 205]),
+        (1, [0, 215, 162, 173, 194, 32, 53]),
+        (2, [0, 215, 162, 173, 194, 32, 53]),
+        (3, [0, 215, 162, 173, 194, 32, 53]),
+        (4, [0, 215, 162, 173, 194, 32, 53]),
+        (5, [0, 215, 162, 173, 194, 32, 53]),
+        (6, [0, 215, 162, 173, 194, 32, 53]),
+        (7, [0, 215, 162, 173, 194, 32, 53]),
+        (8, [0, 215, 162, 173, 194, 32, 53]),
+        (9, [0, 215, 162, 173, 194, 32, 53]),
+        (10, [0, 215, 162, 173, 194, 32, 53]),
+        (11, [0, 215, 162, 173, 194, 32, 53]),
+        (12, [0, 215, 162, 173, 194, 32, 53]),
+        (13, [0, 215, 162, 173, 194, 32, 53]),
+        (14, [0, 215, 162, 173, 194, 32, 53]),
+        (15, [0, 215, 162, 173, 194, 32, 53]),
+        (16, [0, 215, 162, 173, 194, 32, 53]),
+        (17, [0, 215, 162, 173, 194, 32, 53]),
+        (18, [0, 215, 162, 173, 194, 32, 53]),
+        (19, [0, 215, 162, 173, 194, 32, 53]),
+        (20, [0, 215, 162, 173, 194, 32, 53]),
+        (21, [0, 215, 162, 173, 194, 32, 53]),
+        # Add more test cases as needed
+    ],
+)
+
+
+# Define the test function
+def test_horner(x, coeffs, set_init_bits):
+    secrets.init(set_init_bits)
+    # assert secrets.horner(x, coeffs) == node._horner(x, coeffs)
+
+    node_data = []
+    node_data.append(node.init(set_init_bits, list=True))
+    node_data.append(node._horner(x, coeffs, list=True))
+    js_results = chain(node_data)
+
+    assert secrets.horner(x, coeffs) == js_results[-1]

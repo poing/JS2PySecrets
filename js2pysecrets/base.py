@@ -45,12 +45,46 @@ def padLeft(string, multipleOfBits=None):
 
 def bin2hex(binary_string: str) -> str:
     hex_string = hex(int(binary_string, 2))[2:]
+
+    # Need to respect any leading zeros in the binary string when converting
+    #  to hex.  Because 0b0011 = 0x3, while 0x03 is desired
     hex_string = hex_string.zfill((len(padLeft(binary_string, 4)) // 4))
+
     return hex_string
 
 
-def hex2bin(hex_string: str) -> str:
-    return bin(int(hex_string, 16))[2:]
+def hex2bin(hex_str):
+    bin_str = ""
+
+    # Can NOT use `bin(int(hex_str, 16))[2:]` for this conversion.  Need to
+    #  use this unconventional method to match the JavaScript, specifically
+    #  to achieve the correct zero padding in the binary string output.
+    for char in reversed(hex_str):
+        try:
+            num = int(char, 16)
+        except ValueError:
+            raise ValueError(f"Invalid hex character: {char}")
+
+        bin_str = bin(num)[2:].zfill(4) + bin_str
+
+    return bin_str
+
+
+# def hex2bin(hex_string: str) -> str:
+#     binary_string = bin(int(hex_string, 16))[2:]
+#
+#     # Need to respect any leading zeros in the binary string when converting
+#     #  to hex.  Because 0b0011 = 0x3, while 0x03 is desired
+#     binary_string = binary_string.zfill((len(binary_string) // 8))
+#
+#     #binary_string = bin(int(hex_string, 16))[2:]
+#
+#     # Need to respect any leading zeros in the binary string when converting
+#     #  to hex.  Because 0b0011 = 0x3, while 0x03 is desired
+#     #binary_string = binary_string.zfill(int(hex_string, 2))
+#
+#     # return bin(int(hex_string, 16))[2:]
+#     return binary_string
 
 
 """
@@ -59,8 +93,8 @@ ABOVE THIS LINE ARE INTERNAL FUNCTIONS
 
 
 def init(bits=None, rngType=None):
-    logs = []
     exps = []
+    logs = [None]
     x = 1
     primitive = None
 
@@ -88,13 +122,20 @@ def init(bits=None, rngType=None):
     # Construct the exp and log tables for multiplication.
     primitive = settings.primitive_polynomials[settings.bits]
 
+    temp_logs = {}  # Temporary Dict to hold logs
     for i in range(settings.size):
-        exps.append(x)
-        logs.append(i)
+        # this works with loop below
+        exps.insert(i, x)
+        temp_logs[x] = i
+
         x = x << 1  # Left shift assignment
         if x >= settings.size:
             x = x ^ primitive  # Bitwise XOR assignment
             x = x & settings.maxShares  # Bitwise AND assignment
+
+    # Fill the logs List in the proper order
+    for i in range(1, settings.size):
+        logs.append(temp_logs[i])
 
     settings.update_defaults(logs=logs)
     settings.update_defaults(exps=exps)
@@ -176,6 +217,38 @@ def getRNG():
             -bits:
         ]
     return settings.rng
+
+
+def splitNumStringToIntArray(string, pad_length=None):
+    parts = []
+
+    if pad_length:
+        string = padLeft(string, pad_length)
+
+    # Reverse the string to facilitate right-to-left splitting
+    string = string[::-1]
+
+    for i in range(0, len(string), settings.bits):
+        print(string[i : i + settings.bits][::-1])
+        parts.append(int(string[i : i + settings.bits][::-1], 2))
+
+    return parts
+
+
+def horner(x, coeffs):
+    logx = settings.logs[x]
+    fx = 0
+
+    for i in range(len(coeffs) - 1, -1, -1):
+        if fx != 0:
+            fx = (
+                settings.exps[(logx + settings.logs[fx]) % settings.maxShares]
+                ^ coeffs[i]
+            )
+        else:
+            fx = coeffs[i]
+
+    return fx
 
 
 # lambda bits: bin(1+random.getrandbits(bits))[2:].zfill(bits)
