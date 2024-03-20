@@ -646,6 +646,37 @@ def test_getShares(set_init_bits):
     assert True
 
 
+def test_random_dithering():
+    random_list = []
+
+    def dithering(random_string):
+        random_list.append(hex(int(random_string)))
+
+    # Check dithering disabled
+    secrets.init()
+    secrets.getShares(1234, 6, 3)
+    assert len(set(random_list)) == 0
+
+    # Enable dithering
+    settings.update_defaults(dithering=lambda string: dithering(string))
+    secrets.getShares(1234, 6, 3)
+    # print(random_list)
+    assert len(set(random_list)) > 1
+
+    # Check testRandom values are the same
+    random_list = []
+    secrets.init(8, "testRandom")
+    settings.update_defaults(dithering=lambda string: dithering(string))
+    secrets.getShares(1234, 6, 3)
+    assert len(set(random_list)) == 1
+
+    # Check dithering disabled
+    random_list = []
+    secrets.init()
+    secrets.getShares(1234, 6, 3)
+    assert len(set(random_list)) == 0
+
+
 @pytest.fixture(
     params=[
         None,
@@ -673,15 +704,145 @@ def full_range_of_bits(request):
     return request.param
 
 
+# Select a number of random shares
 def pieces(shares, number=3):
     random.shuffle(shares)  # Randomize
     return shares[-number:]
 
 
 def test_py_share(full_range_of_bits):
+    # Generate shares with python
     secrets.init(full_range_of_bits)
-    secret = secrets.random(64)
+    secret = secrets.random(128)
+
+    # A few cold runs to cover non-zero in rng
+    secrets.share(secret, 7, 6)
+    secrets.share(secret, 7, 6)
+    secrets.share(secret, 7, 6)
+
     shares = secrets.share(secret, 6, 3)
 
+    # Combine shares using the JavaScript
     result = node.combine(pieces(shares, 3))
     assert result == secret
+
+
+def test_py_share_error_string():
+    match = "Secret must be a hex string."
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secrets.share(12345, 6, 3)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_py_share_error_shares():
+    match = "Number of shares must be an integer"
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 1, 1)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, "hello", 3)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_py_share_error_high_shares():
+    match = "Number of shares must be"
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 800, 3)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_py_share_error_threshold():
+    match = "Threshold number of shares must be an integer >= 2."
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 6, 1)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 6, "two")
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_py_share_error_high_threshold():
+    match = "Threshold number of shares must be"
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 6, 800)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 6, 7)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_py_share_error_padding():
+    match = "Zero-pad length must be an integer between 0 and 1024 inclusive."
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 6, 3, "hello")
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 6, 3, -1)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        secrets.share(secret, 6, 3, 1025)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_py_random_error():
+    match = "Number of bits must be an Integer between 1 and 65536."
+    with pytest.raises(ValueError, match=match):
+        secret = secrets.random(65538)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)

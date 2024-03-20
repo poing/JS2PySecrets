@@ -22,14 +22,14 @@ def dithering(random_string):
 
 #print(test(2345))
 
-secrets.init(4)
+secrets.init(8)
 #secrets.init()
 #print(max(settings.logs[1:]))
 
-#settings.update_defaults(dithering=lambda string: dithering(string))
+settings.update_defaults(dithering=lambda string: dithering(string))
 
 results = secrets.share('0074007300650074002000610020007300690073006900680074', 6, 3)
 
 print(results)
 
-#print(random_list)
+print(random_list)
