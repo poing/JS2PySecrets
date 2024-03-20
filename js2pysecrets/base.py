@@ -122,7 +122,7 @@ def init(bits=None, rngType=None):
     # Construct the exp and log tables for multiplication.
     primitive = settings.primitive_polynomials[settings.bits]
 
-    temp_logs = {}  # Temporary Dict to hold logs
+    temp_logs = {}  # Temporary Dict to hold indexed logs
     for i in range(settings.size):
         # this works with loop below
         exps.insert(i, x)
@@ -229,30 +229,120 @@ def splitNumStringToIntArray(string, pad_length=None):
     string = string[::-1]
 
     for i in range(0, len(string), settings.bits):
-        print(string[i : i + settings.bits][::-1])
+        # print(string[i : i + settings.bits][::-1])
         parts.append(int(string[i : i + settings.bits][::-1], 2))
 
     return parts
 
 
 def horner(x, coeffs):
+    if x not in settings.logs:
+        raise ValueError(f"Value of 'x' ({x}) is not found in logs.")
+
     logx = settings.logs[x]
     fx = 0
 
     for i in range(len(coeffs) - 1, -1, -1):
         if fx != 0:
-            fx = (
-                settings.exps[(logx + settings.logs[fx]) % settings.maxShares]
-                ^ coeffs[i]
-            )
+
+            try:
+
+                fx = (
+                    settings.exps[
+                        (logx + settings.logs[fx]) % settings.maxShares
+                    ]
+                    ^ coeffs[i]
+                )
+
+            except IndexError:
+                raise IndexError(
+                    f"list index out of range: x:{x} i:{i} fx:{fx}"
+                )
+
         else:
             fx = coeffs[i]
 
     return fx
 
 
-# lambda bits: bin(1+random.getrandbits(bits))[2:].zfill(bits)
-# lambda bits: bin(1+secrets.randbits(bits))[2:].zfill(bits)
+def getShares(secret, num_shares, threshold):
+    shares = []
+    coeffs = [secret]
+
+    rng = getRNG()
+
+    for i in range(1, threshold):
+
+        # Generate non-zero random number
+        random_number = rng(settings.bits)
+        while int(random_number, 2) < 0:
+            random_number = rng(settings.bits)
+
+        # Check if dithering function is specified and callable, this captures
+        # the random data using the provided function for dithering or similar
+        # auditing purposes.
+        if settings.dithering and callable(settings.dithering):
+            capture = settings.dithering
+            capture(random_number)
+
+        coeffs.append(int(random_number, 2))
+
+    for i in range(1, num_shares + 1):
+        shares.append({"x": i, "y": horner(i, coeffs)})
+
+    return shares
+
+
+def constructPublicShareString(bits, share_id, data):
+    share_id = int(share_id, settings.radix)
+    bits = bits or settings.bits
+    bits_base36 = base36encode(bits).upper()
+    id_max = 2**bits - 1
+    id_padding_len = len(hex(int(id_max))[2:])
+    id_hex = padLeft(hex(int(share_id))[2:], id_padding_len)
+
+    if not (
+        isinstance(share_id, int)
+        and share_id % 1 == 0
+        and 1 <= share_id <= id_max
+    ):
+        raise ValueError(
+            f"Share id must be an integer between 1 and {id_max}, inclusive."
+        )
+
+    new_share_string = bits_base36 + id_hex + data
+
+    return new_share_string
+
+
+def base36encode(number, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+    """Converts an integer to a base36 string."""
+    if not isinstance(number, int):
+        raise TypeError("number must be an integer")
+
+    base36 = ""
+    sign = ""
+
+    if number < 0:
+        sign = "-"
+        number = -number
+
+    if 0 <= number < len(alphabet):
+        return sign + alphabet[number]
+
+    while number != 0:
+        number, i = divmod(number, len(alphabet))
+        base36 = alphabet[i] + base36
+
+    return sign + base36
+
+
+def base36decode(number):
+    return int(number, 36)
+
+
+# lambda bits: bin(random.getrandbits(bits))[2:].zfill(bits)
+# lambda bits: bin(secrets.randbits(bits))[2:].zfill(bits)
 # lambda bits: (bin(123456789)[2:].zfill(32) * -(-bits // 32))[-bits:]
 def setRNG(new_rng=None):
     defaults = settings.get_defaults()
@@ -355,6 +445,67 @@ def random(bits):
     rng = getRNG()
 
     return bin2hex(rng(bits))
+
+
+def share(secret, num_shares, threshold, pad_length=None):
+    # Security: pad in multiples of 128 bits by default
+    pad_length = pad_length or 128
+
+    if not isinstance(secret, str):
+        raise ValueError("Secret must be a string.")
+
+    if not isinstance(num_shares, int) or num_shares < 2:
+        raise ValueError("Number of shares must be an integer >= 2.")
+
+    if num_shares > settings.maxShares:
+        needed_bits = math.ceil(math.log(num_shares + 1) / math.log(2))
+        raise ValueError(
+            f"Number of shares must be <= {settings.settings.maxShares}."
+            f" Use at least {needed_bits} bits."
+        )
+
+    if not isinstance(threshold, int) or threshold < 2:
+        raise ValueError("Threshold number of shares must be an integer >= 2.")
+
+    if threshold > settings.maxShares:
+        needed_bits = math.ceil(math.log(threshold + 1) / math.log(2))
+        raise ValueError(
+            f"Threshold number of shares must be <= "
+            f"{settings.settings.maxShares}. Use at least {needed_bits} bits."
+        )
+
+    if threshold > num_shares:
+        raise ValueError(
+            "Threshold number of shares must be less than or equal to the "
+            "total shares specified."
+        )
+
+    if not isinstance(pad_length, int) or pad_length < 0 or pad_length > 1024:
+        raise ValueError(
+            "Zero-pad length must be an integer between 0 and 1024 inclusive."
+        )
+
+    secret = "1" + hex2bin(secret)  # prepend a 1 as a marker
+
+    secret = splitNumStringToIntArray(secret, pad_length)
+
+    num_shares = int(num_shares)
+    threshold = int(threshold)
+    # bits = 128  # Assuming bits as 128, you can adjust it accordingly
+
+    x = [None] * num_shares
+    y = [None] * num_shares
+
+    for i in range(len(secret)):
+        sub_shares = getShares(secret[i], num_shares, threshold)
+        for j in range(num_shares):
+            x[j] = x[j] or str(sub_shares[j]["x"])
+            y[j] = padLeft(bin(sub_shares[j]["y"])[2:]) + (y[j] or "")
+
+    for i in range(num_shares):
+        x[i] = constructPublicShareString(settings.bits, x[i], bin2hex(y[i]))
+
+    return x
 
 
 # # Core Functions from secrets.js

@@ -619,9 +619,6 @@ def set_init_bits(request):
         # Add more test cases as needed
     ],
 )
-
-
-# Define the test function
 def test_horner(x, coeffs, set_init_bits):
     secrets.init(set_init_bits)
     # assert secrets.horner(x, coeffs) == node._horner(x, coeffs)
@@ -632,3 +629,59 @@ def test_horner(x, coeffs, set_init_bits):
     js_results = chain(node_data)
 
     assert secrets.horner(x, coeffs) == js_results[-1]
+
+
+def test_getShares(set_init_bits):
+    secrets.init(set_init_bits, "testRandom")
+    py_results = secrets.getShares(1234, 6, 3)
+
+    node_data = []
+    node_data.append(node.init(set_init_bits, "testRandom", list=True))
+    node_data.append(node._getShares(1234, 6, 3, list=True))
+    js_results = chain(node_data)
+
+    for i in range(6):
+        assert py_results[i]["x"] == js_results[-1][i]["x"]
+        assert py_results[i]["y"] == js_results[-1][i]["y"]
+    assert True
+
+
+@pytest.fixture(
+    params=[
+        None,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+    ]
+)
+def full_range_of_bits(request):
+    return request.param
+
+
+def pieces(shares, number=3):
+    random.shuffle(shares)  # Randomize
+    return shares[-number:]
+
+
+def test_py_share(full_range_of_bits):
+    secrets.init(full_range_of_bits)
+    secret = secrets.random(64)
+    shares = secrets.share(secret, 6, 3)
+
+    result = node.combine(pieces(shares, 3))
+    assert result == secret
