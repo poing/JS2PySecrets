@@ -1,6 +1,6 @@
 # import json
 
-from .decorators import JsFunction, jsNeedless
+from .decorators import JsFunction
 
 # from .wrapper import wrapper  # Import your wrapper function
 
@@ -8,22 +8,7 @@ NAME = "js2pysecrets"
 
 
 @JsFunction
-def share(*args, **kwargs):
-    pass  # pragma: no cover
-
-
-@JsFunction
-def random(*args, **kwargs):
-    pass  # pragma: no cover
-
-
-@JsFunction
-def setRNG(*args, **kwargs):
-    pass  # pragma: no cover
-
-
-@JsFunction
-def getConfig(*args, **kwargs):
+def init(*args, **kwargs):
     pass  # pragma: no cover
 
 
@@ -33,12 +18,107 @@ def combine(*args, **kwargs):
 
 
 @JsFunction
-def init(*args, **kwargs):
+def getConfig(*args, **kwargs):
     pass  # pragma: no cover
 
 
-@jsNeedless
+@JsFunction
+def extractShareComponents(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def setRNG(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def str2hex(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def hex2str(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def random(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def share(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def newShare(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
 def _reset(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _padLeft(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _hex2bin(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _bin2hex(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _hasCryptoGetRandomValues(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _hasCryptoRandomBytes(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _getRNG(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _isSetRNG(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _splitNumStringToIntArray(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _horner(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _lagrange(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _getShares(*args, **kwargs):
+    pass  # pragma: no cover
+
+
+@JsFunction
+def _constructPublicShareString(*args, **kwargs):
     pass  # pragma: no cover
 
 

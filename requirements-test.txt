@@ -9,3 +9,5 @@ mypy
 gitchangelog
 mkdocs
 mkdocs-material
+faker
+pymdown-extensions

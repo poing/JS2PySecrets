@@ -1,0 +1,71 @@
+#! /usr/bin/env python3
+# -*- coding: utf-8 -*-
+# vim: set et sw=4 fenc=utf-8:
+#
+# splitNumStringToIntArray.py.py
+
+import js2pysecrets as secrets
+
+secrets.init()
+string = secrets.hex2bin(secrets.str2hex('hello world'))
+#print(string)
+string = '1' + string
+#print(string)
+
+split_string = secrets.splitNumStringToIntArray(string, 8)
+
+print(split_string)
+
+
+"""
+
+00000000
+01100100
+00000000
+01101100
+00000000
+01110010
+00000000
+01101111
+00000000
+01110111
+00000000
+00100000
+00000000
+01101111
+00000000
+01101100
+00000000
+01101100
+00000000
+01100101
+00000000
+01101000
+
+"""
+
+"""
+
+1100100
+00000000
+01101100
+00000000
+01110010
+00000000
+01101111
+00000000
+01110111
+00000000
+00100000
+00000000
+01101111
+00000000
+01101100
+00000000
+01101100
+00000000
+01100101
+00000000
+01101000
+
+"""

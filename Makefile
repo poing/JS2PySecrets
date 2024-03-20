@@ -38,8 +38,8 @@ lint:             ## Run pep8, black, mypy linters.
 	$(ENV_PREFIX)mypy --ignore-missing-imports js2pysecrets/
 
 .PHONY: test
-test: lint        ## Run tests and generate coverage report.
-	$(ENV_PREFIX)pytest -v --cov-config .coveragerc --cov=js2pysecrets -l --tb=short --maxfail=1 tests/
+test: lint        ## Run tests and generate coverage report.  Add -s for print
+	$(ENV_PREFIX)pytest -s -v --cov-config .coveragerc --cov=js2pysecrets -l --tb=short --maxfail=1 tests/
 	$(ENV_PREFIX)coverage xml
 	$(ENV_PREFIX)coverage html
 
