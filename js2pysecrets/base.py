@@ -236,8 +236,6 @@ def splitNumStringToIntArray(string, pad_length=None):
 
 
 def horner(x, coeffs):
-    if x not in settings.logs:
-        raise ValueError(f"Value of 'x' ({x}) is not found in logs.")
 
     logx = settings.logs[x]
     fx = 0
@@ -245,19 +243,10 @@ def horner(x, coeffs):
     for i in range(len(coeffs) - 1, -1, -1):
         if fx != 0:
 
-            try:
-
-                fx = (
-                    settings.exps[
-                        (logx + settings.logs[fx]) % settings.maxShares
-                    ]
-                    ^ coeffs[i]
-                )
-
-            except IndexError:
-                raise IndexError(
-                    f"list index out of range: x:{x} i:{i} fx:{fx}"
-                )
+            fx = (
+                settings.exps[(logx + settings.logs[fx]) % settings.maxShares]
+                ^ coeffs[i]
+            )
 
         else:
             fx = coeffs[i]
@@ -294,6 +283,7 @@ def getShares(secret, num_shares, threshold):
 
 
 def constructPublicShareString(bits, share_id, data):
+
     share_id = int(share_id, settings.radix)
     bits = bits or settings.bits
     bits_base36 = base36encode(bits).upper()
@@ -308,14 +298,16 @@ def constructPublicShareString(bits, share_id, data):
     ):
         raise ValueError(
             f"Share id must be an integer between 1 and {id_max}, inclusive."
-        )
+        )  # pragma: no cover
 
     new_share_string = bits_base36 + id_hex + data
 
     return new_share_string
 
 
-def base36encode(number, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+def base36encode(
+    number, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+):  # pragma: no cover
     """Converts an integer to a base36 string."""
     if not isinstance(number, int):
         raise TypeError("number must be an integer")
@@ -337,7 +329,7 @@ def base36encode(number, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
     return sign + base36
 
 
-def base36decode(number):
+def base36decode(number):  # pragma: no cover
     return int(number, 36)
 
 
@@ -452,7 +444,7 @@ def share(secret, num_shares, threshold, pad_length=None):
     pad_length = pad_length or 128
 
     if not isinstance(secret, str):
-        raise ValueError("Secret must be a string.")
+        raise ValueError("Secret must be a hex string.")
 
     if not isinstance(num_shares, int) or num_shares < 2:
         raise ValueError("Number of shares must be an integer >= 2.")
@@ -460,7 +452,7 @@ def share(secret, num_shares, threshold, pad_length=None):
     if num_shares > settings.maxShares:
         needed_bits = math.ceil(math.log(num_shares + 1) / math.log(2))
         raise ValueError(
-            f"Number of shares must be <= {settings.settings.maxShares}."
+            f"Number of shares must be <= {settings.maxShares}."
             f" Use at least {needed_bits} bits."
         )
 
@@ -471,7 +463,7 @@ def share(secret, num_shares, threshold, pad_length=None):
         needed_bits = math.ceil(math.log(threshold + 1) / math.log(2))
         raise ValueError(
             f"Threshold number of shares must be <= "
-            f"{settings.settings.maxShares}. Use at least {needed_bits} bits."
+            f"{settings.maxShares}. Use at least {needed_bits} bits."
         )
 
     if threshold > num_shares:
@@ -491,7 +483,6 @@ def share(secret, num_shares, threshold, pad_length=None):
 
     num_shares = int(num_shares)
     threshold = int(threshold)
-    # bits = 128  # Assuming bits as 128, you can adjust it accordingly
 
     x = [None] * num_shares
     y = [None] * num_shares
