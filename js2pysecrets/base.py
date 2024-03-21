@@ -5,6 +5,7 @@
 # from .wrapper import wrapper  # Import your wrapper function
 
 import math
+import re
 
 from js2pysecrets.settings import Settings
 
@@ -254,6 +255,33 @@ def horner(x, coeffs):
     return fx
 
 
+def lagrange(at, x, y):
+    result = 0
+    length = len(x)
+
+    for i in range(length):
+        if y[i]:
+            product = settings.logs[y[i]]
+
+            for j in range(length):
+                if i != j:
+                    if at == x[j]:
+                        product = -1
+                        break
+                    product = (
+                        product
+                        + settings.logs[at ^ x[j]]
+                        - settings.logs[x[i] ^ x[j]]
+                        + settings.maxShares
+                    ) % settings.maxShares
+
+            result = (
+                result ^ settings.exps[product] if product != -1 else result
+            )
+
+    return result
+
+
 def getShares(secret, num_shares, threshold):
     shares = []
     coeffs = [secret]
@@ -423,9 +451,102 @@ def hex2str(hex_string, bytes_per_char=None):
     return out
 
 
+def combine(shares, at=0):
+    result = ""
+    set_bits = None
+    x = []
+    y = []
+
+    at = at or 0
+
+    for share in shares:
+        share_components = extractShareComponents(share)
+        share_id = share_components["id"]
+        share_data = share_components["data"]
+
+        # All shares must have the same bits settings.
+        if set_bits is None:
+            set_bits = share_components["bits"]
+        elif set_bits != share_components["bits"]:
+            raise ValueError("Mismatched shares: Different bit settings.")
+
+        # Reset everything to the bit settings of the shares.
+        if settings.bits != set_bits:
+            init(set_bits)
+
+        # Gathering all the provided shares
+        if share_id not in x:
+            x.append(share_id)
+            split_share = splitNumStringToIntArray(hex2bin(share_data))
+            y.append(split_share)
+
+    # Zipping all of the shares together.
+    y = list(zip(*y))
+
+    # Extract the secret from the 'rotated' share data and return a
+    # string of Binary digits which represent the secret directly. or in the
+    # case of a newShare() return the binary string representing just that
+    # new share.
+    for yi in y:
+
+        result = padLeft(bin(lagrange(at, x, yi))[2:]) + result
+
+    return (
+        bin2hex(result) if at >= 1 else bin2hex(result[result.find("1") + 1 :])
+    )
+
+
 def getConfig():
     settings.update_defaults(hasCSPRNG=isSetRNG())
     return settings.get_config()
+
+
+def extractShareComponents(share):
+    defaults = {
+        "minBits": 1,
+        "maxBits": 32,
+    }  # Assuming defaults for minBits and maxBits
+    config = {"radix": 16}  # Assuming radix as 16 for hex numbers
+
+    bits = int(share[0], 36)
+
+    if not (
+        bits
+        and isinstance(bits, int)
+        and bits % 1 == 0
+        and defaults["minBits"] <= bits <= defaults["maxBits"]
+    ):
+        raise ValueError(
+            f"Invalid share: Number of bits must be an integer between "
+            f"{settings.min_bits} and {settings.max_bits}, inclusive."
+        )
+
+    max_shares = 2**bits - 1
+    id_len = len(hex(max_shares)[2:])
+
+    regex_str = (
+        "^([a-kA-K3-9]{1})([a-fA-F0-9]{" + str(id_len) + "})([a-fA-F0-9]+)$"
+    )
+    share_components = re.match(regex_str, share)
+
+    if share_components:
+        share_id = int(share_components.group(2), config["radix"])
+        if not (
+            isinstance(share_id, int)
+            and share_id % 1 == 0
+            and 1 <= share_id <= max_shares
+        ):
+            raise ValueError(
+                f"Invalid share: Share id must be an integer between 1 and "
+                f"{max_shares}, inclusive."
+            )
+        return {
+            "bits": bits,
+            "id": share_id,
+            "data": share_components.group(3),
+        }
+
+    raise ValueError("Invalid share data provided.")
 
 
 def random(bits):
