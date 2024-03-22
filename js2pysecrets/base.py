@@ -266,8 +266,9 @@ def lagrange(at, x, y):
             for j in range(length):
                 if i != j:
                     if at == x[j]:
-                        product = -1
-                        break
+                        product = -1  # pragma: no cover
+                        break  # pragma: no cover
+
                     product = (
                         product
                         + settings.logs[at ^ x[j]]
@@ -293,7 +294,7 @@ def getShares(secret, num_shares, threshold):
         # Generate non-zero random number
         random_number = rng(settings.bits)
         while int(random_number, 2) < 0:
-            random_number = rng(settings.bits)
+            random_number = rng(settings.bits)  # pragma: no cover
 
         # Check if dithering function is specified and callable, this captures
         # the random data using the provided function for dithering or similar
@@ -312,10 +313,34 @@ def getShares(secret, num_shares, threshold):
 
 def constructPublicShareString(bits, share_id, data):
 
-    share_id = int(share_id, settings.radix)
+    def base36encode(
+        number, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    ):  # pragma: no cover
+        """Converts an integer to a base36 string."""
+        if not isinstance(number, int):
+            raise TypeError("number must be an integer")
+
+        base36 = ""
+        sign = ""
+
+        if number < 0:
+            sign = "-"
+            number = -number
+
+        if 0 <= number < len(alphabet):
+            return sign + alphabet[number]
+
+        while number != 0:
+            number, i = divmod(number, len(alphabet))
+            base36 = alphabet[i] + base36
+
+        return sign + base36
+
+    share_id = int(share_id, 10)  # Value is store as int
     bits = bits or settings.bits
     bits_base36 = base36encode(bits).upper()
-    id_max = 2**bits - 1
+    # id_max = 2**bits - 1
+    id_max = settings.maxShares
     id_padding_len = len(hex(int(id_max))[2:])
     id_hex = padLeft(hex(int(share_id))[2:], id_padding_len)
 
@@ -333,32 +358,9 @@ def constructPublicShareString(bits, share_id, data):
     return new_share_string
 
 
-def base36encode(
-    number, alphabet="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-):  # pragma: no cover
-    """Converts an integer to a base36 string."""
-    if not isinstance(number, int):
-        raise TypeError("number must be an integer")
-
-    base36 = ""
-    sign = ""
-
-    if number < 0:
-        sign = "-"
-        number = -number
-
-    if 0 <= number < len(alphabet):
-        return sign + alphabet[number]
-
-    while number != 0:
-        number, i = divmod(number, len(alphabet))
-        base36 = alphabet[i] + base36
-
-    return sign + base36
-
-
-def base36decode(number):  # pragma: no cover
-    return int(number, 36)
+#
+# def base36decode(number):  # pragma: no cover
+#     return int(number, 36)
 
 
 # lambda bits: bin(random.getrandbits(bits))[2:].zfill(bits)
@@ -519,7 +521,7 @@ def extractShareComponents(share):
         raise ValueError(
             f"Invalid share: Number of bits must be an integer between "
             f"{settings.min_bits} and {settings.max_bits}, inclusive."
-        )
+        )  # pragma: no cover
 
     max_shares = 2**bits - 1
     id_len = len(hex(max_shares)[2:])
@@ -539,7 +541,8 @@ def extractShareComponents(share):
             raise ValueError(
                 f"Invalid share: Share id must be an integer between 1 and "
                 f"{max_shares}, inclusive."
-            )
+            )  # pragma: no cover
+
         return {
             "bits": bits,
             "id": share_id,
@@ -552,7 +555,7 @@ def extractShareComponents(share):
 def random(bits):
     if not isinstance(bits, int) or bits < 2 or bits > 65536:
         raise ValueError(
-            "Number of bits must be an Integer between 1 and 65536."
+            "Number of bits must be an Integer between 2 and 65536."
         )
 
     rng = getRNG()
@@ -618,6 +621,23 @@ def share(secret, num_shares, threshold, pad_length=None):
         x[i] = constructPublicShareString(settings.bits, x[i], bin2hex(y[i]))
 
     return x
+
+
+def newShare(id, shares):
+    if id and isinstance(id, str):
+        id = int(id, settings.radix)  # pragma: no cover
+
+    radid = str(id)
+
+    if id and radid and shares and shares[0]:
+        # share = extractShareComponents(shares[0])
+        return constructPublicShareString(
+            settings.bits, radid, combine(shares, id)
+        )
+
+    raise ValueError(
+        "Invalid 'id' or 'shares' Array argument to newShare()."
+    )  # pragma: no cover
 
 
 # # Core Functions from secrets.js

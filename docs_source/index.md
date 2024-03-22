@@ -73,5 +73,45 @@ $q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
 		var shares = secrets.share(key, 6, 3);
 		
 		var recovered = secrets.combine(shares); // "86a8e7"
+
+
 		```
+
+
+!!! example "Random"
+
+	This package is expandable 
+
+	``` py
+	import js2pysecrets as secrets
+
+	key = "86A8E7"
+
+	shares = secrets.share(key, 6, 3)
+	
+	recovered = secrets.combine(shares) # '86a8e7'
+	```
+
+
+	=== "secrets"
+		![Image title](secrets.png){ align=left }
+
+		=== " :fontawesome-brands-python: Python"
+			``` py
+			import js2pysecrets as secrets
+
+			key = "86A8E7"
+
+			shares = secrets.share(key, 6, 3)
+
+			recovered = secrets.combine(shares) # '86a8e7'
+			```
+
+	=== "random"
+		![Image title](random.png){ align=left }
+
+	=== "testRandom"
+		![Image title](testRandom.png){ align=left }
+
+
 		

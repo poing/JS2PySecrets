@@ -14,7 +14,7 @@ settings = Settings()
 random_list=[]
 def dithering(random_string):
 	#random_list.append('hello')
-	random_list.append(hex(int(random_string)))	
+	random_list.append(int(random_string, 2))	
 	
 #print(settings.dithering)
 
@@ -28,8 +28,14 @@ secrets.init(8)
 
 settings.update_defaults(dithering=lambda string: dithering(string))
 
-results = secrets.share('0074007300650074002000610020007300690073006900680074', 6, 3)
+results = secrets.share('00740073006500740020000020007300690073006900680074', 50, 3)
+results = secrets.share('00740073006500740020610020007300690073006900680074', 60, 3)
+results = secrets.share('00740073006500742000610020007300690073006900680074', 70, 3)
+results = secrets.share('00740073006504002000610020007300690073006900680074', 50, 3)
+results = secrets.share('00740073000074002000610020007300690073006900680074', 50, 3)
+results = secrets.share('00740070650074002000610020007300690073006900680074', 50, 3)
+results = secrets.share('00747300650074002000610020007300690073006900680074', 50, 3)
 
 print(results)
 
-print(random_list)
+print(random_list, len(random_list))
