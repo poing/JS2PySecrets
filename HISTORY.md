@@ -5,6 +5,12 @@ Changelog
 (unreleased)
 ------------
 - Updating for PyPI release. [poing]
+
+
+0.0.9 (2024-03-23)
+------------------
+- Release: version 0.0.9 🚀 [poing]
+- Updating for PyPI release. [poing]
 - Release: version 0.0.8b 🚀 [poing]
 - Updating for PyPI release. [poing]
 - Release: version 0.0.8a 🚀 [poing]
