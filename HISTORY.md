@@ -5,6 +5,8 @@ Changelog
 (unreleased)
 ------------
 - Updating for PyPI release. [poing]
+- Release: version 0.0.8b 🚀 [poing]
+- Updating for PyPI release. [poing]
 - Release: version 0.0.8a 🚀 [poing]
 - Updating for PyPI release. [poing]
 - Documentation work. [poing]
