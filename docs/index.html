@@ -482,41 +482,34 @@ Secret Sharing that interoperates with an existing JavaScript implementation.</p
 </div>
 </div>
 </div>
-<div class="admonition example">
-<p class="admonition-title">Random</p>
-<p>This package is expandable </p>
-<div class="language-py highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span> <span class="nn">js2pysecrets</span> <span class="k">as</span> <span class="nn">secrets</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;86A8E7&quot;</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">shares</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">share</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">recovered</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">shares</span><span class="p">)</span> <span class="c1"># &#39;86a8e7&#39;</span>
-</span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Random Data Can Be Captured</p>
+<div class="admonition danger">
+<p class="admonition-title">Random Data Can Be Captured</p>
+<p>Capturing the random data used to generate shares is possible.  It's <strong>not</strong> enabled by default and the <code>function()</code> necessary to process the random data is at the discretion users of this package.  </p>
+<p>The ability to access the random data is <strong>solely</strong> intended for random dithering and auditing purposes.  <em>(like the images below)</em></p>
+</div>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">secrets</label><label for="__tabbed_2_2">random</label><label for="__tabbed_2_3">testRandom</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><img align="left" alt="Image title" src="secrets.png" /></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/></svg></span> Python</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-py highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">js2pysecrets</span> <span class="k">as</span> <span class="nn">secrets</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;86A8E7&quot;</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">shares</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">share</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">recovered</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">shares</span><span class="p">)</span> <span class="c1"># &#39;86a8e7&#39;</span>
-</span></code></pre></div>
-</div>
-</div>
-</div>
+<p>The <code>secrets</code> module is used for generating cryptographically strong random numbers suitable for managing data such as passwords, account authentication, security tokens, and related secrets.</p>
+<p>The <code>secrets</code> <strong>should be used</strong> instead of the default pseudo-random number generator in the <code>random</code> module, which is designed for modelling and simulation, not security or cryptography.</p>
 </div>
 <div class="tabbed-block">
 <p><img align="left" alt="Image title" src="random.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The pseudo-random generators in the <code>random</code> module <strong>should not</strong> be used for security purposes. For security or cryptographic uses, use the <code>secrets</code> module.         </p>
+</div>
 </div>
 <div class="tabbed-block">
 <p><img align="left" alt="Image title" src="testRandom.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Do Not Use</p>
+<p><strong>For testing purposes only!</strong></p>
+<p>The <code>testRandom</code> function serves as useful tool for development, generating predictable values. However, when it comes to applications involving security or cryptography, it's crucial to employ a robust random number generator. </p>
+</div>
 </div>
 </div>
 </div>
