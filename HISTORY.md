@@ -4,6 +4,13 @@ Changelog
 
 (unreleased)
 ------------
+- Updating for PyPI release. [poing]
+- Documentation work. [poing]
+
+
+0.0.8 (2024-03-22)
+------------------
+- Release: version 0.0.8 🚀 [poing]
 - Added all the functions(), conversion 100% complete. [poing]
 - Added working combine(), conversion at 95% [poing]
 - New branch for continued conversion. [poing]
