@@ -32,7 +32,7 @@ def read_requirements(path):
 setup(
     name="js2pysecrets",
     version=read("js2pysecrets", "VERSION"),
-    description="Port of secrets.js-grempe Shamir's Secret Sharing",
+    description="Shamir's Secret Sharing - JS2Py port of secrets.js-grempe.",
     url="https://github.com/poing/JS2PySecrets/",
     project_urls={
         'Documentation': 'https://poing.github.io/JS2PySecrets',
