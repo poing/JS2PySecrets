@@ -34,7 +34,6 @@ setup(
     version=read("js2pysecrets", "VERSION"),
     description="Port of secrets.js-grempe Shamir's Secret Sharing",
     url="https://github.com/poing/JS2PySecrets/",
-    documentation="https://poing.github.io/JS2PySecrets",
     project_urls={
         'Documentation': 'https://poing.github.io/JS2PySecrets',
         'Source': 'https://github.com/poing/JS2PySecrets',
@@ -43,7 +42,7 @@ setup(
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     author="Brian LaVallee",
-    author_email="brian.lavallee@invite-comm.jp".
+    author_email="brian.lavallee@invite-comm.jp",
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
     entry_points={
