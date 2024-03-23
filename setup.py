@@ -32,11 +32,18 @@ def read_requirements(path):
 setup(
     name="js2pysecrets",
     version=read("js2pysecrets", "VERSION"),
-    description="Awesome js2pysecrets created by poing",
+    description="Port of secrets.js-grempe Shamir's Secret Sharing",
     url="https://github.com/poing/JS2PySecrets/",
+    documentation="https://poing.github.io/JS2PySecrets",
+    project_urls={
+        'Documentation': 'https://poing.github.io/JS2PySecrets',
+        'Source': 'https://github.com/poing/JS2PySecrets',
+        'Bug Tracker': 'https://github.com/poing/JS2PySecrets/issues/',
+    },
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
-    author="poing",
+    author="Brian LaVallee",
+    author_email="brian.lavallee@invite-comm.jp".
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements("requirements.txt"),
     entry_points={
