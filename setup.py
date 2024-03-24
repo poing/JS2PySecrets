@@ -32,7 +32,7 @@ def read_requirements(path):
 setup(
     name="js2pysecrets",
     version=read("js2pysecrets", "VERSION"),
-    description="Shamir's Secret Sharing - Port of secrets.js-grempe to Python, allowing cross-platform compatable share usage between JavaScript and Python.",
+    description="Shamir's Secret Sharing - A port of secrets.js-grempe to Python, allowing cross-platform compatable shares between JavaScript and Python.",
     url="https://github.com/poing/JS2PySecrets/",
     project_urls={
         'Documentation': 'https://poing.github.io/JS2PySecrets',
