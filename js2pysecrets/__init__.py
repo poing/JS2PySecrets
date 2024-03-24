@@ -1,5 +1,5 @@
-from .base import *  # noqa
+from .base import * # noqa
 
-init()
+__import__('js2pysecrets').init()
 
 # import .node  # noqa
