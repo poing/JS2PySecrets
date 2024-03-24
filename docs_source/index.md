@@ -44,6 +44,7 @@ The functionality is essentially the same as the JavaScript package, with an exc
 !!! tip "Random Number Generator"
 
 	This package handles random number generation different that the JavaScript package.  This difference affects:
+	
 	- `init()`
 	- `setRNG()`
 	- `getConfig()`

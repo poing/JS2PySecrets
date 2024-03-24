@@ -467,6 +467,12 @@
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Random Number Generator</p>
+<p>This package handles random number generation different that the JavaScript package.  This difference affects:</p>
+<ul>
+<li><code>init()</code></li>
+<li><code>setRNG()</code></li>
+<li><code>getConfig()</code></li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">Random Data CAN Be Captured</p>
 <p>Capturing the random data used to generate shares is possible.  It's <strong>not</strong> enabled by default and the <code>function()</code> necessary to process the random data is at the discretion users of this package.  </p>
