@@ -44,7 +44,7 @@ print(key) # => key is a hex string
 
 # split into 10 shares with a threshold of 5
 shares = secrets.share(key, 10, 5)
-print(shares) # => ['801xxx...xxx','802xxx...xxx', ... ,'809xxx...xxx','810xxx...xxx']
+print(shares) # => ['801xxx...xxx','802xxx...xxx', ... ,'809xxx...xxx','80axxx...xxx']
 
 # combine 4 shares
 comb = secrets.combine(shares[:4])
