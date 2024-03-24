@@ -43,6 +43,13 @@ The functionality is essentially the same as the JavaScript package, with an exc
 
 !!! tip "Random Number Generator"
 
+	This package handles random number generation different that the JavaScript package.  This difference affects:
+	- `init()`
+	- `setRNG()`
+	- `getConfig()`
+	
+	
+
 	!!! warning "Random Data CAN Be Captured"
 
 		Capturing the random data used to generate shares is possible.  It's __not__ enabled by default and the `function()` necessary to process the random data is at the discretion users of this package.  
