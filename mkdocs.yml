@@ -66,6 +66,7 @@ docs_dir: docs_source
 site_dir: docs
 nav:
   - About: index.md
+  - API: commands.md
   - gems.md
   - "Contributing to JS2PySecrets":
     - "Getting Started": contributing/index.md

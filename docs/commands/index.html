@@ -1,0 +1,898 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../gems/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>API - js2pysecrets</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#secretsshare-secret-numshares-threshold-padlength" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="js2pysecrets" class="md-header__button md-logo" aria-label="js2pysecrets" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="UTF-8"?><svg id="b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 241.55 150.5"><g id="c"><path d="M91.3.25l58.28.08c6.47,0,11.72,5.26,11.72,11.73h0c0,5.3-2.11,10.39-5.86,14.14l-3.5,3.5c-6.03,6.03-6.46,15.66-1.01,22.21h0c8,9.6,22.73,9.6,30.73,0h0c5.46-6.55,5.02-16.18-1.01-22.21l-3.5-3.5c-3.75-3.75-5.86-8.84-5.86-14.14h0c0-6.47,5.24-11.72,11.72-11.73l58.28-.08c0,82.29-67.71,150-150,150-26.33,0-52.2-6.93-75-20.1l29.17-50.52c3.24-5.6,1.32-12.77-4.29-16h0c-4.59-2.65-10.05-3.37-15.18-2l-4.78,1.28c-8.23,2.21-16.79-2.23-19.73-10.23h0c-4.31-11.72,3.06-24.48,15.36-26.61h0c8.4-1.45,16.52,3.74,18.73,11.98l1.28,4.78c1.37,5.12,4.72,9.49,9.32,12.14h0c5.6,3.24,12.77,1.32,16-4.29L91.3.25Z" style="fill:#86A8E7;"/></g></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            js2pysecrets
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/poing/JS2PySecrets" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    poing/JS2PySecrets
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="js2pysecrets" class="md-nav__button md-logo" aria-label="js2pysecrets" data-md-component="logo">
+      
+  
+  <?xml version="1.0" encoding="UTF-8"?><svg id="b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 241.55 150.5"><g id="c"><path d="M91.3.25l58.28.08c6.47,0,11.72,5.26,11.72,11.73h0c0,5.3-2.11,10.39-5.86,14.14l-3.5,3.5c-6.03,6.03-6.46,15.66-1.01,22.21h0c8,9.6,22.73,9.6,30.73,0h0c5.46-6.55,5.02-16.18-1.01-22.21l-3.5-3.5c-3.75-3.75-5.86-8.84-5.86-14.14h0c0-6.47,5.24-11.72,11.72-11.73l58.28-.08c0,82.29-67.71,150-150,150-26.33,0-52.2-6.93-75-20.1l29.17-50.52c3.24-5.6,1.32-12.77-4.29-16h0c-4.59-2.65-10.05-3.37-15.18-2l-4.78,1.28c-8.23,2.21-16.79-2.23-19.73-10.23h0c-4.31-11.72,3.06-24.48,15.36-26.61h0c8.4-1.45,16.52,3.74,18.73,11.98l1.28,4.78c1.37,5.12,4.72,9.49,9.32,12.14h0c5.6,3.24,12.77,1.32,16-4.29L91.3.25Z" style="fill:#86A8E7;"/></g></svg>
+
+    </a>
+    js2pysecrets
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/poing/JS2PySecrets" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    poing/JS2PySecrets
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#secretsshare-secret-numshares-threshold-padlength" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.share( secret, numShares, threshold, [padLength] )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretscombine-shares" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.combine( shares )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsnewshare-id-shares" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.newShare( id, shares )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsinit-bits-rngtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.init( [bits, rngType] )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsgetconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.getConfig()
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsextractsharecomponents-share" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.extractShareComponents( share )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretssetrng-functionbits-rngtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.setRNG( function(bits){} | rngType )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsrandom-bits" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.random( bits )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsstr2hex-str-bytesperchar" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.str2hex( str, [bytesPerChar] )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretshex2str-str-bytesperchar" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.hex2str( str, [bytesPerChar] )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#share-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Share Format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#note-on-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Note on Security
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gems, Snippets, and Concepts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Contributing to JS2PySecrets
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Contributing to JS2PySecrets
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Writing Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../blog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Blog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mkdocs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MkDocs Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#secretsshare-secret-numshares-threshold-padlength" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.share( secret, numShares, threshold, [padLength] )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretscombine-shares" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.combine( shares )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsnewshare-id-shares" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.newShare( id, shares )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsinit-bits-rngtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.init( [bits, rngType] )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsgetconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.getConfig()
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsextractsharecomponents-share" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.extractShareComponents( share )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretssetrng-functionbits-rngtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.setRNG( function(bits){} | rngType )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsrandom-bits" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.random( bits )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretsstr2hex-str-bytesperchar" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.str2hex( str, [bytesPerChar] )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#secretshex2str-str-bytesperchar" class="md-nav__link">
+    <span class="md-ellipsis">
+      secrets.hex2str( str, [bytesPerChar] )
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#share-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      Share Format
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#note-on-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      Note on Security
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>API</h1>
+
+<ul>
+<li>secrets.share()</li>
+<li>secrets.combine()</li>
+<li>secrets.newShare()</li>
+<li>secrets.init()</li>
+<li>secrets.getConfig()</li>
+<li>secrets.extractShareComponents()</li>
+<li>secrets.setRNG()</li>
+<li>secrets.random()</li>
+<li>secrets.str2hex()</li>
+<li>secrets.hex2str()</li>
+</ul>
+<h3 id="secretsshare-secret-numshares-threshold-padlength">secrets.share( secret, numShares, threshold, [padLength] )</h3>
+<p>Divide a <code>secret</code> expressed in hexadecimal form into <code>numShares</code> number of shares, requiring that <code>threshold</code> number of shares be present for reconstructing the <code>secret</code>;</p>
+<ul>
+<li><code>secret</code>: String, required: A hexadecimal string.</li>
+<li><code>numShares</code>: Number, required: The number of shares to compute. This must be an integer between 2 and 2^bits-1 (see <code>secrets.init()</code> below for explanation of <code>bits</code>).</li>
+<li><code>threshold</code>: Number, required: The number of shares required to reconstruct the secret. This must be an integer between 2 and 2^bits-1 (see <code>secrets.init()</code> below for explanation of <code>bits</code>).</li>
+<li><code>padLength</code>: Number, optional, default <code>128</code>: How much to zero-pad the binary representation of <code>secret</code>. This ensures a minimum length for each share. See "Note on security" below.</li>
+</ul>
+<p>The output of <code>secrets.share()</code> is an Array of length <code>numShares</code>. Each item in the array is a String. See <code>Share format</code> below for information on the format.</p>
+<h3 id="secretscombine-shares">secrets.combine( shares )</h3>
+<p>Reconstructs a secret from <code>shares</code>.</p>
+<ul>
+<li><code>shares</code>: Array, required: An Array of shares. The form is equivalent to the output from <code>secrets.share()</code>.</li>
+</ul>
+<p>The output of <code>secrets.combine()</code> is a String representing the reconstructed secret. Note that this function will ALWAYS produce an output String. However, if the number of <code>shares</code> that are provided is not the <code>threshold</code> number of shares, the output <em>will not</em> be the original <code>secret</code>. In order to guarantee that the original secret is reconstructed, the correct <code>threshold</code> number of shares must be provided.</p>
+<p>Note that using <em>more</em> than the <code>threshold</code> number of shares will also result in an accurate reconstruction of the secret. However, using more shares adds to computation time.</p>
+<h3 id="secretsnewshare-id-shares">secrets.newShare( id, shares )</h3>
+<p>Create a new share from the input shares.</p>
+<ul>
+<li><code>id</code>: Number or String, required: A Number representing the share id. The id is an integer between 1 and 2^bits-1. It can be entered as a Number or a number String expressed in hexadecimal form.</li>
+<li><code>shares</code>: Array, required: The array of shares (in the same format as outputted from <code>secrets.share()</code>) that can be used to reconstruct the original <code>secret</code>.</li>
+</ul>
+<p>The output of <code>secrets.newShare()</code> is a String. This is the same format for the share that <code>secrets.share()</code> outputs. Note that this function ALWAYS produces an output String. However, as for <code>secrets.combine()</code>, if the number of <code>shares</code> that are entered is not the <code>threshold</code> number of shares, the output share <em>will not</em> be a valid share (i.e. <em>will not</em> be useful in reconstructing the original secret). In order to guarantee that the share is valid, the correct <code>threshold</code> number of shares must be provided.</p>
+<h3 id="secretsinit-bits-rngtype">secrets.init( [bits, rngType] )</h3>
+<p>Set the number of bits to use for finite field arithmetic.</p>
+<ul>
+<li><code>bits</code>: Number, optional, default <code>8</code>: An integer between 3 and 20. The number of bits to use for the Galois field.</li>
+<li><code>rngType</code>: String, optional: A string that has one of the values <code>["nodeCryptoRandomBytes", "browserCryptoGetRandomValues"]</code>. Setting this will try to override the RNG that would be selected normally based on feature detection. Warning: You can specify a RNG that won't actually <em>work</em> in your environment.</li>
+</ul>
+<p>Internally, secrets.js uses finite field arithmetic in binary Galois Fields of size 2^bits. Multiplication is implemented by the means of log and exponential tables. Before any arithmetic is performed, the log and exp tables are pre-computed. Each table contains 2^bits entries.</p>
+<p><code>bits</code> is the limiting factor on <code>numShares</code> and <code>threshold</code>. The maximum number of shares possible for a particular <code>bits</code> is (2^bits)-1 (the zeroth share cannot be used as it is the <code>secret</code> by definition.). By default, secrets.js uses 8 bits, for a total 2^8-1 = 255 possible number of shares. To compute more shares, a larger field must be used. To compute the number of bits you will need for your <code>numShares</code> or <code>threshold</code>, compute the log-base2 of (<code>numShares</code>+1) and round up, i.e. in JavaScript: <code>Math.ceil(Math.log(numShares+1)/Math.LN2)</code>. You can examine the current calculated <code>maxShares</code> value by calling <code>secrets.getConfig()</code> and increase the bits accordingly for the number of shares you need to generate.</p>
+<p>Note:</p>
+<ul>
+<li>You can call <code>secrets.init()</code> anytime to reset <em>all</em> internal state and re-initialize.</li>
+<li><code>secrets.init()</code> does NOT need to be called if you plan on using the default of 8 bits. It is automatically called on loading the library.</li>
+<li>The size of the exp and log tables depends on <code>bits</code> (each has 2^bits entries). Therefore, using a large number of bits will cause a slightly longer delay to compute the tables.</li>
+<li>The <em>theoretical</em> maximum number of bits is 31, as JavaScript performs bitwise operations on 31-bit numbers. A limit of 20 bits has been hard-coded into secrets.js, which can produce 1,048,575 shares. secrets.js has not been tested with this many shares, and it is not advisable to go this high, as it may be too slow to be of any practical use.</li>
+<li>The Galois Field may be re-initialized to a new setting when <code>secrets.newShare()</code> or <code>secrets.combine()</code> are called with shares that are from a different Galois Field than the currently initialized one. For this reason, use <code>secrets.getConfig()</code> to check what the current <code>bits</code> setting is.</li>
+</ul>
+<h3 id="secretsgetconfig">secrets.getConfig()</h3>
+<p>Returns an Object with the current configuration. Has the following properties:</p>
+<ul>
+<li><code>bits</code>: [Number] The number of bits used for the current initialized finite field</li>
+<li><code>radix</code>: [Number] The current radix (Default: 16)</li>
+<li><code>maxShares</code>: [Number] The max shares that can be created with the current <code>bits</code>. Computed as <code>Math.pow(2, config.bits) - 1</code></li>
+<li><code>hasCSPRNG</code>: [Boolean] Indicates whether or not a Cryptographically Secure Pseudo Random Number Generator has been found and initialized.</li>
+<li>
+<ul>
+<li><code>typeCSPRNG</code>: [String] Indicates which random number generator function has been selected based on either environment feature detection (the default) or by manually specifying the RNG type using <code>secrets.init()</code> or <code>secrets.setRNG()</code>. The current possible types that can be displayed here are ["nodeCryptoRandomBytes", "browserCryptoGetRandomValues"].</li>
+</ul>
+</li>
+</ul>
+<h3 id="secretsextractsharecomponents-share">secrets.extractShareComponents( share )</h3>
+<p>Returns an Object with the extracted parts of a public share string passed as an argument. Has the following properties:</p>
+<ul>
+<li><code>bits</code>: [Number] The number of bits configured when the share was created.</li>
+<li><code>id</code>: [Number] The ID number associated with the share when created.</li>
+<li><code>data</code>: [String] A hex string of the actual share data.</li>
+</ul>
+<h3 id="secretssetrng-functionbits-rngtype">secrets.setRNG( function(bits){} | rngType )</h3>
+<p>Set the pseudo-random number generator used to compute shares.</p>
+<p>secrets.js uses a PRNG in the <code>secrets.share()</code> and <code>secrets.random()</code> functions. By default, it tries to use a cryptographically strong PRNG. In Node.js this is <code>crypto.randomBytes()</code>. In browsers that support it, it is <code>crypto.getRandomValues()</code> (using typed arrays, which must be supported too).</p>
+<p>To supply your own PRNG, use <code>secrets.setRNG()</code>. It expects a Function of the form <code>function(bits){}</code>. It should compute a random integer between 1 and 2^bits-1. The output must be a String of length <code>bits</code> containing random 1's and 0's (cannot be ALL 0's). When <code>secrets.setRNG()</code> is called, it tries to check the PRNG to make sure it complies with some of these demands, but obviously it's not possible to run through all possible outputs. So make sure that it works correctly.</p>
+<ul>
+<li><code>rngType</code>: String, optional: A string that has one of the values <code>["nodeCryptoRandomBytes", "browserCryptoGetRandomValues"]</code>. Setting this will try to override the RNG that would be selected normally based on feature detection. Warning: You can specify a RNG that won't actually <em>work</em> in your environment.</li>
+</ul>
+<h3 id="secretsrandom-bits">secrets.random( bits )</h3>
+<p>Generate a random <code>bits</code> length string, and output it in hexadecimal format. <code>bits</code> must be an integer greater than 1.</p>
+<h3 id="secretsstr2hex-str-bytesperchar">secrets.str2hex( str, [bytesPerChar] )</h3>
+<p>Convert a UTF string <code>str</code> into a hexadecimal string, using <code>bytesPerChar</code> bytes (octets) for each character.</p>
+<ul>
+<li><code>str</code>: String, required: A UTF string.</li>
+<li><code>bytesPerChar</code>: Number, optional, default <code>2</code>. The maximum <code>bytesPerChar</code> is 6 to ensure that each character is represented by a number that is below JavaScript's 2^53 maximum for integers.</li>
+</ul>
+<h3 id="secretshex2str-str-bytesperchar">secrets.hex2str( str, [bytesPerChar] )</h3>
+<p>Convert a hexadecimal string into a UTF string. Each character of the output string is represented by <code>bytesPerChar</code> bytes in the String <code>str</code>. See note on <code>bytesPerChar</code> under <code>secrets.str2hex()</code> above.</p>
+<h2 id="share-format">Share Format</h2>
+<p>Each share is a string in the format <code>&lt;bits&gt;&lt;id&gt;&lt;value&gt;</code>. Each part of the string is described below:</p>
+<ul>
+<li><code>bits</code>: The first character, expressed in Base36 format, is the number of bits used for the Galois Field. This number must be between 3 and 20, expressed by the characters [3-9, a-k] in Base36.</li>
+<li><code>id</code>: The id of the share. This is a number between 1 and 2^bits-1, expressed in hexadecimal form. The number of characters used to represent the id is the character-length of the representation of the maximum id (2^bits-1) in hexadecimal: <code>(Math.pow(2,bits)-1).toString(16).length</code>.</li>
+<li><code>data</code>: The value of the share, expressed in hexadecimal form. The length of this string depends on the length of the secret.</li>
+</ul>
+<p>You can extract these attributes from a share in your possession with the <code>secrets.extractShareComponents(share)</code> function which will return an Object with these attributes. You may use these values, for example, to call <code>secrets.init()</code> with the proper bits setting for shares you want to combine.</p>
+<h2 id="note-on-security">Note on Security</h2>
+<p>Shamir's secret sharing scheme is "information-theoretically secure" and "perfectly secure" in that less than the requisite number of shares provide no information about the secret (i.e. knowing less than the requisite number of shares is the same as knowing none of the shares). However, because the size of each share is the same as the size of the secret (when using binary Galois fields, as secrets.js does), in practice it does leak <em>some</em> information, namely the <em>size</em> of the secret. Therefore, if you will be using secrets.js to share <em>short</em> password strings (which can be brute-forced much more easily than longer ones), it would be wise to zero-pad them so that the shares do not leak information about the size of the secret. With this in mind, secrets.js will zero-pad in multiples of 128 bits by default which slightly increases the share size for small secrets in the name of added security. You can increase or decrease this padding manually by passing the <code>padLength</code> argument to <code>secrets.share()</code>.</p>
+<p>When <code>secrets.share()</code> is called with a <code>padLength</code>, the <code>secret</code> is zero-padded so that it's length is a multiple of the padLength. The second example above can be modified to use 1024-bit zero-padding, producing longer shares:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1"> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4.1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3.1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/></svg></span> Produce Longer Shares</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">js2pysecrets</span> <span class="k">as</span> <span class="nn">secrets</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">pw</span> <span class="o">=</span> <span class="s2">&quot;&lt;&lt;PassWord123&gt;&gt;&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># convert the text into a hex string</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">pwHex</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">str2hex</span><span class="p">(</span><span class="n">pw</span><span class="p">)</span> <span class="o">//</span> <span class="o">=&gt;</span> <span class="mi">240</span><span class="o">-</span><span class="n">bit</span> <span class="n">password</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># split into 5 shares, with a threshold of 3, WITH zero-padding</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">shares</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">share</span><span class="p">(</span><span class="n">pwHex</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="p">)</span> <span class="o">//</span> <span class="o">=&gt;</span> <span class="mi">1024</span><span class="o">-</span><span class="n">bit</span> <span class="n">padded</span> <span class="n">shares</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># combine 3 shares</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">comb</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">combine</span><span class="p">([</span><span class="n">shares</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">shares</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">shares</span><span class="p">[</span><span class="mi">4</span><span class="p">]])</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># convert back to UTF string</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">comb</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">hex2str</span><span class="p">(</span><span class="n">comb</span><span class="p">)</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="nb">print</span><span class="p">(</span><span class="n">comb</span> <span class="o">==</span> <span class="n">pw</span><span class="p">)</span> <span class="o">//</span> <span class="o">=&gt;</span> <span class="n">true</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+    
+    
+    
+    <a href="https://phpc.social/@poing" target="_blank" rel="noopener me" title="poing on phpc.social" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://gitlab.com/poing" target="_blank" rel="noopener" title="Brian LaVallee" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="m503.5 204.6-.7-1.8-69.7-181.78c-1.4-3.57-3.9-6.59-7.2-8.64-2.4-1.55-5.1-2.515-8-2.81-2.9-.295-5.7.083-8.4 1.11-2.7 1.02-5.1 2.66-7.1 4.78-1.9 2.12-3.3 4.67-4.1 7.44l-47 144H160.8l-47.1-144c-.8-2.77-2.2-5.31-4.1-7.43-2-2.12-4.4-3.75-7.1-4.77a18.1 18.1 0 0 0-8.38-1.113 18.4 18.4 0 0 0-8.04 2.793 18.09 18.09 0 0 0-7.16 8.64L9.267 202.8l-.724 1.8a129.57 129.57 0 0 0-3.52 82c7.747 26.9 24.047 50.7 46.447 67.6l.27.2.59.4 105.97 79.5 52.6 39.7 32 24.2c3.7 1.9 8.3 4.3 13 4.3 4.7 0 9.3-2.4 13-4.3l32-24.2 52.6-39.7 106.7-79.9.3-.3c22.4-16.9 38.7-40.6 45.6-67.5 8.6-27 7.4-55.8-2.6-82z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/poing/" target="_blank" rel="noopener" title="Brian LaVallee" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
