@@ -4,6 +4,17 @@ Changelog
 
 (unreleased)
 ------------
+- Fix initilization. [poing]
+- Fix initilization. [poing]
+- Readme updates. [poing]
+- Update readme. [poing]
+- Update readme. [poing]
+- Update readme and PyPI adjustments. [poing]
+
+
+0.0.10 (2024-03-23)
+-------------------
+- Release: version 0.0.10 🚀 [poing]
 - Updating for PyPI release. [poing]
 
 
