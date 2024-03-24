@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Adjusted the readme, check how footnotes are shown in PyPI. [poing]
+
+
+0.0.11 (2024-03-24)
+-------------------
+- Release: version 0.0.11 🚀 [poing]
 - Fix initilization. [poing]
 - Fix initilization. [poing]
 - Readme updates. [poing]
