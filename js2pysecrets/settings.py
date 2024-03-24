@@ -1,12 +1,12 @@
 # settings.py
-import random
+import secrets
 from dataclasses import dataclass, field
 from typing import List, Optional
 
 
 @dataclass
 class Defaults:
-    rng = lambda self, bits: bin(random.getrandbits(bits))[2:].zfill(bits)
+    rng = lambda self, bits: bin(secrets.randbits(bits))[2:].zfill(bits)
     dithering = None
     bits: int = 8  # default number of bits
     radix: int = 16  # work with HEX by default

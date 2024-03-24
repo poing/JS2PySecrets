@@ -4,6 +4,151 @@ Changelog
 
 (unreleased)
 ------------
+- Adjusted the readme, check how footnotes are shown in PyPI. [poing]
+
+
+0.0.11 (2024-03-24)
+-------------------
+- Release: version 0.0.11 🚀 [poing]
+- Fix initilization. [poing]
+- Fix initilization. [poing]
+- Readme updates. [poing]
+- Update readme. [poing]
+- Update readme. [poing]
+- Update readme and PyPI adjustments. [poing]
+
+
+0.0.10 (2024-03-23)
+-------------------
+- Release: version 0.0.10 🚀 [poing]
+- Updating for PyPI release. [poing]
+
+
+0.0.9 (2024-03-23)
+------------------
+- Release: version 0.0.9 🚀 [poing]
+- Updating for PyPI release. [poing]
+- Release: version 0.0.8b 🚀 [poing]
+- Updating for PyPI release. [poing]
+- Release: version 0.0.8a 🚀 [poing]
+- Updating for PyPI release. [poing]
+- Documentation work. [poing]
+
+
+0.0.8 (2024-03-22)
+------------------
+- Release: version 0.0.8 🚀 [poing]
+- Added all the functions(), conversion 100% complete. [poing]
+- Added working combine(), conversion at 95% [poing]
+- New branch for continued conversion. [poing]
+- Merge pull request #26 from poing/0.0.7. [Brian LaVallee]
+
+  Better coverage
+- Better coverage. [poing]
+- Merge pull request #25 from poing/0.0.7. [Brian LaVallee]
+
+  0.0.7
+- Sucessfully created shares compatable with secrets.js-grempe. [poing]
+- Fixed exp and log tables, added horner() [poing]
+- JavaScript to Python is 60% completed. [poing]
+- Added functions, tests, and other modifications. [poing]
+- Added more functions and tests. [poing]
+- Added some functions and test. [poing]
+- Documentation update. [poing]
+- Disabled tests_win (for now) [poing]
+- More python. [poing]
+- Chage the skip code. [poing]
+- Testing default setting as a class. [poing]
+- Revert the windows-2019 test. [poing]
+- Testing UTF on windows-2019. [poing]
+- Testing UTF on windows-2019. [poing]
+- Testing UTF on windows-2019. [poing]
+- Testing UTF on windows-2019. [poing]
+- Testing UTF on windows-2019. [poing]
+- Testing UTF on windows-2019. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Implimented SecretsPrivateSpec.js tests in Python. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Adjust test_with_UTF8 for test_win failure. [poing]
+- Documentation and implimented SecretsSpec.js tests in Python. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Working on documentation. [poing]
+- Merge pull request #23 from
+  poing/dependabot/github_actions/softprops/action-gh-release-2. [Brian
+  LaVallee]
+
+  Bump softprops/action-gh-release from 1 to 2
+- Bump softprops/action-gh-release from 1 to 2. [dependabot[bot]]
+
+  Bumps [softprops/action-gh-release](https://github.com/softprops/action-gh-release) from 1 to 2.
+  - [Release notes](https://github.com/softprops/action-gh-release/releases)
+  - [Changelog](https://github.com/softprops/action-gh-release/blob/master/CHANGELOG.md)
+  - [Commits](https://github.com/softprops/action-gh-release/compare/v1...v2)
+
+  ---
+  updated-dependencies:
+  - dependency-name: softprops/action-gh-release
+    dependency-type: direct:production
+    update-type: version-update:semver-major
+  ...
+- Merge pull request #22 from poing/0.0.7. [Brian LaVallee]
+
+  Updated wrapper and added chain function.
+- Setting up documentation. [poing]
+- New wrapper testing and adjustmenr for Chain and Distinct. [poing]
+- New wrapper approach.  Chain and Distinct. [poing]
+- Merge pull request #21 from poing/0.0.6. [Brian LaVallee]
+
+  New wrapper using the node_modules approach
+- Addressed coverage and testing. [poing]
+- New wrapper using the node_modules approach. [poing]
+- Merge pull request #20 from poing/0.0.6. [Brian LaVallee]
+
+  0.0.6
+- Add a Gems page to docs. [poing]
+- Add a Gems page to docs. [poing]
+- Restored from older branch. [poing]
+- Merge pull request #19 from poing/0.0.4. [Brian LaVallee]
+
+  Recovering from failed merge
+- Recovering from failed merge. [poing]
+- Merge pull request #18 from poing/0.0.4. [Brian LaVallee]
+
+  Add license to docs, again
+- Add license to docs, again. [poing]
+- Merge pull request #17 from poing/0.0.4. [Brian LaVallee]
+
+  Revised secrets.js to use NodeJS
+
+
+0.0.4 (2024-03-07)
+------------------
+- Release: version 0.0.4 🚀 [poing]
 - Added license to docs. [poing]
 - Change the item order. [poing]
 - Change the item order. [poing]

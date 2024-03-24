@@ -2,7 +2,7 @@
 
 js2pysecrets welcomes contributions from the community.
 
-**You need PYTHON3!**
+**You need Node.js and Python3!**
 
 This instructions are for linux base systems. (Linux, MacOS, BSD, etc.)
 ## Setting up your own fork of this repo.
@@ -20,6 +20,10 @@ then activate it with `source .venv/bin/activate`.
 ## Install the project in develop mode
 
 Run `make install` to install the project in develop mode.
+
+## Install the Node.js package
+
+Run `npm install` to install `secrets.js-grempe`
 
 ## Run the tests to ensure everything is working
 

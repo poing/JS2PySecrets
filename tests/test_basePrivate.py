@@ -839,9 +839,167 @@ def test_py_share_error_padding():
 
 
 def test_py_random_error():
-    match = "Number of bits must be an Integer between 1 and 65536."
+    match = "Number of bits must be an Integer between 2 and 65536."
     with pytest.raises(ValueError, match=match):
         secret = secrets.random(65538)
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_extractShareComponents_py(full_range_of_bits):
+    # Generate shares with python
+    secrets.init(full_range_of_bits)
+    secret = secrets.random(128)
+    shares = secrets.share(secret, 6, 3)
+    shuffle = pieces(shares)
+
+    py_result = secrets.extractShareComponents(shuffle[0])
+    js_result = node.extractShareComponents(shuffle[0])
+    assert py_result["bits"] == js_result["bits"]
+    assert py_result["id"] == js_result["id"]
+    assert py_result["data"] == js_result["data"]
+
+
+def test_extractShareComponents_js(full_range_of_bits):
+    secret = secrets.random(128)
+    # Generate shares with node
+    node_data = []
+    node_data.append(node.init(full_range_of_bits, list=True))
+    node_data.append(node.share(secret, 6, 3, list=True))
+    js_results = chain(node_data)
+
+    shuffle = pieces(js_results[-1])
+
+    py_result = secrets.extractShareComponents(shuffle[0])
+    js_result = node.extractShareComponents(shuffle[0])
+    assert py_result["bits"] == js_result["bits"]
+    assert py_result["id"] == js_result["id"]
+    assert py_result["data"] == js_result["data"]
+
+
+def test_lagrange_simple():
+    secrets.init()
+    js_poly = node._lagrange(
+        0, [1, 2, 3, 4, 5, 6], [79, 123, 68, 175, 144, 164]
+    )
+    polynomial = secrets.lagrange(
+        0, [1, 2, 3, 4, 5, 6], [79, 123, 68, 175, 144, 164]
+    )
+    assert polynomial == js_poly
+    polynomial = secrets.lagrange(0, [1, 2, 3, 4, 5], [79, 123, 68, 175, 144])
+    assert polynomial == js_poly
+    polynomial = secrets.lagrange(0, [1, 2, 3, 4], [79, 123, 68, 175])
+    assert polynomial == js_poly
+    polynomial = secrets.lagrange(0, [1, 2, 3], [79, 123, 68])
+    assert polynomial == js_poly
+    polynomial = secrets.lagrange(0, [1, 2], [79, 123])
+    assert polynomial != js_poly
+    polynomial = secrets.lagrange(0, [1], [79])
+    assert polynomial != js_poly
+
+
+def test_combine_js2py(full_range_of_bits):
+    secrets.init(full_range_of_bits)
+    secret = secrets.random(128)
+    # Generate shares with node
+    node_data = []
+    node_data.append(node.init(full_range_of_bits, list=True))
+    node_data.append(node.share(secret, 6, 3, list=True))
+    js_results = chain(node_data)
+
+    shuffle = pieces(js_results[-1])
+    # print(shuffle)
+
+    py_result = secrets.combine(shuffle)
+    assert py_result == secret
+
+
+def test_combine_py2py(full_range_of_bits):
+    secrets.init(full_range_of_bits)
+    secret = secrets.random(128)
+    # Generate shares with node
+    shares = secrets.share(secret, 6, 3)
+
+    shuffle = pieces(shares)
+    # print(shuffle)
+
+    py_result = secrets.combine(shuffle)
+    assert py_result == secret
+
+
+def test_new_shares(full_range_of_bits):
+    secrets.init(full_range_of_bits)
+    secret = secrets.random(128)
+    shares = secrets.share(secret, 6, 3)
+
+    result = secrets.newShare(7, shares)
+
+    chunks = pieces(shares, 2)
+    chunks.append(result)
+
+    py_result = secrets.combine(chunks)
+    assert py_result == secret
+
+
+def test_rng_trigger_non_zero():
+    secrets.init(3)
+    secret = secrets.random(128)
+    for i in range(256):
+        shares = secrets.share(secret, 7, 5, 1024)
+        assert len(shares) == 7
+
+
+def test_combine_mismatch():
+    match = "Mismatched shares: Different bit settings."
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        eight_bit = secrets.share(secret, 6, 3)
+
+        secrets.init(10)
+        ten_bit = secrets.share(secret, 6, 3)
+
+        shuffle_eight = pieces(eight_bit)
+        shuffle_ten = pieces(ten_bit)
+
+        secrets.combine(eight_bit)
+        secrets.combine(ten_bit)
+
+        secrets.combine([shuffle_eight[0], shuffle_ten[1], shuffle_eight[2]])
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_combine_invalid():
+    match = "Invalid share data provided."
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        shares = secrets.share(secret, 6, 3)
+
+        shuffle = pieces(shares)
+
+        secrets.combine([shares[0], "hello world", shares[2]])
+        # Check if any warnings were raised
+        assert len(caught_warnings) == 1
+        assert issubclass(caught_warnings[0].category, Warning)
+        assert match in str(caught_warnings[0].message)
+
+
+def test_new_share_invalid():
+    match = "Invalid share data provided."
+    with pytest.raises(ValueError, match=match):
+        secrets.init()
+        secret = secrets.random(32)
+        shares = secrets.share(secret, 6, 3)
+
+        shuffle = pieces(shares)
+
+        secrets.newShare(277, shuffle[0])
         # Check if any warnings were raised
         assert len(caught_warnings) == 1
         assert issubclass(caught_warnings[0].category, Warning)

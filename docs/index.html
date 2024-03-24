@@ -482,6 +482,38 @@ Secret Sharing that interoperates with an existing JavaScript implementation.</p
 </div>
 </div>
 </div>
+<div class="admonition danger">
+<p class="admonition-title">Random Data Can Be Captured</p>
+<div class="admonition danger">
+<p class="admonition-title">Random Data Can Be Captured</p>
+<p>Capturing the random data used to generate shares is possible.  It's <strong>not</strong> enabled by default and the <code>function()</code> necessary to process the random data is at the discretion users of this package.  </p>
+<p>The ability to access the random data is <strong>solely</strong> intended for random dithering and auditing purposes.  <em>(like the images below)</em></p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">secrets</label><label for="__tabbed_2_2">random</label><label for="__tabbed_2_3">testRandom</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><img align="left" alt="Image title" src="secrets.png" /></p>
+<p>The <code>secrets</code> module is used for generating cryptographically strong random numbers suitable for managing data such as passwords, account authentication, security tokens, and related secrets.</p>
+<p>The <code>secrets</code> <strong>should be used</strong> instead of the default pseudo-random number generator in the <code>random</code> module, which is designed for modelling and simulation, not security or cryptography.</p>
+</div>
+<div class="tabbed-block">
+<p><img align="left" alt="Image title" src="random.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The pseudo-random generators in the <code>random</code> module <strong>should not</strong> be used for security purposes. For security or cryptographic uses, use the <code>secrets</code> module.         </p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><img align="left" alt="Image title" src="testRandom.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Do Not Use</p>
+<p><strong>For testing purposes only!</strong></p>
+<p>The <code>testRandom</code> function serves as useful tool for development, generating predictable values. However, when it comes to applications involving security or cryptography, it's crucial to employ a robust random number generator. </p>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 

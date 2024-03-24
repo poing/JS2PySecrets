@@ -73,5 +73,42 @@ $q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
 		var shares = secrets.share(key, 6, 3);
 		
 		var recovered = secrets.combine(shares); // "86a8e7"
+
+
 		```
+
+
+!!! danger "Random Data Can Be Captured"
+
+	!!! danger "Random Data Can Be Captured"
+
+		Capturing the random data used to generate shares is possible.  It's __not__ enabled by default and the `function()` necessary to process the random data is at the discretion users of this package.  
+	
+		The ability to access the random data is __solely__ intended for random dithering and auditing purposes.  _(like the images below)_
+	
+	=== "secrets"
+		![Image title](secrets.png){ align=left }
+
+		The `secrets` module is used for generating cryptographically strong random numbers suitable for managing data such as passwords, account authentication, security tokens, and related secrets.
+
+		The `secrets` __should be used__ instead of the default pseudo-random number generator in the `random` module, which is designed for modelling and simulation, not security or cryptography.
+
+	=== "random"
+		![Image title](random.png){ align=left }
+		
+
+
+
+		!!! warning "Warning"
+
+			The pseudo-random generators in the `random` module __should not__ be used for security purposes. For security or cryptographic uses, use the `secrets` module. 		
+
+	=== "testRandom"
+		![Image title](testRandom.png){ align=left }
+
+		!!! warning "Do Not Use"
+
+			__For testing purposes only!__
+			
+			The `testRandom` function serves as useful tool for development, generating predictable values. However, when it comes to applications involving security or cryptography, it's crucial to employ a robust random number generator. 
 		
