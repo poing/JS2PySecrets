@@ -67,6 +67,36 @@ comb = secrets.combine(shares[:4] + [new_share])
 print(comb == key) # => True
 ```
 
+Divide a password containing a mix of numbers, letters, and other characters, requiring that any 3 shares must be present to reconstruct the original password:
+
+```python
+import js2pysecrets as secrets
+
+pw = "<<PassWord123>>"
+
+# convert the text into a hex string
+pwHex = secrets.str2hex(pw)
+print(pwHex) # => hex string
+
+# split into 5 shares, with a threshold of 3
+shares = secrets.share(pwHex, 5, 3)
+print(shares) # => ['801xxx...xxx','802xxx...xxx', ... ,'804xxx...xxx','805xxx...xxx']
+
+# combine 2 shares:
+comb = secrets.combine(shares[:2])
+
+//convert back to UTF string:
+comb = secrets.hex2str(comb)
+print(comb === pw) # => False
+
+// combine 3 shares:
+comb = secrets.combine([shares[1], shares[3], shares[4]])
+
+//convert back to UTF string:
+comb = secrets.hex2str(comb)
+print(comb === pw) # => True
+```
+
 ---
 
 This is a `Python` implementation of [Shamir's threshold secret sharing scheme](http://en.wikipedia.org/wiki/Shamir's_Secret_Sharing), based **and compatible with** the `JavaScript` fork of `secrets.js` [*maintained by `grempe`*](https://github.com/grempe/secrets.js).  Which is orginally based on the code created by `amper5and` on Github. The [original secrets.js can be found there](https://github.com/amper5and/secrets.js/).
