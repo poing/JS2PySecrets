@@ -567,10 +567,12 @@ def share(secret, num_shares, threshold, pad_length=None):
     # Security: pad in multiples of 128 bits by default
     pad_length = pad_length or 128
 
-    if not isinstance(secret, str):
+    if not isinstance(secret, str) or not all(
+        c in "0123456789abcdefABCDEF" for c in secret
+    ):
         raise ValueError("Secret must be a hex string.")
 
-    if not isinstance(num_shares, int) or num_shares < 2:
+    if not isinstance(num_shares, int) or num_shares <= 2:
         raise ValueError("Number of shares must be an integer >= 2.")
 
     if num_shares > settings.maxShares:
