@@ -61,7 +61,7 @@ setup(
 		"sharing",
 		"sss",
 		"ssss",
-	]
+	],
 	classifiers = [
 		"Development Status :: 4 - Beta",
 		"Intended Audience :: Developers",
