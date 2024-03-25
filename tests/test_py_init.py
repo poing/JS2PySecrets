@@ -115,7 +115,6 @@ settings = Settings()
         (None, None),
     ],
 )
-
 @pytest.mark.skip(reason="WIP: started seeing odd failures")
 def test_py_init_with_errors(
     bits,
@@ -127,10 +126,12 @@ def test_py_init_with_errors(
     num_val,
     num_error,
     th_val,
-    th_error
+    th_error,
 ):
 
-    expected_error = check_error(bits_error, rand_error, sec_error, num_error, th_error)
+    expected_error = check_error(
+        bits_error, rand_error, sec_error, num_error, th_error
+    )
 
     if expected_error:
         with pytest.raises(ValueError, match=expected_error):
@@ -146,11 +147,11 @@ def test_py_init_with_errors(
                 num_shares = base_value(num_val)
                 shares = secrets.share(secret, num_shares, 3)
             if not bits_error or rand_error:
-                
+
                 numShares = low_random(settings.maxShares, settings.bits)
                 threshold = base_value(th_val)
                 shares = secrets.share(secret, numShares, threshold)
-                
+
             assert len(caught_warnings) == 1
             assert issubclass(caught_warnings[0].category, Warning)
             assert expected_error in str(caught_warnings[0].message)
@@ -174,7 +175,13 @@ def check_error(bits_error, rand_error, sec_error, num_error, th_error):
             rand_error
             if rand_error
             else (
-                sec_error if sec_error else (num_error if num_error else (th_error if th_error else None))
+                sec_error
+                if sec_error
+                else (
+                    num_error
+                    if num_error
+                    else (th_error if th_error else None)
+                )
             )
         )
     )
