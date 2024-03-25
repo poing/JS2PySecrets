@@ -2,6 +2,16 @@ Changelog
 =========
 
 
+(unreleased)
+------------
+- Added keywords and classifiers. [poing]
+
+
+0.0.17 (2024-03-25)
+-------------------
+- Release: version 0.0.17 🚀 [poing]
+
+
 0.0.16 (2024-03-25)
 -------------------
 - Release: version 0.0.16 🚀 [poing]
