@@ -4,6 +4,12 @@ Changelog
 
 (unreleased)
 ------------
+- Cleaning up tests. [poing]
+
+
+0.0.18 (2024-03-25)
+-------------------
+- Release: version 0.0.18 🚀 [poing]
 - Added keywords and classifiers. [poing]
 
 
