@@ -10,9 +10,9 @@ Function names and arguments used in the JavaScript package have been maintained
 
 The functionality is essentially the same as the JavaScript package, with an exception around random number generation.  Python doesn't have to adapt to different environments for random number generation like the JavaScript does.
 
-!!! example "Quick Comparison"
+!!! info "Quick Comparison"
 
-	Here's a quick overview of how Python will look, compared with the JavaScript implimentation.
+	Here's a quick overview of the Python use, compared with the JavaScript use.
 
 	=== " :fontawesome-brands-python: Python"
 
@@ -36,50 +36,95 @@ The functionality is essentially the same as the JavaScript package, with an exc
 		var shares = secrets.share(key, 6, 3);
 		
 		var recovered = secrets.combine(shares); // "86a8e7"
+		```
 
+## Installation and Usage
 
+Install the PyPI package:
+
+```
+pip install js2pysecrets
+```
+
+Import the library:
+
+```
+import js2pysecrets as secrets
+```
+
+### Examples
+
+!!! example "Examples"
+
+	=== " :fontawesome-brands-python: Divide a Hex Key"
+
+		Divide a 512-bit key, expressed in hexadecimal form, into 10 shares, requiring that any 5 of them are necessary to reconstruct the original key:
+
+		```python
+		import js2pysecrets as secrets
+
+		# generate a 512-bit key
+		key = secrets.random(512) 
+		print(key) # => key is a hex string
+
+		# split into 10 shares with a threshold of 5
+		shares = secrets.share(key, 10, 5)
+		print(shares) # => ['801xxx...xxx','802xxx...xxx', ... ,'809xxx...xxx','80axxx...xxx']
+
+		# combine 4 shares
+		comb = secrets.combine(shares[:4])
+		print(comb == key) # => False
+
+		# combine 5 shares
+		comb = secrets.combine(shares[:5])
+		print(comb == key) # => True
+
+		# combine ALL shares
+		comb = secrets.combine(shares)
+		print(comb == key) # => True
+
+		# create another share with id 8
+		new_share = secrets.newShare(8, shares)
+		print(new_share) # => '808xxx...xxx'
+
+		# reconstruct using 4 original shares and the new share:
+		comb = secrets.combine(shares[:4] + [new_share])
+		print(comb == key) # => True
+		```
+
+	=== " :fontawesome-brands-python: Divide a Password"
+
+		Divide a password containing a mix of numbers, letters, and other characters, requiring that any 3 shares must be present to reconstruct the original password:
+
+		```python
+		import js2pysecrets as secrets
+
+		pw = "<<PassWord123>>"
+
+		# convert the text into a hex string
+		pwHex = secrets.str2hex(pw)
+		print(pwHex) # => hex string
+
+		# split into 5 shares, with a threshold of 3
+		shares = secrets.share(pwHex, 5, 3)
+		print(shares) # => ['801xxx...xxx','802xxx...xxx', ... ,'804xxx...xxx','805xxx...xxx']
+
+		# combine 2 shares:
+		comb = secrets.combine(shares[:2])
+
+		# convert back to UTF string:
+		comb = secrets.hex2str(comb)
+		print(comb == pw) # => False
+
+		# combine 3 shares:
+		comb = secrets.combine([shares[1], shares[3], shares[4]])
+
+		# convert back to UTF string:
+		comb = secrets.hex2str(comb)
+		print(comb == pw) # => True
 		```
 
 
-!!! tip "Random Number Generator"
-
-	This package handles random number generation different that the JavaScript package.  This difference affects:
-	
-	- `init()`
-	- `setRNG()`
-	- `getConfig()`
-	
-	
-
-	!!! warning "Random Data CAN Be Captured"
-
-		Capturing the random data used to generate shares is possible.  It's __not__ enabled by default and the `function()` necessary to process the random data is at the discretion users of this package.  
-	
-		The ability to access the random data is __solely__ intended for random dithering _(like the images below)_.
-	
-	=== "secrets"
-		![Image title](images/secrets.png){ align=left }
-
-		The `secrets` module is used for generating cryptographically strong random numbers suitable for managing data such as passwords, account authentication, security tokens, and related secrets.
-
-		The `secrets` module __should be used__ instead of the default pseudo-random number generator in the `random` module, which is designed for modelling and simulation, not security or cryptography.
-
-	=== "random"
-		![Image title](images/random.png){ align=left }
-		
 
 
 
-		!!! warning "Warning"
-
-			The pseudo-random generators in the `random` module __should not__ be used for security purposes. For security or cryptographic uses, use the `secrets` module. 		
-
-	=== "testRandom"
-		![Image title](images/testRandom.png){ align=left }
-
-		!!! danger "Do Not Use"
-
-			__For testing purposes only!__
-			
-			The `testRandom` function serves as useful tool for development, generating predictable values. However, when it comes to applications involving security or cryptography, it's crucial to employ a robust random number generator. 
-		

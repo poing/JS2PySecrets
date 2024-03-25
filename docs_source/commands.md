@@ -41,21 +41,32 @@ The output of `secrets.newShare()` is a String. This is the same format for the 
 
 ### secrets.init( [bits, rngType] )
 
+!!! danger ""
+	This package handles random number generation different that the JavaScript package it's based on. 
+
 Set the number of bits to use for finite field arithmetic.
 
 - `bits`: Number, optional, default `8`: An integer between 3 and 20. The number of bits to use for the Galois field.
-- `rngType`: String, optional: A string that has one of the values `["nodeCryptoRandomBytes", "browserCryptoGetRandomValues"]`. Setting this will try to override the RNG that would be selected normally based on feature detection. Warning: You can specify a RNG that won't actually _work_ in your environment.
 
-Internally, secrets.js uses finite field arithmetic in binary Galois Fields of size 2^bits. Multiplication is implemented by the means of log and exponential tables. Before any arithmetic is performed, the log and exp tables are pre-computed. Each table contains 2^bits entries.
+- `rngType`: String or Callable, optional: A _string_ with __any__ value will use the `testRandom`.  Setting this with a _callable_ will try to override the RNG that would normally be used. Warning: You can specify a RNG that __may not__ _work_ in your environment.
 
-`bits` is the limiting factor on `numShares` and `threshold`. The maximum number of shares possible for a particular `bits` is (2^bits)-1 (the zeroth share cannot be used as it is the `secret` by definition.). By default, secrets.js uses 8 bits, for a total 2^8-1 = 255 possible number of shares. To compute more shares, a larger field must be used. To compute the number of bits you will need for your `numShares` or `threshold`, compute the log-base2 of (`numShares`+1) and round up, i.e. in JavaScript: `Math.ceil(Math.log(numShares+1)/Math.LN2)`. You can examine the current calculated `maxShares` value by calling `secrets.getConfig()` and increase the bits accordingly for the number of shares you need to generate.
+!!! warning
+
+    Changing the _optional_ `rngType` can be either a `str` or `callable`.  
+
+    __Any__ `str` will invoke the `testRandom` RNG.  _See `setRNG()` for details._
+
+
+Internally, js2pysecrets uses finite field arithmetic in binary Galois Fields of size 2^bits. Multiplication is implemented by the means of log and exponential tables. Before any arithmetic is performed, the log and exp tables are pre-computed. Each table contains 2^bits entries.
+
+`bits` is the limiting factor on `numShares` and `threshold`. The maximum number of shares possible for a particular `bits` is (2^bits)-1 (the zeroth share cannot be used as it is the `secret` by definition.). By default, js2pysecrets uses 8 bits, for a total 2^8-1 = 255 possible number of shares. To compute more shares, a larger field must be used. To compute the number of bits you will need for your `numShares` or `threshold`, compute the log-base2 of (`numShares`+1) and round up, i.e. in JavaScript: `Math.ceil(Math.log(numShares+1)/Math.LN2)`. You can examine the current calculated `maxShares` value by calling `secrets.getConfig()` and increase the bits accordingly for the number of shares you need to generate.
 
 Note:
 
 - You can call `secrets.init()` anytime to reset _all_ internal state and re-initialize.
 - `secrets.init()` does NOT need to be called if you plan on using the default of 8 bits. It is automatically called on loading the library.
 - The size of the exp and log tables depends on `bits` (each has 2^bits entries). Therefore, using a large number of bits will cause a slightly longer delay to compute the tables.
-- The _theoretical_ maximum number of bits is 31, as JavaScript performs bitwise operations on 31-bit numbers. A limit of 20 bits has been hard-coded into secrets.js, which can produce 1,048,575 shares. secrets.js has not been tested with this many shares, and it is not advisable to go this high, as it may be too slow to be of any practical use.
+- The _theoretical_ maximum number of bits is 31, as JavaScript performs bitwise operations on 31-bit numbers. A limit of 20 bits has been hard-coded into js2pysecrets, which can produce 1,048,575 shares. js2pysecrets has not been tested with this many shares, and it is not advisable to go this high, as it may be too slow to be of any practical use.
 - The Galois Field may be re-initialized to a new setting when `secrets.newShare()` or `secrets.combine()` are called with shares that are from a different Galois Field than the currently initialized one. For this reason, use `secrets.getConfig()` to check what the current `bits` setting is.
 
 ### secrets.getConfig()
@@ -65,8 +76,12 @@ Returns an Object with the current configuration. Has the following properties:
 - `bits`: [Number] The number of bits used for the current initialized finite field
 - `radix`: [Number] The current radix (Default: 16)
 - `maxShares`: [Number] The max shares that can be created with the current `bits`. Computed as `Math.pow(2, config.bits) - 1`
-- `hasCSPRNG`: [Boolean] Indicates whether or not a Cryptographically Secure Pseudo Random Number Generator has been found and initialized.
-- - `typeCSPRNG`: [String] Indicates which random number generator function has been selected based on either environment feature detection (the default) or by manually specifying the RNG type using `secrets.init()` or `secrets.setRNG()`. The current possible types that can be displayed here are ["nodeCryptoRandomBytes", "browserCryptoGetRandomValues"].
+- `hasCSPRNG`: [Boolean] Indicates whether or not a Random Number Generator has been initialized.
+
+!!! danger ""
+	This package handles random number generation different that the JavaScript package it's based on.  
+
+- `typeCSPRNG`: [None] __Depreciated__ and not used in the Python package.
 
 ### secrets.extractShareComponents( share )
 
@@ -78,13 +93,98 @@ Returns an Object with the extracted parts of a public share string passed as an
 
 ### secrets.setRNG( function(bits){} | rngType )
 
-Set the pseudo-random number generator used to compute shares.
+!!! danger ""
+	This package handles random number generation different that the JavaScript package it's based on.  
 
-secrets.js uses a PRNG in the `secrets.share()` and `secrets.random()` functions. By default, it tries to use a cryptographically strong PRNG. In Node.js this is `crypto.randomBytes()`. In browsers that support it, it is `crypto.getRandomValues()` (using typed arrays, which must be supported too).
+Set the RNG number generator used to compute shares.
 
-To supply your own PRNG, use `secrets.setRNG()`. It expects a Function of the form `function(bits){}`. It should compute a random integer between 1 and 2^bits-1. The output must be a String of length `bits` containing random 1's and 0's (cannot be ALL 0's). When `secrets.setRNG()` is called, it tries to check the PRNG to make sure it complies with some of these demands, but obviously it's not possible to run through all possible outputs. So make sure that it works correctly.
+js2pysecrets uses a RNG in the `secrets.share()` and `secrets.random()` functions. By default, it uses the Python `secrets` module.
 
-- `rngType`: String, optional: A string that has one of the values `["nodeCryptoRandomBytes", "browserCryptoGetRandomValues"]`. Setting this will try to override the RNG that would be selected normally based on feature detection. Warning: You can specify a RNG that won't actually _work_ in your environment.
+To supply your own RNG, use `secrets.setRNG()`. It expects a Function of the form `lambda bits: function(bits)`. It should compute a random integer between 1 and 2^bits-1. The output must be a String of length `bits` containing random 1's and 0's (cannot be ALL 0's).
+
+!!! example "Setting an RNG"
+
+    js2pysecrets is flexable and can use _alternate_ RNG's.  The Python `secrets` module is the default.
+    
+	=== " :fontawesome-brands-python: random"
+
+        Using the Python `random` module
+
+		``` py
+		import js2pysecrets as secrets
+		import random
+	
+		secrets.setRNG(lambda bits: bin(random.getrandbits(bits))[2:].zfill(bits))
+		
+		secrets.random(32)
+		secrets.random(32)
+		secrets.random(32)
+		```
+
+	=== " :fontawesome-brands-python: custom"
+	
+	    Using a custom `function()`
+
+		``` py
+		import js2pysecrets as secrets
+		
+		def custom_random(bits):
+            # Not random, not using bits... just an example
+		    return '01010101' # Must be a binary string and len() = bits
+
+		secrets.setRNG(lambda bits: custom_random(bits))
+
+		secrets.random(32)
+		secrets.random(32)
+		secrets.random(32)
+		```
+
+	=== " :fontawesome-brands-python: any string"
+	
+        !!! danger ""
+            __Any `str` value will use `testRandom`__
+
+
+		``` py
+		import js2pysecrets as secrets
+
+		secrets.setRNG('testRandom') # Uses testRandom
+		secrets.random(32)
+
+		secrets.setRNG('foo') # Uses testRandom
+		secrets.random(32)
+
+		secrets.setRNG('bar') # Uses testRandom
+		secrets.random(32)
+
+        secrets.setRNG('foobar') # Uses testRandom
+		secrets.random(32)
+		```
+
+	=== " :fontawesome-brands-python: default"
+	
+	    Use `init()` to _revert_ the default RNG
+
+		``` py
+		import js2pysecrets as secrets
+
+		secrets.setRNG('testRandom') # Uses testRandom
+		secrets.random(32)
+		secrets.random(32)
+
+        secrets.init() # Revert to default RNG
+		secrets.random(32)
+		secrets.random(32)
+		```
+
+
+- `rngType`: String or Callable, optional: A _string_ with __ANY__ value will use the `testRandom`.  Setting this with a _callable_ will override the RNG that would normally be used. Warning: You can specify a RNG that __may not__ _work_ in your environment.
+
+!!! warning
+
+	Changing the _optional_ `rngType` can be either a `str` or `callable`.  
+	
+	__Any__ `str` will invoke the `testRandom` RNG.
 
 ### secrets.random( bits )
 
@@ -113,7 +213,7 @@ You can extract these attributes from a share in your possession with the `secre
 
 ## Note on Security
 
-Shamir's secret sharing scheme is "information-theoretically secure" and "perfectly secure" in that less than the requisite number of shares provide no information about the secret (i.e. knowing less than the requisite number of shares is the same as knowing none of the shares). However, because the size of each share is the same as the size of the secret (when using binary Galois fields, as secrets.js does), in practice it does leak _some_ information, namely the _size_ of the secret. Therefore, if you will be using secrets.js to share _short_ password strings (which can be brute-forced much more easily than longer ones), it would be wise to zero-pad them so that the shares do not leak information about the size of the secret. With this in mind, secrets.js will zero-pad in multiples of 128 bits by default which slightly increases the share size for small secrets in the name of added security. You can increase or decrease this padding manually by passing the `padLength` argument to `secrets.share()`.
+Shamir's secret sharing scheme is "information-theoretically secure" and "perfectly secure" in that less than the requisite number of shares provide no information about the secret (i.e. knowing less than the requisite number of shares is the same as knowing none of the shares). However, because the size of each share is the same as the size of the secret (when using binary Galois fields, as js2pysecrets does), in practice it does leak _some_ information, namely the _size_ of the secret. Therefore, if you will be using js2pysecrets to share _short_ password strings (which can be brute-forced much more easily than longer ones), it would be wise to zero-pad them so that the shares do not leak information about the size of the secret. With this in mind, js2pysecrets will zero-pad in multiples of 128 bits by default which slightly increases the share size for small secrets in the name of added security. You can increase or decrease this padding manually by passing the `padLength` argument to `secrets.share()`.
 
 When `secrets.share()` is called with a `padLength`, the `secret` is zero-padded so that it's length is a multiple of the padLength. The second example above can be modified to use 1024-bit zero-padding, producing longer shares:
 

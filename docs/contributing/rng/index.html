@@ -9,21 +9,25 @@
       
       
       
+        <link rel="prev" href="../tests/">
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+        <link rel="next" href="../../blog/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
     
     
       
-        <title>Why start with a JavaScript package? - js2pysecrets</title>
+        <title>RNG - js2pysecrets</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.7e359304.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -42,9 +46,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -68,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#why-start-with-a-javascript-package" class="md-skip">
+        <a href="#random-number-generator" class="md-skip">
           Skip to content
         </a>
       
@@ -84,7 +88,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="js2pysecrets" class="md-header__button md-logo" aria-label="js2pysecrets" data-md-component="logo">
+    <a href="../.." title="js2pysecrets" class="md-header__button md-logo" aria-label="js2pysecrets" data-md-component="logo">
       
   
   <?xml version="1.0" encoding="UTF-8"?><svg id="b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 241.55 150.5"><g id="c"><path d="M91.3.25l58.28.08c6.47,0,11.72,5.26,11.72,11.73h0c0,5.3-2.11,10.39-5.86,14.14l-3.5,3.5c-6.03,6.03-6.46,15.66-1.01,22.21h0c8,9.6,22.73,9.6,30.73,0h0c5.46-6.55,5.02-16.18-1.01-22.21l-3.5-3.5c-3.75-3.75-5.86-8.84-5.86-14.14h0c0-6.47,5.24-11.72,11.72-11.73l58.28-.08c0,82.29-67.71,150-150,150-26.33,0-52.2-6.93-75-20.1l29.17-50.52c3.24-5.6,1.32-12.77-4.29-16h0c-4.59-2.65-10.05-3.37-15.18-2l-4.78,1.28c-8.23,2.21-16.79-2.23-19.73-10.23h0c-4.31-11.72,3.06-24.48,15.36-26.61h0c8.4-1.45,16.52,3.74,18.73,11.98l1.28,4.78c1.37,5.12,4.72,9.49,9.32,12.14h0c5.6,3.24,12.77,1.32,16-4.29L91.3.25Z" style="fill:#86A8E7;"/></g></svg>
@@ -104,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Why start with a JavaScript package?
+              RNG
             
           </span>
         </div>
@@ -145,9 +149,7 @@
           
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -156,7 +158,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="js2pysecrets" class="md-nav__button md-logo" aria-label="js2pysecrets" data-md-component="logo">
+    <a href="../.." title="js2pysecrets" class="md-nav__button md-logo" aria-label="js2pysecrets" data-md-component="logo">
       
   
   <?xml version="1.0" encoding="UTF-8"?><svg id="b" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 241.55 150.5"><g id="c"><path d="M91.3.25l58.28.08c6.47,0,11.72,5.26,11.72,11.73h0c0,5.3-2.11,10.39-5.86,14.14l-3.5,3.5c-6.03,6.03-6.46,15.66-1.01,22.21h0c8,9.6,22.73,9.6,30.73,0h0c5.46-6.55,5.02-16.18-1.01-22.21l-3.5-3.5c-3.75-3.75-5.86-8.84-5.86-14.14h0c0-6.47,5.24-11.72,11.72-11.73l58.28-.08c0,82.29-67.71,150-150,150-26.33,0-52.2-6.93-75-20.1l29.17-50.52c3.24-5.6,1.32-12.77-4.29-16h0c-4.59-2.65-10.05-3.37-15.18-2l-4.78,1.28c-8.23,2.21-16.79-2.23-19.73-10.23h0c-4.31-11.72,3.06-24.48,15.36-26.61h0c8.4-1.45,16.52,3.74,18.73,11.98l1.28,4.78c1.37,5.12,4.72,9.49,9.32,12.14h0c5.6,3.24,12.77,1.32,16-4.29L91.3.25Z" style="fill:#86A8E7;"/></g></svg>
@@ -186,7 +188,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -206,7 +208,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../commands/" class="md-nav__link">
+      <a href="../../commands/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -226,7 +228,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../gems/" class="md-nav__link">
+      <a href="../../gems/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -243,17 +245,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -267,7 +271,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Contributing to JS2PySecrets
@@ -281,7 +285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -302,7 +306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/tests/" class="md-nav__link">
+      <a href="../tests/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -320,10 +324,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../contributing/rng/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -332,6 +345,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -348,14 +362,12 @@
       
   
   
-    
-  
   
     
   
   
-    <li class="md-nav__item md-nav__item--active">
-      <a href="../../" class="md-nav__link">
+    <li class="md-nav__item">
+      <a href="../../blog/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -375,7 +387,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../mkdocs/" class="md-nav__link">
+      <a href="../../mkdocs/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -395,7 +407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../license/" class="md-nav__link">
+      <a href="../../license/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -416,8 +428,6 @@
             
             
               
-                
-              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -437,100 +447,70 @@
             
           
           
-  <div class="md-content md-content--post" data-md-component="content">
-    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
-      <div class="md-sidebar__scrollwrap">
-        <div class="md-sidebar__inner md-post">
-          <nav class="md-nav md-nav--primary">
-            <div class="md-post__back">
-              <div class="md-nav__title md-nav__container">
-                <a href="../../" class="md-nav__link">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-                  <span class="md-ellipsis">
-                    Back to index
-                  </span>
-                </a>
-              </div>
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="random-number-generator">Random Number Generator</h1>
+<div class="admonition tip">
+<p class="admonition-title">Random Number Generator</p>
+<p>This package handles random number generation different that the JavaScript package.  This difference affects:</p>
+<ul>
+<li><code>init()</code></li>
+<li><code>setRNG()</code></li>
+<li><code>getConfig()</code></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Random Data CAN Be Captured</p>
+<p>Capturing the random data used to generate shares is possible.  It's <strong>not</strong> enabled by default and the <code>function()</code> necessary to process the random data is at the discretion users of this package.  </p>
+<p>The ability to access the random data is <strong>solely</strong> intended for random dithering <em>(like the images below)</em>.</p>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">secrets</label><label for="__tabbed_1_2">random</label><label for="__tabbed_1_3">testRandom</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><img align="left" alt="Image title" src="../../images/secrets.png" /></p>
+<p>The <code>secrets</code> module is used for generating cryptographically strong random numbers suitable for managing data such as passwords, account authentication, security tokens, and related secrets.</p>
+<p>The <code>secrets</code> module <strong>should be used</strong> instead of the default pseudo-random number generator in the <code>random</code> module, which is designed for modelling and simulation, not security or cryptography.</p>
+</div>
+<div class="tabbed-block">
+<p><img align="left" alt="Image title" src="../../images/random.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The pseudo-random generators in the <code>random</code> module <strong>should not</strong> be used for security purposes. For security or cryptographic uses, use the <code>secrets</code> module.         </p>
+</div>
+</div>
+<div class="tabbed-block">
+<p><img align="left" alt="Image title" src="../../images/testRandom.png" /></p>
+<div class="admonition danger">
+<p class="admonition-title">Do Not Use</p>
+<p><strong>For testing purposes only!</strong></p>
+<p>The <code>testRandom</code> function serves as useful tool for development, generating predictable values. However, when it comes to applications involving security or cryptography, it's crucial to employ a robust random number generator. </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
             </div>
-            
-            <ul class="md-post__meta md-nav__list">
-              <li class="md-nav__item md-nav__item--section">
-                <div class="md-post__title">
-                  <span class="md-ellipsis">
-                    Metadata
-                  </span>
-                </div>
-                <nav class="md-nav">
-                  <ul class="md-nav__list">
-                    <li class="md-nav__item">
-                      <div class="md-nav__link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"/></svg>
-                        <time datetime="2024-03-09 00:00:00" class="md-ellipsis">2024-03-09</time>
-                      </div>
-                    </li>
-                    
-                    
-                    
-                      
-                      <li class="md-nav__item">
-                        <div class="md-nav__link">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"/></svg>
-                          <span class="md-ellipsis">
-                            
-                              1 min read
-                            
-                          </span>
-                        </div>
-                      </li>
-                    
-                  </ul>
-                </nav>
-              </li>
-            </ul>
-          </nav>
           
-        </div>
-      </div>
-    </div>
-    <article class="md-content__inner md-typeset">
-      
-        
-
-  
-  
-
-
-<h1 id="why-start-with-a-javascript-package">Why start with a JavaScript package?</h1>
-<p>My decision to start with a JavaScript package came from thorough online research, leading me to the <a href="https://iancoleman.io/shamir/">Shamir Secret Sharing Scheme</a> website. This site offered a straightforward and practical online tool for splitting and combining secrets, with the added benefit of offline usability.</p>
-<!-- more -->
-
-<p>The website not only provided the source code but also offered various links, including the JavaScript library it used to implement Shamir's secret sharing. Additionally, there was a documented security audit conducted on the open-source JavaScript library, instilling confidence in its reliability.</p>
-<p>One significant challenge I encountered with Shamir's secret sharing implementations are the differing outputs (and inputs) across various programming languages and code bases. Despite the plethora of implementations and approaches, they simply fail to interoperate.</p>
-<p><em>I'm certain that someone somewhere, a college programmer studying security, is currently crafting their own implementation of Shamir's secret sharing.</em></p>
-<p>While I dug into different implementations of Shamir's shared secrets, gaining valuable insights along the way, I found myself drawn back to the <code>secrets.js-grempe</code> JavaScript package. Its advantages, including the security audit and its use in a user-friendly offline website, were compelling factors in my decision.</p>
-<p>And so...</p>
-<p>I began exploring how to create a Python version that could seamlessly interoperate with the JavaScript package.</p>
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-  
-
-
-
-      
-    </article>
-  </div>
-
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
@@ -591,12 +571,12 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
       
-        <script src="../../../javascripts/mathjax.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
       
         <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       

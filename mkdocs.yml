@@ -71,6 +71,7 @@ nav:
   - "Contributing to JS2PySecrets":
     - "Getting Started": contributing/index.md
     - "Writing Tests": contributing/tests.md
+    - "RNG": contributing/rng.md
   - blog/index.md
   - 'mkdocs.md'
   - 'license.md'
