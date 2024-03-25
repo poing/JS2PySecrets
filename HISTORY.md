@@ -4,6 +4,15 @@ Changelog
 
 (unreleased)
 ------------
+- Update docs. [poing]
+- Update docs. [poing]
+- Update docs. [poing]
+- Update docs. [poing]
+
+
+0.0.13 (2024-03-24)
+-------------------
+- Release: version 0.0.13 🚀 [poing]
 - Adjusted the readme, check how footnotes are shown in PyPI. [poing]
 
 
