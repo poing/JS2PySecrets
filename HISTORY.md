@@ -4,48 +4,35 @@ Changelog
 
 (unreleased)
 ------------
+- Cleaned up the code. [poing]
+- Cleaned up the code. [poing]
+- Cleanup. [poing]
+- Merge pull request #28 from poing/0.0.8. [Brian LaVallee]
+
+  0.0.8
+- Fixed test format that fails CI. [poing]
+- Merge pull request #27 from poing/0.0.8. [Brian LaVallee]
+
+  0.0.8
+
+
+0.1.0 (2024-03-25)
+------------------
+- Release: version 0.1.0 🚀 [poing]
 - Cleaning up tests. [poing]
-
-
-0.0.18 (2024-03-25)
--------------------
 - Release: version 0.0.18 🚀 [poing]
 - Added keywords and classifiers. [poing]
-
-
-0.0.17 (2024-03-25)
--------------------
 - Release: version 0.0.17 🚀 [poing]
-
-
-0.0.16 (2024-03-25)
--------------------
 - Release: version 0.0.16 🚀 [poing]
 - Added keywords and classifiers. [poing]
-
-
-0.0.15 (2024-03-25)
--------------------
 - Release: version 0.0.15 🚀 [poing]
-
-
-0.0.14 (2024-03-25)
--------------------
 - Release: version 0.0.14 🚀 [poing]
 - Update docs. [poing]
 - Update docs. [poing]
 - Update docs. [poing]
 - Update docs. [poing]
-
-
-0.0.13 (2024-03-24)
--------------------
 - Release: version 0.0.13 🚀 [poing]
 - Adjusted the readme, check how footnotes are shown in PyPI. [poing]
-
-
-0.0.11 (2024-03-24)
--------------------
 - Release: version 0.0.11 🚀 [poing]
 - Fix initilization. [poing]
 - Fix initilization. [poing]
@@ -53,16 +40,8 @@ Changelog
 - Update readme. [poing]
 - Update readme. [poing]
 - Update readme and PyPI adjustments. [poing]
-
-
-0.0.10 (2024-03-23)
--------------------
 - Release: version 0.0.10 🚀 [poing]
 - Updating for PyPI release. [poing]
-
-
-0.0.9 (2024-03-23)
-------------------
 - Release: version 0.0.9 🚀 [poing]
 - Updating for PyPI release. [poing]
 - Release: version 0.0.8b 🚀 [poing]
@@ -70,10 +49,6 @@ Changelog
 - Release: version 0.0.8a 🚀 [poing]
 - Updating for PyPI release. [poing]
 - Documentation work. [poing]
-
-
-0.0.8 (2024-03-22)
-------------------
 - Release: version 0.0.8 🚀 [poing]
 - Added all the functions(), conversion 100% complete. [poing]
 - Added working combine(), conversion at 95% [poing]
@@ -181,10 +156,6 @@ Changelog
 - Merge pull request #17 from poing/0.0.4. [Brian LaVallee]
 
   Revised secrets.js to use NodeJS
-
-
-0.0.4 (2024-03-07)
-------------------
 - Release: version 0.0.4 🚀 [poing]
 - Added license to docs. [poing]
 - Change the item order. [poing]
@@ -205,10 +176,6 @@ Changelog
 - Added NodeJS to the workflow. [poing]
 - Added NodeJS to the workflow. [poing]
 - Have release working. [poing]
-
-
-0.0.3 (2024-03-07)
-------------------
 - Release: version 0.0.3 🚀 [poing]
 - Release: version  🚀 [poing]
 - Release: version  🚀 [poing]

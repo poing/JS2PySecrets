@@ -1,9 +1,3 @@
-# import json
-
-# from .decorators import JsFunction, jsNeedless
-
-# from .wrapper import wrapper  # Import your wrapper function
-
 import math
 import re
 
@@ -13,8 +7,6 @@ NAME = "js2pysecrets"
 
 
 settings = Settings()
-# settings.update_defaults(rng=99)
-# config = settings.get_config()
 
 
 def reset():
@@ -71,97 +63,6 @@ def hex2bin(hex_str):
     return bin_str
 
 
-# def hex2bin(hex_string: str) -> str:
-#     binary_string = bin(int(hex_string, 16))[2:]
-#
-#     # Need to respect any leading zeros in the binary string when converting
-#     #  to hex.  Because 0b0011 = 0x3, while 0x03 is desired
-#     binary_string = binary_string.zfill((len(binary_string) // 8))
-#
-#     #binary_string = bin(int(hex_string, 16))[2:]
-#
-#     # Need to respect any leading zeros in the binary string when converting
-#     #  to hex.  Because 0b0011 = 0x3, while 0x03 is desired
-#     #binary_string = binary_string.zfill(int(hex_string, 2))
-#
-#     # return bin(int(hex_string, 16))[2:]
-#     return binary_string
-
-
-"""
-ABOVE THIS LINE ARE INTERNAL FUNCTIONS
-"""
-
-
-def init(bits=None, rngType=None):
-    exps = []
-    logs = [None]
-    x = 1
-    primitive = None
-
-    # reset all config back to initial state
-    reset()
-
-    if bits and (
-        not isinstance(bits, int)
-        or bits < settings.min_bits
-        or bits > settings.max_bits
-    ):
-        raise ValueError(
-            f"Number of bits must be an integer between {settings.min_bits} "
-            f"and {settings.max_bits}, inclusive."
-        )
-
-    if rngType and not isinstance(rngType, str) or callable(rngType):
-        raise ValueError(f"Invalid RNG type argument : '{rngType}'")
-
-    settings.update_defaults(radix=settings.radix)
-    settings.update_defaults(bits=bits or settings.bits)
-    settings.update_defaults(size=(2**settings.bits))
-    settings.update_defaults(maxShares=settings.size - 1)
-
-    # Construct the exp and log tables for multiplication.
-    primitive = settings.primitive_polynomials[settings.bits]
-
-    temp_logs = {}  # Temporary Dict to hold indexed logs
-    for i in range(settings.size):
-        # this works with loop below
-        exps.insert(i, x)
-        temp_logs[x] = i
-
-        x = x << 1  # Left shift assignment
-        if x >= settings.size:
-            x = x ^ primitive  # Bitwise XOR assignment
-            x = x & settings.maxShares  # Bitwise AND assignment
-
-    # Fill the logs List in the proper order
-    for i in range(1, settings.size):
-        logs.append(temp_logs[i])
-
-    settings.update_defaults(logs=logs)
-    settings.update_defaults(exps=exps)
-
-    if rngType:
-        settings.update_defaults(rng=rngType)
-
-    if not isSetRNG():
-        setRNG()  # pragma: no cover unlikely-and-redundant
-
-    if (
-        not isSetRNG()
-        or not settings.bits
-        or not settings.size
-        or not settings.maxShares
-        or not settings.logs
-        or not settings.exps
-        or len(settings.logs) != settings.size
-        or len(settings.exps) != settings.size
-    ):
-        raise ValueError(
-            "Initialization failed."
-        )  # pragma: no cover hard-to-fail
-
-
 """
 Adapted Python Random Number Generation:
 
@@ -178,7 +79,7 @@ included for testing purposes, providing repeatable non-random bits.
 
 The `setRNG` function mirrors the logic of the JavaScript function. If it's a
 string, ANY STRING, it implies a specific type is requested. In such cases,
-it will function like the JavaScript `test_random` RNG for testing purposes.
+it will function like the JavaScript `testRandom` RNG for testing purposes.
 
 This adaptation aims to maintain the core functionality of the JavaScript
 version while adhering to Python idioms and conventions. The focus is on
@@ -236,6 +137,7 @@ def splitNumStringToIntArray(string, pad_length=None):
     return parts
 
 
+# Horner's method for polynomial evaluation.
 def horner(x, coeffs):
 
     logx = settings.logs[x]
@@ -255,6 +157,7 @@ def horner(x, coeffs):
     return fx
 
 
+# Lagrange interpolation formula for polynomial interpolation
 def lagrange(at, x, y):
     result = 0
     length = len(x)
@@ -336,10 +239,9 @@ def constructPublicShareString(bits, share_id, data):
 
         return sign + base36
 
-    share_id = int(share_id, 10)  # Value is store as int
+    share_id = int(share_id, 10)  # Value is stored as int
     bits = bits or settings.bits
     bits_base36 = base36encode(bits).upper()
-    # id_max = 2**bits - 1
     id_max = settings.maxShares
     id_padding_len = len(hex(int(id_max))[2:])
     id_hex = padLeft(hex(int(share_id))[2:], id_padding_len)
@@ -358,9 +260,178 @@ def constructPublicShareString(bits, share_id, data):
     return new_share_string
 
 
-#
-# def base36decode(number):  # pragma: no cover
-#     return int(number, 36)
+"""
+ABOVE THIS LINE ARE INTERNAL FUNCTIONS
+"""
+
+
+def init(bits=None, rngType=None):
+    exps = []
+    logs = [None]
+    x = 1
+    primitive = None
+
+    # reset all config back to initial state
+    reset()
+
+    if bits and (
+        not isinstance(bits, int)
+        or bits < settings.min_bits
+        or bits > settings.max_bits
+    ):
+        raise ValueError(
+            f"Number of bits must be an integer between {settings.min_bits} "
+            f"and {settings.max_bits}, inclusive."
+        )
+
+    if rngType and not isinstance(rngType, str) or callable(rngType):
+        raise ValueError(f"Invalid RNG type argument : '{rngType}'")
+
+    settings.update_defaults(radix=settings.radix)
+    settings.update_defaults(bits=bits or settings.bits)
+    settings.update_defaults(size=(2**settings.bits))
+    settings.update_defaults(maxShares=settings.size - 1)
+
+    # Construct the exp and log tables for multiplication.
+    primitive = settings.primitive_polynomials[settings.bits]
+
+    temp_logs = {}  # Temporary Dict to hold indexed logs
+    for i in range(settings.size):
+        # this works with loop below
+        exps.insert(i, x)
+        temp_logs[x] = i
+
+        x = x << 1  # Left shift assignment
+        if x >= settings.size:
+            x = x ^ primitive  # Bitwise XOR assignment
+            x = x & settings.maxShares  # Bitwise AND assignment
+
+    # Fill the logs List in the proper order
+    for i in range(1, settings.size):
+        logs.append(temp_logs[i])
+
+    settings.update_defaults(logs=logs)
+    settings.update_defaults(exps=exps)
+
+    if rngType:
+        settings.update_defaults(rng=rngType)
+
+    if not isSetRNG():
+        setRNG()  # pragma: no cover unlikely-and-redundant
+
+    if (
+        not isSetRNG()
+        or not settings.bits
+        or not settings.size
+        or not settings.maxShares
+        or not settings.logs
+        or not settings.exps
+        or len(settings.logs) != settings.size
+        or len(settings.exps) != settings.size
+    ):
+        raise ValueError(
+            "Initialization failed."
+        )  # pragma: no cover hard-to-fail
+
+
+def combine(shares, at=0):
+    result = ""
+    set_bits = None
+    x = []
+    y = []
+
+    at = at or 0
+
+    for share in shares:
+        share_components = extractShareComponents(share)
+        share_id = share_components["id"]
+        share_data = share_components["data"]
+
+        # All shares must have the same bits settings.
+        if set_bits is None:
+            set_bits = share_components["bits"]
+        elif set_bits != share_components["bits"]:
+            raise ValueError("Mismatched shares: Different bit settings.")
+
+        # Reset everything to the bit settings of the shares.
+        if settings.bits != set_bits:
+            init(set_bits)
+
+        # Gathering all the provided shares
+        if share_id not in x:
+            x.append(share_id)
+            split_share = splitNumStringToIntArray(hex2bin(share_data))
+            y.append(split_share)
+
+    # Zipping all of the shares together.
+    y = list(zip(*y))
+
+    # Extract the secret from the 'rotated' share data and return a
+    # string of Binary digits which represent the secret directly. or in the
+    # case of a newShare() return the binary string representing just that
+    # new share.
+    for yi in y:
+
+        result = padLeft(bin(lagrange(at, x, yi))[2:]) + result
+
+    return (
+        bin2hex(result) if at >= 1 else bin2hex(result[result.find("1") + 1 :])
+    )
+
+
+def getConfig():
+    settings.update_defaults(hasCSPRNG=isSetRNG())
+    return settings.get_config()
+
+
+def extractShareComponents(share):
+
+    defaults = {
+        "minBits": 1,
+        "maxBits": 32,
+    }  # Assuming defaults for minBits and maxBits
+
+    config = {"radix": 16}  # Assuming radix as 16 for hex numbers
+    bits = int(share[0], 36)
+
+    if not (
+        bits
+        and isinstance(bits, int)
+        and bits % 1 == 0
+        and defaults["minBits"] <= bits <= defaults["maxBits"]
+    ):
+        raise ValueError(
+            f"Invalid share: Number of bits must be an integer between "
+            f"{settings.min_bits} and {settings.max_bits}, inclusive."
+        )  # pragma: no cover
+
+    max_shares = 2**bits - 1
+    id_len = len(hex(max_shares)[2:])
+
+    regex_str = (
+        "^([a-kA-K3-9]{1})([a-fA-F0-9]{" + str(id_len) + "})([a-fA-F0-9]+)$"
+    )
+    share_components = re.match(regex_str, share)
+
+    if share_components:
+        share_id = int(share_components.group(2), config["radix"])
+        if not (
+            isinstance(share_id, int)
+            and share_id % 1 == 0
+            and 1 <= share_id <= max_shares
+        ):
+            raise ValueError(
+                f"Invalid share: Share id must be an integer between 1 and "
+                f"{max_shares}, inclusive."
+            )  # pragma: no cover
+
+        return {
+            "bits": bits,
+            "id": share_id,
+            "data": share_components.group(3),
+        }
+
+    raise ValueError("Invalid share data provided.")
 
 
 # lambda bits: bin(random.getrandbits(bits))[2:].zfill(bits)
@@ -424,7 +495,6 @@ def hex2str(hex_string, bytes_per_char=None):
 
     # defaults = {"bytes_per_char": 2, "max_bytes_per_char": 4}
     # Assuming these defaults
-
     bytes_per_char = bytes_per_char or defaults.bytes_per_char
 
     if (
@@ -453,106 +523,8 @@ def hex2str(hex_string, bytes_per_char=None):
     return out
 
 
-def combine(shares, at=0):
-    result = ""
-    set_bits = None
-    x = []
-    y = []
-
-    at = at or 0
-
-    for share in shares:
-        share_components = extractShareComponents(share)
-        share_id = share_components["id"]
-        share_data = share_components["data"]
-
-        # All shares must have the same bits settings.
-        if set_bits is None:
-            set_bits = share_components["bits"]
-        elif set_bits != share_components["bits"]:
-            raise ValueError("Mismatched shares: Different bit settings.")
-
-        # Reset everything to the bit settings of the shares.
-        if settings.bits != set_bits:
-            init(set_bits)
-
-        # Gathering all the provided shares
-        if share_id not in x:
-            x.append(share_id)
-            split_share = splitNumStringToIntArray(hex2bin(share_data))
-            y.append(split_share)
-
-    # Zipping all of the shares together.
-    y = list(zip(*y))
-
-    # Extract the secret from the 'rotated' share data and return a
-    # string of Binary digits which represent the secret directly. or in the
-    # case of a newShare() return the binary string representing just that
-    # new share.
-    for yi in y:
-
-        result = padLeft(bin(lagrange(at, x, yi))[2:]) + result
-
-    return (
-        bin2hex(result) if at >= 1 else bin2hex(result[result.find("1") + 1 :])
-    )
-
-
-def getConfig():
-    settings.update_defaults(hasCSPRNG=isSetRNG())
-    return settings.get_config()
-
-
-def extractShareComponents(share):
-    defaults = {
-        "minBits": 1,
-        "maxBits": 32,
-    }  # Assuming defaults for minBits and maxBits
-    config = {"radix": 16}  # Assuming radix as 16 for hex numbers
-
-    bits = int(share[0], 36)
-
-    if not (
-        bits
-        and isinstance(bits, int)
-        and bits % 1 == 0
-        and defaults["minBits"] <= bits <= defaults["maxBits"]
-    ):
-        raise ValueError(
-            f"Invalid share: Number of bits must be an integer between "
-            f"{settings.min_bits} and {settings.max_bits}, inclusive."
-        )  # pragma: no cover
-
-    max_shares = 2**bits - 1
-    id_len = len(hex(max_shares)[2:])
-
-    regex_str = (
-        "^([a-kA-K3-9]{1})([a-fA-F0-9]{" + str(id_len) + "})([a-fA-F0-9]+)$"
-    )
-    share_components = re.match(regex_str, share)
-
-    if share_components:
-        share_id = int(share_components.group(2), config["radix"])
-        if not (
-            isinstance(share_id, int)
-            and share_id % 1 == 0
-            and 1 <= share_id <= max_shares
-        ):
-            raise ValueError(
-                f"Invalid share: Share id must be an integer between 1 and "
-                f"{max_shares}, inclusive."
-            )  # pragma: no cover
-
-        return {
-            "bits": bits,
-            "id": share_id,
-            "data": share_components.group(3),
-        }
-
-    raise ValueError("Invalid share data provided.")
-
-
 def random(bits):
+
     if not isinstance(bits, int) or bits < 2 or bits > 65536:
         raise ValueError(
             "Number of bits must be an Integer between 2 and 65536."
@@ -564,6 +536,7 @@ def random(bits):
 
 
 def share(secret, num_shares, threshold, pad_length=None):
+
     # Security: pad in multiples of 128 bits by default
     pad_length = pad_length or 128
 
@@ -640,33 +613,3 @@ def newShare(id, shares):
     raise ValueError(
         "Invalid 'id' or 'shares' Array argument to newShare()."
     )  # pragma: no cover
-
-
-# # Core Functions from secrets.js
-# init = jsFunction('init')
-# combine = jsFunction('combine')
-# getConfig = jsFunction('getConfig')
-# extractShareComponents = jsFunction('extractShareComponents')
-# setRNG = jsFunction('setRNG')
-# str2hex = jsFunction('str2hex')
-# hex2str = jsFunction('hex2str')
-# random = jsFunction('random')
-# share = jsFunction('share')
-# newShare = jsFunction('newShare')
-#
-#         /* test-code */
-#         // export private functions so they can be unit tested directly.
-#         _reset: reset,
-#         _padLeft: padLeft,
-#         _hex2bin: hex2bin,
-#         _bin2hex: bin2hex,
-#         _hasCryptoGetRandomValues: hasCryptoGetRandomValues,
-#         _hasCryptoRandomBytes: hasCryptoRandomBytes,
-#         _getRNG: getRNG,
-#         _isSetRNG: isSetRNG,
-#         _splitNumStringToIntArray: splitNumStringToIntArray,
-#         _horner: horner,
-#         _lagrange: lagrange,
-#         _getShares: getShares,
-#         _constructPublicShareString: constructPublicShareString
-#         /* end-test-code */
