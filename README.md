@@ -107,11 +107,14 @@ Read the [CONTRIBUTING.md](https://github.com/poing/JS2PySecrets/blob/main/CONTR
 
 ## To Do
 
-- Restructure and split into separate modules
-    - Move the backend functions outside the main module 
 - Restructure and clean-up the tests
+- Documentation
 
 ## Changelog
+
+- 0.1.x
+
+  - Cleaned up the code an some tests
 
 - 0.0.x
 
