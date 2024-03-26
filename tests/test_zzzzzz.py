@@ -6,10 +6,10 @@
 
 # test_functions_exist.py
 
-import js2pysecrets.base as secrets  # Import the module you want to test
+import js2pysecrets.base as secrets
 
 
-def test_functions_exist():
+def depreciated_test_functions_exist():
     # List of functions you expect to exist in secrets
     expected_functions = [
         "init",

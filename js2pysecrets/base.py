@@ -79,7 +79,7 @@ included for testing purposes, providing repeatable non-random bits.
 
 The `setRNG` function mirrors the logic of the JavaScript function. If it's a
 string, ANY STRING, it implies a specific type is requested. In such cases,
-it will function like the JavaScript `test_random` RNG for testing purposes.
+it will function like the JavaScript `testRandom` RNG for testing purposes.
 
 This adaptation aims to maintain the core functionality of the JavaScript
 version while adhering to Python idioms and conventions. The focus is on
@@ -239,10 +239,9 @@ def constructPublicShareString(bits, share_id, data):
 
         return sign + base36
 
-    share_id = int(share_id, 10)  # Value is store as int
+    share_id = int(share_id, 10)  # Value is stored as int
     bits = bits or settings.bits
     bits_base36 = base36encode(bits).upper()
-    # id_max = 2**bits - 1
     id_max = settings.maxShares
     id_padding_len = len(hex(int(id_max))[2:])
     id_hex = padLeft(hex(int(share_id))[2:], id_padding_len)
@@ -386,12 +385,13 @@ def getConfig():
 
 
 def extractShareComponents(share):
+
     defaults = {
         "minBits": 1,
         "maxBits": 32,
     }  # Assuming defaults for minBits and maxBits
-    config = {"radix": 16}  # Assuming radix as 16 for hex numbers
 
+    config = {"radix": 16}  # Assuming radix as 16 for hex numbers
     bits = int(share[0], 36)
 
     if not (
@@ -524,6 +524,7 @@ def hex2str(hex_string, bytes_per_char=None):
 
 
 def random(bits):
+
     if not isinstance(bits, int) or bits < 2 or bits > 65536:
         raise ValueError(
             "Number of bits must be an Integer between 2 and 65536."
