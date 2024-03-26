@@ -107,22 +107,23 @@ Read the [CONTRIBUTING.md](https://github.com/poing/JS2PySecrets/blob/main/CONTR
 
 ## To Do
 
-- Restructure and split into seterate modules
+- Restructure and split into separate modules
     - Move the backend functions outside the main module 
 - Restructure and clean-up the tests
 
 ## Changelog
 
 - 0.0.x
+
   - Documentation, documentation, documentation...
   - Configured automatic release to PyPI 
   - Converted `secrets.js`[^1] to Python
   - Disabled the `tests_win` GitHub action, #24
   - Moved docs to use [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
-  - Converted `secrets.js`[^1] Jasmine tests to `pytest` versions
+  - Converted `secrets.js-grempe` Jasmine tests to `pytest` versions
   - Added package.json as a stub
   - Built Node.js wrapper for testing
   - Enable CodeCov
   - Started with the [Python Project Template](https://github.com/rochacbruno/python-project-template)
   
-[^1]: `secrets.js-grempe` and `secrets.js` are basically the same.  The difference is the environment, JavaScript or Node.js.
+[^1]: `secrets.js-grempe` and `secrets.js` are basically the same.  The difference is the execution environment, JavaScript or Node.js.

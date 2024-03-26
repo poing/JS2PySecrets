@@ -66,10 +66,12 @@ docs_dir: docs_source
 site_dir: docs
 nav:
   - About: index.md
+  - API: commands.md
   - gems.md
   - "Contributing to JS2PySecrets":
     - "Getting Started": contributing/index.md
     - "Writing Tests": contributing/tests.md
+    - "RNG": contributing/rng.md
   - blog/index.md
   - 'mkdocs.md'
   - 'license.md'

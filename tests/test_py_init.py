@@ -67,9 +67,11 @@ settings = Settings()
     "sec_val, sec_error",
     [
         (None, "Secret must be a hex string."),
+        (True, "Secret must be a hex string."),
+        (False, "Secret must be a hex string."),
         (1234, "Secret must be a hex string."),
         (-256, "Secret must be a hex string."),
-        ("hello world", "Invalid hex character:"),
+        ("hello world", "Secret must be a hex string."),
         (None, None),
     ],
 )
@@ -82,11 +84,33 @@ settings = Settings()
         (-22, "Number of shares must be an integer >= 2."),
         (
             "hello",
-            "Threshold number of shares must be less than or equal to the total shares specified.",
+            "Number of shares must be an integer >= 2.",
+        ),
+        (
+            lambda: settings.maxShares + 1,
+            "Number of shares must be <=",
+        ),
+        (None, None),
+    ],
+)
+@pytest.mark.parametrize(
+    "th_val, th_error",
+    [
+        (False, "Number of shares must be an integer >= 2."),
+        (2, "Threshold number of shares must be an integer >= 2."),
+        (0, "Threshold number of shares must be an integer >= 2."),
+        (-22, "Threshold number of shares must be an integer >= 2."),
+        (
+            "hello",
+            "Threshold number of shares must be an integer >= 2.",
         ),
         (
             lambda: settings.maxShares + 1,
             "Threshold number of shares must be <=",
+        ),
+        (
+            lambda: numShares + 1,
+            "Threshold number of shares must be less than or equal to the",
         ),
         (None, None),
     ],
@@ -101,9 +125,13 @@ def test_py_init_with_errors(
     sec_error,
     num_val,
     num_error,
+    th_val,
+    th_error,
 ):
 
-    expected_error = check_error(bits_error, rand_error, sec_error, num_error)
+    expected_error = check_error(
+        bits_error, rand_error, sec_error, num_error, th_error
+    )
 
     if expected_error:
         with pytest.raises(ValueError, match=expected_error):
@@ -112,12 +140,18 @@ def test_py_init_with_errors(
                 secret = secrets.random(rand_bits)
                 if sec_error:
                     secret = sec_val
-            if not bits_error or rand_error or num_error:
+            if not bits_error or rand_error or num_error or th_error:
                 num_shares = base_value(num_val) or 6
                 shares = secrets.share(secret, num_shares, 3)
-            if not bits_error or rand_error:
+            if not bits_error or rand_error or th_error:
                 num_shares = base_value(num_val)
                 shares = secrets.share(secret, num_shares, 3)
+            if not bits_error or rand_error:
+
+                numShares = low_random(settings.maxShares, settings.bits)
+                threshold = base_value(th_val)
+                shares = secrets.share(secret, numShares, threshold)
+
             assert len(caught_warnings) == 1
             assert issubclass(caught_warnings[0].category, Warning)
             assert expected_error in str(caught_warnings[0].message)
@@ -125,12 +159,15 @@ def test_py_init_with_errors(
         secrets.init(bits)
         assert bits == settings.bits or settings.get_defaults().bits
 
+        numShares = low_random(settings.maxShares, settings.bits)
+        threshold = low_random(numShares, settings.bits)
+
         secret = secrets.random(rand_bits)
-        shares = secrets.share(secret, 6, 3)
+        shares = secrets.share(secret, numShares, threshold)
 
 
 # Used to catch the expected error
-def check_error(bits_error, rand_error, sec_error, num_error):
+def check_error(bits_error, rand_error, sec_error, num_error, th_error):
     expected_error = (
         bits_error
         if bits_error
@@ -138,7 +175,13 @@ def check_error(bits_error, rand_error, sec_error, num_error):
             rand_error
             if rand_error
             else (
-                sec_error if sec_error else (num_error if num_error else None)
+                sec_error
+                if sec_error
+                else (
+                    num_error
+                    if num_error
+                    else (th_error if th_error else None)
+                )
             )
         )
     )

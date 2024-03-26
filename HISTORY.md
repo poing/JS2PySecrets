@@ -4,6 +4,43 @@ Changelog
 
 (unreleased)
 ------------
+- Cleaning up tests. [poing]
+
+
+0.0.18 (2024-03-25)
+-------------------
+- Release: version 0.0.18 🚀 [poing]
+- Added keywords and classifiers. [poing]
+
+
+0.0.17 (2024-03-25)
+-------------------
+- Release: version 0.0.17 🚀 [poing]
+
+
+0.0.16 (2024-03-25)
+-------------------
+- Release: version 0.0.16 🚀 [poing]
+- Added keywords and classifiers. [poing]
+
+
+0.0.15 (2024-03-25)
+-------------------
+- Release: version 0.0.15 🚀 [poing]
+
+
+0.0.14 (2024-03-25)
+-------------------
+- Release: version 0.0.14 🚀 [poing]
+- Update docs. [poing]
+- Update docs. [poing]
+- Update docs. [poing]
+- Update docs. [poing]
+
+
+0.0.13 (2024-03-24)
+-------------------
+- Release: version 0.0.13 🚀 [poing]
 - Adjusted the readme, check how footnotes are shown in PyPI. [poing]
 
 

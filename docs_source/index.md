@@ -1,55 +1,18 @@
 # JS2PySecrets
 
-!!! danger "Work in Progress"
-
-	The Python implementation of Shamir's Secret Sharing is currently under development.  
-	
-	It doesn't work just yet, but it's progressing.
-
-
-Python implementation of Shamir's Secret Sharing.
-
 $q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
 
-!!! note ""
+A port of the [`secrets.js`](https://github.com/grempe/secrets.js) JavaScript package to Python. 
 
-    The primary goal of this project is to create a Python implementation of Shamir's
-    Secret Sharing that interoperates with an existing JavaScript implementation.
+This package allows for cross-platform compatible shares, *generated using [Shamir's Secret Sharing](http://en.wikipedia.org/wiki/Shamir's_Secret_Sharing)*, to seamlessly interoperate between JavaScript and Python.
 
-<!--
-/// html | inline
+Function names and arguments used in the JavaScript package have been maintained for consistency and maintainability. 
 
+The functionality is essentially the same as the JavaScript package, with an exception around random number generation.  Python doesn't have to adapt to different environments for random number generation like the JavaScript does.
 
+!!! info "Quick Comparison"
 
-            <div class="row">
-                <div class="col-sm-6">
-                    <h2>Split</h2>
-                    <div>
-                        Require
-                        <input class="required form-control" type="number" value="3" min="2" max="255">
-                        parts from
-                        <input class="total form-control" type="number" value="5" min="2" max="255">
-                        to reconstruct the following secret
-                    </div>
-                    <textarea class="secret form-control" rows=10 placeholder="Enter your secret here"></textarea>
-                    <h2>Usage</h2>
-                    <p>Double click each part below to select the content for that part. Copy and paste the content for each part into <span class="distributesize">5</span> individual files on your computer.</p>
-                    <p>Distribute one file to each person in your group.</p>
-                    <p>If <span class="recreatesize">3</span> of those people can combine the contents of their file using this page, they can view the secret.</p>
-                    <p>Remember to delete the parts from your computer once you're finished. If you use a rubbish bin for deleted files, also remove them from the rubbish bin.</p>
-                    <p class="error text-danger"></p>
-                    <h2>Parts</h2>
-                    <ol class="generated">
-                        <li>Enter your secret above.</li>
-                    </ol>
-                </div></div>
-
-///
--->
-  
-!!! example "Quick Comparison"
-
-	Here's a quick overview of how Python will look, compared with the JavaScript implimentation.
+	Here's a quick overview of the Python use, compared with the JavaScript use.
 
 	=== " :fontawesome-brands-python: Python"
 
@@ -73,42 +36,95 @@ $q(x) = a_0 + a_1x + \dotsi + a_{k-1}x^{k-1}$
 		var shares = secrets.share(key, 6, 3);
 		
 		var recovered = secrets.combine(shares); // "86a8e7"
+		```
 
+## Installation and Usage
 
+Install the PyPI package:
+
+```
+pip install js2pysecrets
+```
+
+Import the library:
+
+```
+import js2pysecrets as secrets
+```
+
+### Examples
+
+!!! example "Examples"
+
+	=== " :fontawesome-brands-python: Divide a Hex Key"
+
+		Divide a 512-bit key, expressed in hexadecimal form, into 10 shares, requiring that any 5 of them are necessary to reconstruct the original key:
+
+		```python
+		import js2pysecrets as secrets
+
+		# generate a 512-bit key
+		key = secrets.random(512) 
+		print(key) # => key is a hex string
+
+		# split into 10 shares with a threshold of 5
+		shares = secrets.share(key, 10, 5)
+		print(shares) # => ['801xxx...xxx','802xxx...xxx', ... ,'809xxx...xxx','80axxx...xxx']
+
+		# combine 4 shares
+		comb = secrets.combine(shares[:4])
+		print(comb == key) # => False
+
+		# combine 5 shares
+		comb = secrets.combine(shares[:5])
+		print(comb == key) # => True
+
+		# combine ALL shares
+		comb = secrets.combine(shares)
+		print(comb == key) # => True
+
+		# create another share with id 8
+		new_share = secrets.newShare(8, shares)
+		print(new_share) # => '808xxx...xxx'
+
+		# reconstruct using 4 original shares and the new share:
+		comb = secrets.combine(shares[:4] + [new_share])
+		print(comb == key) # => True
+		```
+
+	=== " :fontawesome-brands-python: Divide a Password"
+
+		Divide a password containing a mix of numbers, letters, and other characters, requiring that any 3 shares must be present to reconstruct the original password:
+
+		```python
+		import js2pysecrets as secrets
+
+		pw = "<<PassWord123>>"
+
+		# convert the text into a hex string
+		pwHex = secrets.str2hex(pw)
+		print(pwHex) # => hex string
+
+		# split into 5 shares, with a threshold of 3
+		shares = secrets.share(pwHex, 5, 3)
+		print(shares) # => ['801xxx...xxx','802xxx...xxx', ... ,'804xxx...xxx','805xxx...xxx']
+
+		# combine 2 shares:
+		comb = secrets.combine(shares[:2])
+
+		# convert back to UTF string:
+		comb = secrets.hex2str(comb)
+		print(comb == pw) # => False
+
+		# combine 3 shares:
+		comb = secrets.combine([shares[1], shares[3], shares[4]])
+
+		# convert back to UTF string:
+		comb = secrets.hex2str(comb)
+		print(comb == pw) # => True
 		```
 
 
-!!! danger "Random Data Can Be Captured"
-
-	!!! danger "Random Data Can Be Captured"
-
-		Capturing the random data used to generate shares is possible.  It's __not__ enabled by default and the `function()` necessary to process the random data is at the discretion users of this package.  
-	
-		The ability to access the random data is __solely__ intended for random dithering and auditing purposes.  _(like the images below)_
-	
-	=== "secrets"
-		![Image title](secrets.png){ align=left }
-
-		The `secrets` module is used for generating cryptographically strong random numbers suitable for managing data such as passwords, account authentication, security tokens, and related secrets.
-
-		The `secrets` __should be used__ instead of the default pseudo-random number generator in the `random` module, which is designed for modelling and simulation, not security or cryptography.
-
-	=== "random"
-		![Image title](random.png){ align=left }
-		
 
 
 
-		!!! warning "Warning"
-
-			The pseudo-random generators in the `random` module __should not__ be used for security purposes. For security or cryptographic uses, use the `secrets` module. 		
-
-	=== "testRandom"
-		![Image title](testRandom.png){ align=left }
-
-		!!! warning "Do Not Use"
-
-			__For testing purposes only!__
-			
-			The `testRandom` function serves as useful tool for development, generating predictable values. However, when it comes to applications involving security or cryptography, it's crucial to employ a robust random number generator. 
-		
